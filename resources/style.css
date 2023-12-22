@@ -235,7 +235,14 @@ html, body, main{
 }
 
 .direct_msg{
+    display: flex;
     overflow: hidden;
+}
+
+.direct_msg .left-side, .direct_msg .right-side{
+    height: 100%;
+    overflow-y: auto;
+    padding: 20px;
 }
 
 .direct_msg .left-side::-webkit-scrollbar, .direct_msg .right-side::-webkit-scrollbar{
@@ -244,8 +251,42 @@ html, body, main{
 }
 
 .direct_msg .left-side{
-    width: calc(80% - 1px);
-    overflow: scroll;
+    width: 80%;
+    border-right: 1px solid var(--cor_prim);
+}
+
+.direct_msg .separation{
+    width: 1px;
+    background-color: var(--cor_prim);
+}
+
+.direct_msg .right-side{
+    width: 20%;
+    border-left: 1px solid var(--cor_prim);
+}
+
+.friend {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.friend img {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.friend_name {
+    font-weight: 500;
+    color: var(--cor_prim);
+}
+
+.friend-hidden{
+    display: none;
 }
 
 .profile-name{

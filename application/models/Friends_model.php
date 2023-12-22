@@ -29,6 +29,22 @@
             return $check_already_friends;
         }
 
+        public function fetch_friends($id){
+            if(empty($id))
+                return;
+
+            $this->db->group_start();
+            $this->db->where('id_user1', $id);
+            $this->db->group_end();
+            $this->db->or_group_start();
+            $this->db->where('id_user2', $id);
+            $this->db->group_end();
+
+            $query = $this->db->get($this->table);
+            
+            return $query->result_array();
+        }
+
         public function update_invite($id_rec, $id_send, $status){
             // Verifica se os utilizadores têm algum registo na base de dados e se o convite está em estado pendente
             if($this->check_friends($id_rec, $id_send) != true)

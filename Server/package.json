@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "FamilyNet's Server responsible for the connection between users",
+  "main": "Server.cjs",
+  "scripts": {
+    "test": "test",
+    "start": "node server.cjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GDPM05/FamilyNet.git"
+  },
+  "keywords": [
+    "family"
+  ],
+  "author": "GDPM",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GDPM05/FamilyNet/issues"
+  },
+  "homepage": "https://github.com/GDPM05/FamilyNet#readme",
+  "dependencies": {
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2"
+  }
+}
