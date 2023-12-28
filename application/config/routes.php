@@ -67,3 +67,6 @@ $route['send_invite/(:num)'] = 'Profile/send_friend_invitation';
 $route['invites/(:any)/(:num)'] = 'Profile/update_invite/$1/$2';
 $route['notification'] = 'Notification';
 $route['notification/(:num)'] = 'Notification';
+$route['get_messages/(:num)/(:num)'] = 'Directmsg/get_messages';
+$route['fetch_user/(:num)'] = 'Directmsg/fetch_user';
+$route['send_message'] = 'Directmsg/send_message';

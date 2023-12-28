@@ -12,7 +12,8 @@
     </div>
     <p class="users_page"></p>
     <script type="text/javascript">
-       $(document).ready(function(){
+        $(document).ready(function(){
+            var ajax = new AjaxHandler();
             execAjax();
 
             $(document).on('keyup', '#search', function(event){
@@ -29,7 +30,6 @@
             }
 
             function execAjax(){
-                console.log("aa");
                 var debounceTimeout;
                 clearTimeout(debounceTimeout);
                 $(".results").html("");
@@ -38,34 +38,21 @@
                 var page = <?php echo ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;?>;
                 console.log(query, page);
                 debounceTimeout = setTimeout(function(){
-                    console.log("aa");
                     if(query != "") {
-                        console.log("bb")
-                        $.ajax({
-                            url:"<?php echo base_url('fetch'); ?>",
-                            method:"POST",
-                            data:{
-                                query:query, 
-                                page:page
-                            },
-                            success:function(results) {
-                                console.log(results);
-                                $(".results").html("");
-                                console.log(results.query);
-                                Object.values(results.query).forEach(user => {
-                                    console.log(results.query.user);
-                                    var div = createDiv(user);
-                                    $(".results").append(div);
-                                });
-                                $(".users_page").html(results.links);
-                            }
+                        ajax.post("<?php echo base_url('fetch'); ?>", {query:query, page:page}, function(results) {
+                            console.log(results);
+                            $(".results").html("");
+                            console.log(results.query);
+                            Object.values(results.query).forEach(user => {
+                                console.log(results.query.user);
+                                var div = createDiv(user);
+                                $(".results").append(div);
+                            });
+                            $(".users_page").html(results.links);
                         });
                     }
                 }, 200);
             }
         });
-
-
-
-        </script>
+    </script>
 </main>

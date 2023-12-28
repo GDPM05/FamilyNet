@@ -4,7 +4,7 @@
 
 ?>
 
-<main>
+<main class="home">
     <div class="left-side">
         <h1><span>Family</span>Net</h1>
         <img src="<?php echo base_url('resources/Logo.png');?>" alt="Logo">

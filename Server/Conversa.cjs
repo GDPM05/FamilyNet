@@ -42,7 +42,7 @@ class Conversa{
     }
 
     generateEncMethod(){
-        var char = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZãõâôáéíóúàèìòùÃÕÂÔÁÉÍÓÚÀÈÌÒÙ1234567890,.?!-_ºª+*´`~^\'\"#$%&/()=@£§{[]}»«\\|';
+        var char = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZãõâôáéíóúàèìòùÃÕÂÔÁÉÍÓÚÀÈÌÒÙ1234567890,.?!-_ºª+*´`~^\'\"#$%&/()=@£§{[]}»«\|";
         var code = {}; // Inicialize code como um objeto
     
         for(var i = 0; i < char.length; i++){

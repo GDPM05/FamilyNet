@@ -34,29 +34,27 @@
 
 <script>
     $(document).ready(function(){
+        var ajax = new AjaxHandler();
         var modal = $("#friend_invitation_modal");
         var btn_add = $(".add_friend");
         var btn_decline = $(".unfriend");
         var span = $(".close");
 
         btn_add.click(function(){
-            $.ajax({
-                url: '<?php echo base_url('send_invite').'/'.$user['id'];?>',
-                type: 'POST',
-                success: function(data) {
-                    $('#mensagemModal').text("Pedido de amizade enviado com sucesso!");
-                    modal.show();
-                    console.log(data);
-                },
-                error: function(data) {
-                    $('#mensagemModal').text('Internal Error. Try again later.');
-                    modal.show();
-                    console.log(data);
-                }
+            ajax.post('<?php echo base_url('send_invite').'/'.$user['id'];?>', null, (data)=>{
+                $('#mensagemModal').text("Pedido de amizade enviado com sucesso!");
+                modal.show();
+                console.log(data);
             });
         });
 
         btn_decline.click(function(){
+            ajax.post('<?php echo base_url('invites/'.$user['id'].'/'.'2');?>', {notification_id}, (data)=>{
+                $('#mensagemModal').text(data.mensagem);
+                modal.show();
+                console.log(data);
+            })
+
             $.ajax({
                 url: '<?php echo base_url('invites/'.$user['id'].'/'.'2');?>',
                 type: 'POST',

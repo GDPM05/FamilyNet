@@ -34,6 +34,7 @@
 </main>
 <script>
     $(document).ready(function(){
+        var ajax = new AjaxHandler();
         var modal = $("#friend_invitation_modal");
         var btn_add = $(".add_friend");
         var btn_decline = $(".deny_friend");
@@ -41,32 +42,18 @@
 
         btn_add.click(function(){
             var notification_id = $(this).data("id"); 
-            $.ajax({
-                url: '<?php echo base_url('invites');?>/'+$(this).data("indicator")+'/1',
-                type: 'POST',
-                data:{
-                    notification_id:notification_id
-                },
-                success: function(){
-                    $('#mensagemModal').text('Pedido de amizade aceito!');
-                    modal.show();
-                }
-            })
-        })
+            ajax.post('<?php echo base_url('invites');?>/'+$(this).data("indicator")+'/1', {notification_id:notification_id}, function() {
+                $('#mensagemModal').text('Pedido de amizade aceito!');
+                modal.show();
+            });
+        });
 
         btn_decline.click(function(){
             var notification_id = $(this).data("id"); 
-            $.ajax({
-                url: '<?php echo base_url('invites');?>/'+$(this).data("indicator")+'/2',
-                type: 'POST',
-                data:{
-                    notification_id:notification_id
-                },
-                success: function(){
-                    $('#mensagemModal').text('Pedido de amizade recusado!');
-                    modal.show();
-                }
-            })
+            ajax.post('<?php echo base_url('invites');?>/'+$(this).data("indicator")+'/2', {notification_id:notification_id}, function() {
+                $('#mensagemModal').text('Pedido de amizade recusado!');
+                modal.show();
+            });
         });
 
         span.click(function(){

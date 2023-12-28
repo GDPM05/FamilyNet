@@ -7,6 +7,7 @@
             parent::__construct();
             $this->load->library(array('form_validation', 'session'));
             $this->load->model('Friends_model');
+            $this->load->model('Message_model');
             if(!$this->LoggedIn()){
                 redirect(base_url('logout'));
                 exit;
@@ -45,6 +46,38 @@
             $this->load->view('common/footer');
         }
 
+        public function get_messages(){
+            $offset = $this->uri->segment(2);
+            $friend_id = $this->uri->segment(3);
+        
+            $messages = $this->Message_model->fetch_messages(true, 15, $offset, 'send_date DESC', ['id_friend' => $friend_id, 'id_user' => $this->session->userdata('user')['id']]);
+        
+            header('Content-Type: application/json');
+            echo json_encode($messages);
+        }
+        
+
+        public function fetch_user(){
+            $user_id = $this->uri->segment(2);
+            $data['user'] = $this->User_model->fetch(['id' => $user_id], 'id, user, username, pfp');
+            $data['user']['pfp'] = $this->get_profile_pic($data['user']['id']);
+            header('Content-Type: application/json');
+            echo json_encode($data['user']);
+        }
+
+        public function send_message(){
+            $data = $_POST['message'];
+    
+            $this->Message_model->insert($data);
+
+            if($this->Message_model->error){
+                $data['error'] = $this->Message_model->error;
+                $data['error_msg'] = $this->Message_model->error_message;
+            }
+
+            header('Content-Type: application/json');
+            echo json_encode($data);
+        }
 
     }
 ?>

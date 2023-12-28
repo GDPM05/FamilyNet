@@ -108,11 +108,11 @@ class Server{
     }
 
     handleMessage(socket, data){
-        var user = sockets[socket.id];
-        if(!user_map[user.id_user_conv])
+        var user = this.sockets[socket.id];
+        if(!this.user_map[user.id_user_conv])
             return;
         
-        conv_id = this.user_conv_map[user.uniqueId];
+        var conv_id = this.user_conv_map[user.uniqueId];
         var conv = this.conversas[conv_id];
 
         for(var i = 0; i < conv['users'].length; i++){

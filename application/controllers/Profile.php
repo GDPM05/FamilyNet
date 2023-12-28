@@ -57,7 +57,7 @@
             $check_friends = $this->Friends_model->check_friends($user['id'], $this->session->userdata('user')['id']);
 
             if($check_friends !== TRUE){
-                switch($check_friends['status']){
+                switch($check_friends->status){
                     case 2:
                         $this->update_invite($user['id'], 3);
                         return;
@@ -114,20 +114,17 @@
                     break;
                 case 2:
                     $type_id = 2; 
-                    $status_message = $this->session->userdata('user')['username'].' recusou o seu pedido de amizade!';
+                    $status_message = ($check_friends->status == 3) ? $this->session->userdata('user')['username'].' recusou o seu pedido de amizade!' : $user['username'].' já não é seu amigo.';
                     break;
                 case 3: 
                     $type_id = 1;
                     $status_message = $this->session->userdata('user')['username'].' enviou um pedido de amizade!';
                     break;
             }
-            $this->Friends_model->update([
-                'status' => $status
-            ], [
-                'id_user1' => $this->session->userdata('user')['id']
-            ]);
+
+            $this->Friends_model->update_invite($user['id'], $this->session->userdata('user')['id'], $status);
             
-            $this->Notification_model->insert([
+            $notification_id = $this->Notification_model->insert([
                 'type_id' => 2,
                 'sent_date' => date('Y-m-d H:i:s'),
                 'receiver_id' => $user['id'],
@@ -147,12 +144,11 @@
         
             if(!$error){
                 $this->Notification_model->delete([
-                    'id' => $_POST['notification_id']
+                    'id' => $notification_id
                 ]);
             }
 
             $data['mensagem'] = $status_message;
-            $data['success'] = true;
             $data['error'] = $error;
             $data['error_message'] = $message;
 
