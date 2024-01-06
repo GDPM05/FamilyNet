@@ -10,7 +10,7 @@
      *  - Gerar e enviar um código de verificação por email para o utilizador 
      */
 
-    class Signup extends CI_Controller {
+    class Signup extends MY_Controller {
         
         private $general_data = array();
 

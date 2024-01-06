@@ -25,13 +25,13 @@ class Client{
         };
     }
 
-    connect(url){
+    connect(url){ // Método responsável por se conectar com o servidor e fazer a gestão das informações enviadas e recebidas
         try{
             this.socket = this.io.connect(url);
 
             this.socket.on('connect_error', (error) => {
                 console.log('connect_error event fired', error);
-                window.location.href = 'http://localhost/FamilyNet/main';
+                window.location.href = 'http://localhost/FamilyNet/main'; // Trocar por uma mensagem
             });
 
             this.socket.on('connect', () => {
@@ -42,12 +42,12 @@ class Client{
                 });
             });
         }catch(error){
-            window.location.href = 'http://localhost/FamilyNet/main';
+            window.location.href = 'http://localhost/FamilyNet/main'; // Trocar por uma mensagem
             throw error;
         }
     }
 
-    emit_userdata(data){
+    emit_userdata(data){ // Método responsável por enviar os dados do utilizador para o servidor
         console.log(data);
         try{
             this.socket.emit('user_data', {name: data.user_name, id: data.user_id, id_user_conv: data.friend_id});
@@ -56,11 +56,11 @@ class Client{
         }    
     }
 
-    getMethod(){
+    getMethod(){ // Métodoa responsável por obter o método de encriptação que será utilizado
         return this.enc_method;
     }
 
-    change_friend(friend_id){
+    change_friend(friend_id){ // Método responsável por alterar o id do utilizador amigo no servidor
         try{
             this.socket.emit('change_friend', {friend_id: friend_id});
         }catch(error){
@@ -68,7 +68,7 @@ class Client{
         }
     }
 
-    send_message(str){
+    send_message(str){ // Método responsável por enviar uma mensagem para o outro utilizador
         var encrypted_message = this.encrypt_message(str);
         
         try{
@@ -79,14 +79,21 @@ class Client{
         }
     }
 
-    receive_message(socket, str){
+    receive_message(socket, str){ // Método responsável por receber uma mensagem enviada pelo outro utilizador
         console.log(str);
         var decrypted_msg = this.decrypt_message(str.msg, this.enc_method);
         console.log(toString(decrypted_msg));
         $(".messages").prepend('<p class="message friend_msg">'+decrypted_msg+'</p>');
     }
 
-    encrypt_message(str){
+    encrypt_message(str){ // Método responsável por encriptar uma mensagem
+        /**
+         * Recebe mensagem via parametro
+         * Em seguida, vai percorrer a string e substituir cada caractere pelo correspondente no método de encriptação gerado no servidor
+         * Em seguida, vai percorrer esta nova string com os caracteres baralhados e substituir cada caractere pelo correspondente em binário
+         * Em seguida, vai percorrer a string em binário e substituir cada 4 caracters pelo correspondente em hexa
+         */
+
         console.log(str);
         console.log(this.enc_method[str[0]]);
         var new_str = '';

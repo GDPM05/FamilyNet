@@ -31,7 +31,7 @@
 <script>
     $(()=>{
         var cliente = new Client(io);
-        cliente.connect('http://localhost:6969');
+        cliente.connect('http://localhost:3000');
         var ajax = new AjaxHandler();
         var friend_id;
         let offset = 0;

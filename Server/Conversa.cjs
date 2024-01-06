@@ -27,7 +27,7 @@ class Conversa{
         return this.cod_enc;
     }
 
-    generateUniqueId(){
+    generateUniqueId(){ // Gera um id único para a conversa
         var code = '';
         var char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         var num = '1234567890';
@@ -41,7 +41,7 @@ class Conversa{
         this.uniqueId = code;
     }
 
-    generateEncMethod(){
+    generateEncMethod(){ // Gera o cóigo que vai ser utilizado pelos utilizadores para a encriptação das mensagens
         var char = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZãõâôáéíóúàèìòùÃÕÂÔÁÉÍÓÚÀÈÌÒÙ1234567890,.?!-_ºª+*´`~^\'\"#$%&/()=@£§{[]}»«\|";
         var code = {}; // Inicialize code como um objeto
     

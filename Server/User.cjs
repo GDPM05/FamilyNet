@@ -8,7 +8,7 @@ class User{
         this.uniqueId = null;
     }
 
-    generateUniqueId(){
+    generateUniqueId(){ // Gera id único para este utilizador
         var code = '';
         var char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         var num = '1234567890';

@@ -18,7 +18,7 @@ html, body{
     padding-left: 70px;
 }
 
-.home .left-side {
+.home .left-side, .signup .left-side{
     float: left;
     width: calc(60% - 1px);
     text-align: center;
@@ -26,21 +26,21 @@ html, body{
     color: var(--cor_prim);
 }
 
-.home .left-side h1{
+.home .left-side h1, .signup .left-side h1{
     font-size: 120px;
     margin-bottom: 0;
 }
 
-.home .left-side h1 span, .left-side h2 span{
+.home .left-side h1 span, .signup .left-side h2 span{
     color: var(--cor_sec);
 }
 
-.home .left-side h2{
+.home .left-side h2, .signup .left-side h2{
     font-size: 60px;
     margin-top: 0;
 }
 
-.home .right-side {
+.home .right-side, .signup .right-side {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -51,18 +51,18 @@ html, body{
     
 }
 
-.home .right-side h2{
+.home .right-side h2, .signup .right-side h2{
     font-size: 45px;
     color: var(--cor_prim);
     margin-bottom: 0;
 }
 
-.home .right-side form{
+.home .right-side form, .signup .right-side form{
     display: block;
     width: 400px;
 }
 
-.home .right-side form input{
+.home .right-side form input, .signup .right-side form input{
     display: block;
     width: 300px;
     margin: 10px auto;
@@ -74,16 +74,16 @@ html, body{
     border: 1px solid var(--cor_prim);
 }
 
-.home .right-side form label{
+.home .right-side form label, .signup .right-side form label{
     display: block;
     margin-left: 50px;
 }
 
-.home .right-side form input:focus{
+.home .right-side form input:focus, .signup .right-side form input:focus{
     outline: 1px solid var(--cor_prim);
 }
 
-.home .right-side form input[type="submit"]{
+.home .right-side form input[type="submit"], .signup .right-side form input[type="submit"]{
     margin-top: 20px;
     background-color: var(--cor_prim);
     color: white;
@@ -92,7 +92,7 @@ html, body{
     transition: 0.5s;
 }
 
-.home .right-side form input[type="submit"]:hover{
+.home .right-side form input[type="submit"]:hover, .signup .right-side form input[type="submit"]:hover{
     transform: scale(101%);
     background-color: white;
     color: var(--cor_prim);
@@ -105,7 +105,7 @@ html, body{
     margin: 10px;
 }
 
-.home .separation {
+.home .separation, .signup .separation{
     float: left;
     width: 4px;
     height: 800px;
