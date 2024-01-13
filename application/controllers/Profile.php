@@ -3,10 +3,12 @@
 
     class Profile extends MY_Controller {
         public $data = array();
+
         function __construct(){
             parent::__construct();
             $this->load->model('Friends_model');
-            $this->load->model('Notification_model');
+            //$this->load->model('Notification_model');
+            $this->load->library('NotificationHandler');
             if(!$this->LoggedIn()){
                 redirect(base_url('logout'));
                 exit;
@@ -53,6 +55,10 @@
             */
 
             $user = $this->User_model->fetch(['id' => $this->uri->segment(2)]);
+            
+            if(empty($user)){
+                return false;
+            }
 
             $check_friends = $this->Friends_model->check_friends($user['id'], $this->session->userdata('user')['id']);
 
@@ -75,22 +81,11 @@
                 'status' => 3
             ]);
 
-            $this->Notification_model->insert([
-                'type_id' => 1,
-                'sent_date' => date('Y-m-d H:i:s'),
-                'receiver_id' => $user['id'],
-                'sender_id' => $this->session->userdata('user')['id'],
-                'message_text' => $user['username'].' enviou um pedido de amizade'
-            ]);
+            $this->notificationhandler->notify($this->notificationhandler::FRIEND_INVITE, $user['id'], $this->session->userdata('user')['id'], $user['username'].' enviou um pedido de amizade');
 
             if($this->Friends_model->error){
                 $error = $this->Friends_model->error;
                 $message = $this->Friends_model->error_message;
-            }
-
-            if($this->Notification_model->error){
-                $error = $this->Notification_model->error;
-                $message = $this->Notification_model->error_message;
             }
 
             header('Content-Type: application/json');
@@ -100,9 +95,13 @@
         public function update_invite($user_id = null, $status = null){
             $message = '';
             $error = false;
-        
-            $user = $this->User_model->fetch(['id' => $user_id]);
+            $status_message;
+
+            $user = $this->User_model->fetch(['id' => ((!empty($user_id) ? $user_id : $this->input->post('sender_id')))]);
+            //var_dump($user);
+            //var_dump((!empty($user_id) ? $user_id : $this->input->post('sender_id')));
             $check_friends = $this->Friends_model->check_friends($user['id'], $this->session->userdata('user')['id']);
+            //print_r($check_friends);
         
             if($check_friends === TRUE)
                 return;
@@ -124,36 +123,31 @@
 
             $this->Friends_model->update_invite($user['id'], $this->session->userdata('user')['id'], $status);
             
-            $notification_id = $this->Notification_model->insert([
+            /*$notification_id = $this->Notification_model->insert([
                 'type_id' => 2,
                 'sent_date' => date('Y-m-d H:i:s'),
                 'receiver_id' => $user['id'],
                 'sender_id' =>  $this->session->userdata('user')['id'],
                 'message_text' => $status_message
-            ]);
+            ]);*/
+
+            $notification_id = $this->notificationhandler->notify($type_id, $user['id'], $this->session->userdata('user')['id'], $status_message);
+
+            $this->notificationhandler->denotify($this->input->post('notification_id'));
+
+            //$delete_notification = $this->Notification_model->delete(['id' => $this->input->post('notification_id')]);
 
             if($this->Friends_model->error){
                 $error = $this->Friends_model->error;
                 $message = $this->Friends_model->error_message;
             }
-
-            if($this->Notification_model->error){
-                $error = $this->Notification_model->error;
-                $message = $this->Notification_model->error_message;
-            }
-        
-            if(!$error){
-                $this->Notification_model->delete([
-                    'id' => $notification_id
-                ]);
-            }
+    
 
             $data['mensagem'] = $status_message;
             $data['error'] = $error;
             $data['error_message'] = $message;
 
             header('Content-Type: application/json');
-            
             echo json_encode($data);
         }
 

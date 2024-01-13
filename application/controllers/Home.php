@@ -51,6 +51,14 @@
             $this->load->view('common/footer');
         }
 
+        public function reset_pass(){
+            $data['title'] = TITLE.' | Reset Password';
+            
+            $this->load->view('common/header', $data);
+            $this->load->view('reset_password');
+            $this->load->view('common/footer');
+        }
+
         protected function createSession($userdata, $token = null){
             $this->session->set_userdata(array(
                 'logged_in' => TRUE,

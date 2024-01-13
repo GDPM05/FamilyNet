@@ -41,9 +41,11 @@
         var span = $(".close");
 
         btn_add.click(function(){
-            var notification_id = $(this).data("id"); 
-            ajax.post('<?php echo base_url('invites');?>/'+$(this).data("indicator")+'/1', {notification_id:notification_id}, function() {
-                $('#mensagemModal').text('Pedido de amizade aceito!');
+            var sender_id = $(this).data("indicator");
+            var notification_id = $(this).data("id");
+            console.log(sender_id); 
+            ajax.post('<?php echo base_url('invites');?>/'+$(this).data("indicator")+'/1', {sender_id:sender_id, notification_id:notification_id}, function() {
+                $('#mensagemModal').text('Pedido de amizade aceito!'); 
                 modal.show();
             });
         });

@@ -21,7 +21,7 @@
 
             $user = $this->session->userdata('user');
 
-            $page = $this->uri->segment(2) OR 0; // Fazer operador ternerarui
+            $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0; // Fazer operador ternerarui
             $per_page = 10;
             
             $config = array();

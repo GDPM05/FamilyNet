@@ -275,7 +275,7 @@
                 $this->email->from($this->config->item('smtp_user'), 'FamilyNet');
                 $this->email->to($email);
                 $this->email->subject('Código de Verificação');
-                $this->email->message('Aqui está o código para prosseguir com o login. Tem 5 minutos para introduzir o código. '.$code);
+                $this->email->message('Aqui está o código para prosseguir com o registo. Tem 5 minutos para introduzir o código. '.$code);
                 $this->email->send();
             }catch(Exception $e){
                 return $e;

@@ -49,26 +49,12 @@
         });
 
         btn_decline.click(function(){
-            ajax.post('<?php echo base_url('invites/'.$user['id'].'/'.'2');?>', {notification_id}, (data)=>{
+            ajax.post('<?php echo base_url('invites/'.$user['id'].'/'.'2');?>', null, (data)=>{
                 $('#mensagemModal').text(data.mensagem);
                 modal.show();
                 console.log(data);
             })
 
-            $.ajax({
-                url: '<?php echo base_url('invites/'.$user['id'].'/'.'2');?>',
-                type: 'POST',
-                success: function(data) {
-                    $('#mensagemModal').text(data.mensagem);
-                    modal.show();
-                    console.log(data);
-                },
-                error: function(data) {
-                    $('#mensagemModal').text('Internal Error. Try again later.');
-                    modal.show();
-                    console.log(data);
-                }
-            });
         });
 
         span.click(function(){
