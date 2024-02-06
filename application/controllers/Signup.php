@@ -284,5 +284,75 @@
 
             return true;
         }
+
+        public function complete(){
+            $data = array(
+                'title' => TITLE.' | Sign Up',
+                'genders' => $this->Gender_model->fetch_all(),
+                'p_roles' => $this->ParentalRole_model->fetch_all(),
+                'email' => $this->session->userdata(md5('current_signup_data'))
+            );
+
+            //print_r($data);
+
+            $this->load->view('common/header', $data);
+            $this->load->view('complete_signup', $data);
+            $this->load->view('common/footer');  
+        }
+
+        public function complete_validation(){
+            $email = $this->input->post('email');
+            $data = [];
+            // Validation rules for the "complete_signup" page
+            $this->form_validation->set_rules('name_in', 'Name', 'required|min_length[5]');
+            $this->form_validation->set_rules('username_in', 'Username', 'required|trim');
+            $this->form_validation->set_rules('phone_in', 'Phone Number', 'numeric|max_length[15]');
+            $this->form_validation->set_rules('birthday_in', 'Birthday', 'required');
+            $this->form_validation->set_rules('gender_in', 'Gender', 'required');
+            $this->form_validation->set_rules('p_role', 'Parental Role', 'required');
+
+            if ($this->form_validation->run() == FALSE) {
+                $data['formErrors'] = validation_errors();
+            } else {
+                $form_data = $this->input->post();
+
+                // Update the existing user based on the email
+                $existing_user = $this->User_model->fetch(['email' => $form_data['email']]);
+                if ($existing_user) {
+                    // Update user data
+                    $update_data = [
+                        'username' => $form_data['name_in'],
+                        'user' => $form_data['username_in'],
+                        'birthday' => $form_data['birthday_in'],
+                        'phone' => $form_data['phone_in'],
+                        'gender' => $form_data['gender_in'],
+                        'p_role' => $form_data['p_role'],
+                    ];
+
+                    $this->User_model->update($update_data, ['id' => $existing_user['id']]);
+                    $user = $this->User_model->fetch(['id' => $existing_user['id']], ['id', 'email', 'username', 'user', 'phone', 'gender']);
+                    if ($this->User_model->error) {
+                        $data['formErrors'] = $this->User_model->form_msg;
+                    } else {
+                        $userdata = ['id' => $user['id'],'email' => $user['email'], 'username' => $user['username'], 'user' => $user['user'], 'phone' => $user['phone'], 'gender' => $user['gender']];
+                        $token = session_id();
+                        $this->session->set_userdata(array(
+                            'logged_in' => TRUE,
+                            'user' => $userdata,
+                            'access_token' => $token
+                        ));
+                        redirect(base_url('main'));
+                    }
+                } else {
+                    $data['formErrors'] = 'User not found in the database.';
+                }
+            }
+
+            // Load views
+            $this->load->view('common/header', $data);
+            $this->load->view('complete_signup', $data);  // Change the view file name if needed
+            $this->load->view('common/footer');
+
+        }
     }
 ?>

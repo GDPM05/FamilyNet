@@ -117,6 +117,21 @@ html, body{
     text-align: center;
 }
 
+.home .right-side form .continue_with{
+    background-color: #38b6ff;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home .right-side form .continue_with button{
+    width: 50px;
+    height: 50px;
+    border: none;
+    background-color: transparent;
+}
+
 .step_two, .step_three, .step_four, .step_five{
     display: none;
 }

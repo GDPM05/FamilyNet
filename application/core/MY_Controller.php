@@ -8,6 +8,7 @@
             parent::__construct();
             $this->load->model('Media_model');
             $this->load->model('User_model');
+            
             if($this->LoggedIn()){
                 $this->data['path'] = $this->get_profile_pic($this->session->userdata('user')['id'])['path'];
             }
