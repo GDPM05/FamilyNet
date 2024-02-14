@@ -118,11 +118,11 @@ html, body{
 }
 
 .home .right-side form .continue_with{
-    background-color: #38b6ff;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0
 }
 
 .home .right-side form .continue_with button{
