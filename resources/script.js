@@ -52,5 +52,20 @@ $(()=>{
         
     });
 
+    $(".create_group").click(function(){
+        $("#create_group").css("display", "block");
+        console.log("airflow");
+      });
+    
+      $(".close").click(function(){
+        $("#create_group").css("display", "none");
+      });
+    
+      $(window).click(function(event) {
+        if ($(event.target).is('#create_group')) {
+          $("#create_group").css("display", "none");
+        }
+      });
+
 })
 

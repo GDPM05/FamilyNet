@@ -18,6 +18,11 @@
     </div>
     <div class="separation"></div>
     <div class="right-side">
+        <button class="create_group">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+            </svg>
+        </button>
         <?php
             // Lista todos os utilizadores que o utilizador já comunicou, mas carrega por partes para evitar sobrecargam, tal como em cima, usar o ajax + a função limit
             foreach($friends as $friend){
@@ -26,6 +31,30 @@
                 echo $div;
             }
         ?>
+    </div>
+    <div id="create_group" class="modal">
+        <script>
+            ajax = new AjaxHandler();
+            var page = 0;
+
+            ajax.get('<?=base_url('get_friends')?>', (data)=>{
+                var users = data;
+            })
+        </script>
+        <div class="modal-content">
+            <span class="close">×</span>
+            <form action="<?=base_url("create_group")?>" method="post" class="create_group_form" enctype="multipart/form-data">
+                <label for="gname">Nome do Grupo</label>
+                <input type="text" name="gname" id="gname">
+                <label for="gpic">Foto do grupo</label>
+                <input type="file" name="gpic" id="gpic">
+                <label for="gdesc">Descrição</label>
+                <textarea name="gdesc" id="gdesc" cols="20" rows="2"></textarea>
+                <label for="gprivacy">Privado</label>
+                <input type="checkbox" name="gprivacy" id="gprivacy">
+                <input type="submit" value="Criar" name="gcreate">
+            </form>
+        </div>
     </div>
 </main>
 <script>
