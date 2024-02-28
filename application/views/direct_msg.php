@@ -27,19 +27,33 @@
             // Lista todos os utilizadores que o utilizador já comunicou, mas carrega por partes para evitar sobrecargam, tal como em cima, usar o ajax + a função limit
             foreach($friends as $friend){
                 $div = '<div class="friend"><img src="'.$friend['pfp']['path'].'" alt="'.$friend['pfp']['alt'].'"><p class="friend_name">'.$friend['username'].'</p><p class="friend-hidden" id="friend_user">'.$friend['user'].'</p><p class="friend-hidden" id="friend_id">'.$friend['id'].'</p></div>';
-
                 echo $div;
             }
         ?>
     </div>
     <div id="create_group" class="modal">
         <script>
-            ajax = new AjaxHandler();
-            var page = 0;
+            function updateCharacterCount() {
+                var textarea = document.getElementById('gdesc');
+                var count = document.getElementById('characterCount');
+                count.innerText = textarea.value.length + " / 400";
+            }
+            $(document).ready(function() {
+                $("#friend_list").mousedown(function(e) {
+                    e.preventDefault();
 
-            ajax.get('<?=base_url('get_friends')?>', (data)=>{
-                var users = data;
-            })
+                    var select = this;
+                    var scroll = select.scrollTop;
+
+                    e.target.selected = !e.target.selected;
+
+                    setTimeout(function(){select.scrollTop = scroll;}, 0);
+
+                    $(select).focus();
+                }).mousemove(function(e){e.preventDefault()});
+            });
+
+
         </script>
         <div class="modal-content">
             <span class="close">×</span>
@@ -49,9 +63,14 @@
                 <label for="gpic">Foto do grupo</label>
                 <input type="file" name="gpic" id="gpic">
                 <label for="gdesc">Descrição</label>
-                <textarea name="gdesc" id="gdesc" cols="20" rows="2"></textarea>
-                <label for="gprivacy">Privado</label>
-                <input type="checkbox" name="gprivacy" id="gprivacy">
+                <textarea name="gdesc" id="gdesc" cols="20" rows="2" maxlength="400" oninput="updateCharacterCount()"></textarea>
+                <p id="characterCount">0 / 400</p>
+                <label for="friend_list">Amigos: </label>
+                <select name="friend_list[]" id="friend_list" multiple>
+                    <?php foreach ($friends as $friend): ?>
+                        <option value="<?=$friend['id']?>"><?=$friend['username']?></option>
+                    <?php endforeach; ?>
+                </select>
                 <input type="submit" value="Criar" name="gcreate">
             </form>
         </div>
