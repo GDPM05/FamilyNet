@@ -48,5 +48,13 @@
             }
         }
 
+        public function update_message_state($friend_id, $user_id){
+            $this->db->set('state', '1');
+            $this->db->where('id_sender', $friend_id);
+            $this->db->where('id_receiver', $user_id);
+            $this->db->where('state', '0');
+            $this->db->update('message');
+        }
+
     }
 

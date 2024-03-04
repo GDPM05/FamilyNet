@@ -3,6 +3,7 @@ class Client{
 
     socket;
     bin_hexa_map;
+
     constructor(io){
         this.io = io;
         this.bin_hexa_map = { // Mapa do valor em hexadecimal correspondente a cada valor binário
@@ -39,6 +40,10 @@ class Client{
                 this.socket.on('enc_method', (socket)=>{
                     console.log('ai');
                     this.enc_method = socket;
+                });
+                this.socket.on('friend_online', (socket)=>{
+                    console.log((socket) ? "Online" : "Offline");
+                    $(".is_online").html((socket) ? "Online" : "Offline");
                 });
             });
         }catch(error){

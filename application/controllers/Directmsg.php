@@ -54,6 +54,8 @@
         
             $messages = $this->Message_model->fetch_messages(true, 15, $offset, 'send_date DESC', ['id_friend' => $friend_id, 'id_user' => $this->session->userdata('user')['id']]);
         
+            $this->Message_model->update_message_state($friend_id, $this->session->userdata('user')['id']);
+
             header('Content-Type: application/json');
             echo json_encode($messages);
         }
