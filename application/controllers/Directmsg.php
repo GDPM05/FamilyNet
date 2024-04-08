@@ -10,6 +10,8 @@
             $this->load->model('Message_model');
             $this->load->model('Groups_model');
             $this->load->model('GroupUsers_model');
+            $this->load->model('Conversation_model');
+            $this->load->model('UserConversation_model');
             if(!$this->LoggedIn()){
                 redirect(base_url('logout'));
                 exit;
@@ -24,24 +26,18 @@
 
             $user_id = $this->session->userdata['user']['id'];
 
-            $friends_ids = $this->Friends_model->fetch_friends($user_id);
-            //print_r($friends_ids);
-            $users = [];
-            foreach($friends_ids as $friends){
-                //print_r($friends);
-                if($friends['status'] == 1){
-                    if($friends['id_user1'] != $user_id){
-                        $users[$friends['id_user1']] = $this->User_model->fetch(['id' => $friends['id_user1']], 'id, user, username');
-                        $users[$friends['id_user1']]['pfp'] = $this->get_profile_pic($friends['id_user1']);
-                    }else{
-                        $users[$friends['id_user2']] = $this->User_model->fetch(['id' => $friends['id_user2']], 'id, user, username');
-                        $users[$friends['id_user2']]['pfp'] = $this->get_profile_pic($friends['id_user2']);
-                    }
+            $conversations_ids = $this->UserConversation_model->fetch_all(false, null, null, null, ['id_user' => $user_id]);
+            
+            $conversations = [];
+            if(is_array($conversations_ids[count($conversations_ids)-1])){
+                foreach($conversations_ids as $conv){
+                    $conversations[$conv['id_conv']] = $this->get_conversation_details($conv['id_conv'], $user_id);
                 }
+            }else{
+                $conversations[$conversations_ids['id_conv']] = $this->get_conversation_details($conversations_ids['id_conv'], $user_id);
             }
-            //print_r($users);
-            $data['friends'] = $users;
 
+            $data['conversations'] = $conversations;
             $this->load->view('common/header', $data);
             $this->load->view('common/menu', $this->data);
             $this->load->view('direct_msg', $data);
@@ -151,6 +147,17 @@
             }
 
             redirect(base_url('direct_msg'));
+        }
+
+        private function get_conversation_details($id, $user_id){
+            $conversation = [];
+            $conversation['id'] = $id;
+            $conv = $this->UserConversation_model->get_conversation(['my_id' => $user_id, 'id_conv' => $id])['id_user'];
+            $user = $this->User_model->fetch(['id' => $conv], ['pfp', 'username', 'user']);
+            $user_pfp = $this->Media_model->fetch(['id' => $user['pfp']]);
+            $conversation['user'] = $user;
+            $conversation['pfp'] = $user_pfp;
+            return $conversation;
         }
 
     }
