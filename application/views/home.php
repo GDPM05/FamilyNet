@@ -23,6 +23,10 @@
             <div class="account_help">
                 <p>Don't have an <a href="<?php echo base_url('signup');?>">account</a>?</p>
                 <p>Forgot your <a href="<?php echo base_url('reset_password');?>">password</a>?</p>
+                <div class="keep_login">
+                    <input type="checkbox" name="keep_login" id="keep_login">
+                    <p id="keep_login_p">Keep Log In</p>
+                </div>
             </div>
             <div class="continue_with">
                 <a href="<?=base_url('google_auth')?>" class="google">

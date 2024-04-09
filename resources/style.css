@@ -74,6 +74,22 @@ html, body{
     border: 1px solid var(--cor_prim);
 }
 
+.home .right-side form .keep_login{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home .right-side form .keep_login #keep_login{
+    width: 20px;
+    margin: 0;
+}
+
+.home .right-side form .keep_login #keep_login_p{
+    width: auto;
+}
+
 .home .right-side form label, .signup .right-side form label{
     display: block;
     margin-left: 50px;

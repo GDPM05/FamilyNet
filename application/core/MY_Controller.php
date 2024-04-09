@@ -22,8 +22,15 @@
         }
 
         public function LoggedIn(){
-            $logged_in = $this->session->userdata('logged_in');
-    
+            
+            if(isset($_COOKIE['user_login']) && $_COOKIE['user_login']['logged_in']){
+                $logged_in = true;
+                $this->session->set_userdata($_COOKIE['user_login']);
+            }else if($this->session->userdata('logged_in'))
+                $logged_in = (($this->session->userdata('logged_in') !== null && $this->session->userdata('logged_in')) || (isset($_COOKIE['user_login']) && $_COOKIE['user_login']['logged_in']));
+            else
+                $logged_in = false;        
+            
             return $logged_in;
         }
     }
