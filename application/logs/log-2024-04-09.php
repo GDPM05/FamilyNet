@@ -5048,3 +5048,361 @@ INFO - 2024-04-09 09:54:34 --> Model "Conversation_model" initialized
 INFO - 2024-04-09 09:54:34 --> Model "UserConversation_model" initialized
 INFO - 2024-04-09 09:54:34 --> Final output sent to browser
 DEBUG - 2024-04-09 09:54:34 --> Total execution time: 0.0873
+INFO - 2024-04-09 13:41:36 --> Config Class Initialized
+INFO - 2024-04-09 13:41:36 --> Hooks Class Initialized
+DEBUG - 2024-04-09 13:41:36 --> UTF-8 Support Enabled
+INFO - 2024-04-09 13:41:36 --> Utf8 Class Initialized
+INFO - 2024-04-09 13:41:36 --> URI Class Initialized
+INFO - 2024-04-09 13:41:36 --> Router Class Initialized
+INFO - 2024-04-09 13:41:36 --> Output Class Initialized
+INFO - 2024-04-09 13:41:36 --> Security Class Initialized
+DEBUG - 2024-04-09 13:41:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-09 13:41:36 --> Input Class Initialized
+INFO - 2024-04-09 13:41:36 --> Language Class Initialized
+INFO - 2024-04-09 13:41:36 --> Loader Class Initialized
+INFO - 2024-04-09 13:41:36 --> Helper loaded: url_helper
+INFO - 2024-04-09 13:41:36 --> Database Driver Class Initialized
+DEBUG - 2024-04-09 13:41:36 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-09 13:41:36 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-09 13:41:36 --> Controller Class Initialized
+INFO - 2024-04-09 13:41:36 --> MY_Model class loaded
+INFO - 2024-04-09 13:41:36 --> Model "Media_model" initialized
+INFO - 2024-04-09 13:41:36 --> Model "User_model" initialized
+INFO - 2024-04-09 13:41:36 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/header.php
+INFO - 2024-04-09 13:41:36 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/menu.php
+INFO - 2024-04-09 13:41:36 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\main.php
+INFO - 2024-04-09 13:41:36 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/footer.php
+INFO - 2024-04-09 13:41:36 --> Final output sent to browser
+DEBUG - 2024-04-09 13:41:36 --> Total execution time: 0.1818
+INFO - 2024-04-09 13:42:20 --> Config Class Initialized
+INFO - 2024-04-09 13:42:20 --> Hooks Class Initialized
+DEBUG - 2024-04-09 13:42:20 --> UTF-8 Support Enabled
+INFO - 2024-04-09 13:42:20 --> Utf8 Class Initialized
+INFO - 2024-04-09 13:42:20 --> URI Class Initialized
+INFO - 2024-04-09 13:42:20 --> Router Class Initialized
+INFO - 2024-04-09 13:42:20 --> Output Class Initialized
+INFO - 2024-04-09 13:42:20 --> Security Class Initialized
+DEBUG - 2024-04-09 13:42:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-09 13:42:20 --> Input Class Initialized
+INFO - 2024-04-09 13:42:20 --> Language Class Initialized
+INFO - 2024-04-09 13:42:20 --> Loader Class Initialized
+INFO - 2024-04-09 13:42:20 --> Helper loaded: url_helper
+INFO - 2024-04-09 13:42:20 --> Database Driver Class Initialized
+DEBUG - 2024-04-09 13:42:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-09 13:42:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-09 13:42:20 --> Controller Class Initialized
+INFO - 2024-04-09 13:42:20 --> MY_Model class loaded
+INFO - 2024-04-09 13:42:20 --> Model "Media_model" initialized
+INFO - 2024-04-09 13:42:20 --> Model "User_model" initialized
+INFO - 2024-04-09 13:42:20 --> Helper loaded: form_helper
+INFO - 2024-04-09 13:42:20 --> Form Validation Class Initialized
+DEBUG - 2024-04-09 13:42:20 --> Session class already loaded. Second attempt ignored.
+INFO - 2024-04-09 13:42:20 --> Model "Friends_model" initialized
+INFO - 2024-04-09 13:42:20 --> Model "Message_model" initialized
+INFO - 2024-04-09 13:42:20 --> Model "Groups_model" initialized
+INFO - 2024-04-09 13:42:20 --> Model "GroupUsers_model" initialized
+INFO - 2024-04-09 13:42:20 --> Model "Conversation_model" initialized
+INFO - 2024-04-09 13:42:20 --> Model "UserConversation_model" initialized
+ERROR - 2024-04-09 13:42:20 --> Severity: Notice --> Undefined index: message C:\Program Files\Ampps\www\FamilyNet\application\controllers\Directmsg.php 74
+INFO - 2024-04-09 13:42:20 --> Final output sent to browser
+DEBUG - 2024-04-09 13:42:20 --> Total execution time: 0.1669
+INFO - 2024-04-09 14:11:48 --> Config Class Initialized
+INFO - 2024-04-09 14:11:48 --> Hooks Class Initialized
+DEBUG - 2024-04-09 14:11:48 --> UTF-8 Support Enabled
+INFO - 2024-04-09 14:11:48 --> Utf8 Class Initialized
+INFO - 2024-04-09 14:11:48 --> URI Class Initialized
+INFO - 2024-04-09 14:11:48 --> Router Class Initialized
+INFO - 2024-04-09 14:11:48 --> Output Class Initialized
+INFO - 2024-04-09 14:11:48 --> Security Class Initialized
+DEBUG - 2024-04-09 14:11:48 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-09 14:11:48 --> Input Class Initialized
+INFO - 2024-04-09 14:11:48 --> Language Class Initialized
+INFO - 2024-04-09 14:11:48 --> Loader Class Initialized
+INFO - 2024-04-09 14:11:48 --> Helper loaded: url_helper
+INFO - 2024-04-09 14:11:48 --> Database Driver Class Initialized
+DEBUG - 2024-04-09 14:11:48 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-09 14:11:48 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-09 14:11:48 --> Controller Class Initialized
+INFO - 2024-04-09 14:11:48 --> MY_Model class loaded
+INFO - 2024-04-09 14:11:48 --> Model "Media_model" initialized
+INFO - 2024-04-09 14:11:48 --> Model "User_model" initialized
+INFO - 2024-04-09 14:11:48 --> Model "Friends_model" initialized
+INFO - 2024-04-09 14:11:48 --> Model "Notification_model" initialized
+INFO - 2024-04-09 14:11:48 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/header.php
+INFO - 2024-04-09 14:11:48 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/menu.php
+INFO - 2024-04-09 14:11:48 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\profile.php
+INFO - 2024-04-09 14:11:48 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/footer.php
+INFO - 2024-04-09 14:11:48 --> Final output sent to browser
+DEBUG - 2024-04-09 14:11:48 --> Total execution time: 0.1804
+INFO - 2024-04-09 14:11:49 --> Config Class Initialized
+INFO - 2024-04-09 14:11:49 --> Hooks Class Initialized
+DEBUG - 2024-04-09 14:11:49 --> UTF-8 Support Enabled
+INFO - 2024-04-09 14:11:49 --> Utf8 Class Initialized
+INFO - 2024-04-09 14:11:49 --> URI Class Initialized
+INFO - 2024-04-09 14:11:49 --> Router Class Initialized
+INFO - 2024-04-09 14:11:49 --> Output Class Initialized
+INFO - 2024-04-09 14:11:49 --> Security Class Initialized
+DEBUG - 2024-04-09 14:11:49 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-09 14:11:49 --> Input Class Initialized
+INFO - 2024-04-09 14:11:49 --> Language Class Initialized
+INFO - 2024-04-09 14:11:49 --> Loader Class Initialized
+INFO - 2024-04-09 14:11:49 --> Helper loaded: url_helper
+INFO - 2024-04-09 14:11:49 --> Database Driver Class Initialized
+DEBUG - 2024-04-09 14:11:49 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-09 14:11:49 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-09 14:11:49 --> Controller Class Initialized
+INFO - 2024-04-09 14:11:49 --> MY_Model class loaded
+INFO - 2024-04-09 14:11:49 --> Model "Media_model" initialized
+INFO - 2024-04-09 14:11:49 --> Model "User_model" initialized
+INFO - 2024-04-09 14:11:49 --> Helper loaded: form_helper
+INFO - 2024-04-09 14:11:49 --> Form Validation Class Initialized
+INFO - 2024-04-09 14:11:49 --> Config Class Initialized
+INFO - 2024-04-09 14:11:49 --> Hooks Class Initialized
+DEBUG - 2024-04-09 14:11:49 --> UTF-8 Support Enabled
+INFO - 2024-04-09 14:11:49 --> Utf8 Class Initialized
+INFO - 2024-04-09 14:11:49 --> URI Class Initialized
+DEBUG - 2024-04-09 14:11:49 --> No URI present. Default controller set.
+INFO - 2024-04-09 14:11:49 --> Router Class Initialized
+INFO - 2024-04-09 14:11:49 --> Output Class Initialized
+INFO - 2024-04-09 14:11:49 --> Security Class Initialized
+DEBUG - 2024-04-09 14:11:49 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-09 14:11:49 --> Input Class Initialized
+INFO - 2024-04-09 14:11:49 --> Language Class Initialized
+INFO - 2024-04-09 14:11:49 --> Loader Class Initialized
+INFO - 2024-04-09 14:11:49 --> Helper loaded: url_helper
+INFO - 2024-04-09 14:11:49 --> Database Driver Class Initialized
+DEBUG - 2024-04-09 14:11:49 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-09 14:11:49 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-09 14:11:49 --> Controller Class Initialized
+INFO - 2024-04-09 14:11:49 --> MY_Model class loaded
+INFO - 2024-04-09 14:11:49 --> Model "Media_model" initialized
+INFO - 2024-04-09 14:11:49 --> Model "User_model" initialized
+INFO - 2024-04-09 14:11:49 --> Helper loaded: form_helper
+INFO - 2024-04-09 14:11:49 --> Form Validation Class Initialized
+INFO - 2024-04-09 14:11:49 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/header.php
+INFO - 2024-04-09 14:11:49 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\home.php
+INFO - 2024-04-09 14:11:49 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/footer.php
+INFO - 2024-04-09 14:11:49 --> Final output sent to browser
+DEBUG - 2024-04-09 14:11:49 --> Total execution time: 0.0694
+INFO - 2024-04-09 14:11:50 --> Config Class Initialized
+INFO - 2024-04-09 14:11:50 --> Hooks Class Initialized
+DEBUG - 2024-04-09 14:11:50 --> UTF-8 Support Enabled
+INFO - 2024-04-09 14:11:50 --> Utf8 Class Initialized
+INFO - 2024-04-09 14:11:50 --> URI Class Initialized
+DEBUG - 2024-04-09 14:11:50 --> No URI present. Default controller set.
+INFO - 2024-04-09 14:11:50 --> Router Class Initialized
+INFO - 2024-04-09 14:11:50 --> Output Class Initialized
+INFO - 2024-04-09 14:11:50 --> Security Class Initialized
+DEBUG - 2024-04-09 14:11:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-09 14:11:50 --> Input Class Initialized
+INFO - 2024-04-09 14:11:50 --> Language Class Initialized
+INFO - 2024-04-09 14:11:50 --> Loader Class Initialized
+INFO - 2024-04-09 14:11:50 --> Helper loaded: url_helper
+INFO - 2024-04-09 14:11:50 --> Database Driver Class Initialized
+DEBUG - 2024-04-09 14:11:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-09 14:11:50 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-09 14:11:50 --> Controller Class Initialized
+INFO - 2024-04-09 14:11:50 --> MY_Model class loaded
+INFO - 2024-04-09 14:11:50 --> Model "Media_model" initialized
+INFO - 2024-04-09 14:11:50 --> Model "User_model" initialized
+INFO - 2024-04-09 14:11:50 --> Helper loaded: form_helper
+INFO - 2024-04-09 14:11:50 --> Form Validation Class Initialized
+INFO - 2024-04-09 14:11:50 --> Language file loaded: language/english/form_validation_lang.php
+INFO - 2024-04-09 14:11:50 --> Config Class Initialized
+INFO - 2024-04-09 14:11:50 --> Hooks Class Initialized
+DEBUG - 2024-04-09 14:11:50 --> UTF-8 Support Enabled
+INFO - 2024-04-09 14:11:50 --> Utf8 Class Initialized
+INFO - 2024-04-09 14:11:50 --> URI Class Initialized
+INFO - 2024-04-09 14:11:50 --> Router Class Initialized
+INFO - 2024-04-09 14:11:50 --> Output Class Initialized
+INFO - 2024-04-09 14:11:50 --> Security Class Initialized
+DEBUG - 2024-04-09 14:11:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-09 14:11:50 --> Input Class Initialized
+INFO - 2024-04-09 14:11:50 --> Language Class Initialized
+INFO - 2024-04-09 14:11:50 --> Loader Class Initialized
+INFO - 2024-04-09 14:11:51 --> Helper loaded: url_helper
+INFO - 2024-04-09 14:11:51 --> Database Driver Class Initialized
+DEBUG - 2024-04-09 14:11:51 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-09 14:11:51 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-09 14:11:51 --> Controller Class Initialized
+INFO - 2024-04-09 14:11:51 --> MY_Model class loaded
+INFO - 2024-04-09 14:11:51 --> Model "Media_model" initialized
+INFO - 2024-04-09 14:11:51 --> Model "User_model" initialized
+INFO - 2024-04-09 14:11:51 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/header.php
+INFO - 2024-04-09 14:11:51 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/menu.php
+INFO - 2024-04-09 14:11:51 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\main.php
+INFO - 2024-04-09 14:11:51 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/footer.php
+INFO - 2024-04-09 14:11:51 --> Final output sent to browser
+DEBUG - 2024-04-09 14:11:51 --> Total execution time: 0.1455
+INFO - 2024-04-09 14:11:52 --> Config Class Initialized
+INFO - 2024-04-09 14:11:52 --> Hooks Class Initialized
+DEBUG - 2024-04-09 14:11:52 --> UTF-8 Support Enabled
+INFO - 2024-04-09 14:11:52 --> Utf8 Class Initialized
+INFO - 2024-04-09 14:11:52 --> URI Class Initialized
+INFO - 2024-04-09 14:11:52 --> Router Class Initialized
+INFO - 2024-04-09 14:11:52 --> Output Class Initialized
+INFO - 2024-04-09 14:11:52 --> Security Class Initialized
+DEBUG - 2024-04-09 14:11:52 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-09 14:11:52 --> Input Class Initialized
+INFO - 2024-04-09 14:11:52 --> Language Class Initialized
+INFO - 2024-04-09 14:11:52 --> Loader Class Initialized
+INFO - 2024-04-09 14:11:52 --> Helper loaded: url_helper
+INFO - 2024-04-09 14:11:52 --> Database Driver Class Initialized
+DEBUG - 2024-04-09 14:11:52 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-09 14:11:52 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-09 14:11:52 --> Controller Class Initialized
+INFO - 2024-04-09 14:11:52 --> MY_Model class loaded
+INFO - 2024-04-09 14:11:52 --> Model "Media_model" initialized
+INFO - 2024-04-09 14:11:52 --> Model "User_model" initialized
+INFO - 2024-04-09 14:11:52 --> Model "Friends_model" initialized
+INFO - 2024-04-09 14:11:52 --> Model "Notification_model" initialized
+INFO - 2024-04-09 14:11:52 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/header.php
+INFO - 2024-04-09 14:11:52 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/menu.php
+INFO - 2024-04-09 14:11:52 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\profile.php
+INFO - 2024-04-09 14:11:52 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/footer.php
+INFO - 2024-04-09 14:11:52 --> Final output sent to browser
+DEBUG - 2024-04-09 14:11:52 --> Total execution time: 0.1388
+INFO - 2024-04-09 14:11:53 --> Config Class Initialized
+INFO - 2024-04-09 14:11:53 --> Hooks Class Initialized
+DEBUG - 2024-04-09 14:11:53 --> UTF-8 Support Enabled
+INFO - 2024-04-09 14:11:53 --> Utf8 Class Initialized
+INFO - 2024-04-09 14:11:53 --> URI Class Initialized
+INFO - 2024-04-09 14:11:53 --> Router Class Initialized
+INFO - 2024-04-09 14:11:53 --> Output Class Initialized
+INFO - 2024-04-09 14:11:53 --> Security Class Initialized
+DEBUG - 2024-04-09 14:11:53 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-09 14:11:53 --> Input Class Initialized
+INFO - 2024-04-09 14:11:53 --> Language Class Initialized
+INFO - 2024-04-09 14:11:53 --> Loader Class Initialized
+INFO - 2024-04-09 14:11:53 --> Helper loaded: url_helper
+INFO - 2024-04-09 14:11:53 --> Database Driver Class Initialized
+DEBUG - 2024-04-09 14:11:53 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-09 14:11:53 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-09 14:11:53 --> Controller Class Initialized
+INFO - 2024-04-09 14:11:53 --> MY_Model class loaded
+INFO - 2024-04-09 14:11:53 --> Model "Media_model" initialized
+INFO - 2024-04-09 14:11:53 --> Model "User_model" initialized
+INFO - 2024-04-09 14:11:53 --> Helper loaded: form_helper
+INFO - 2024-04-09 14:11:53 --> Form Validation Class Initialized
+INFO - 2024-04-09 14:11:53 --> Config Class Initialized
+INFO - 2024-04-09 14:11:53 --> Hooks Class Initialized
+DEBUG - 2024-04-09 14:11:53 --> UTF-8 Support Enabled
+INFO - 2024-04-09 14:11:53 --> Utf8 Class Initialized
+INFO - 2024-04-09 14:11:53 --> URI Class Initialized
+DEBUG - 2024-04-09 14:11:53 --> No URI present. Default controller set.
+INFO - 2024-04-09 14:11:53 --> Router Class Initialized
+INFO - 2024-04-09 14:11:53 --> Output Class Initialized
+INFO - 2024-04-09 14:11:53 --> Security Class Initialized
+DEBUG - 2024-04-09 14:11:53 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-09 14:11:53 --> Input Class Initialized
+INFO - 2024-04-09 14:11:53 --> Language Class Initialized
+INFO - 2024-04-09 14:11:53 --> Loader Class Initialized
+INFO - 2024-04-09 14:11:53 --> Helper loaded: url_helper
+INFO - 2024-04-09 14:11:53 --> Database Driver Class Initialized
+DEBUG - 2024-04-09 14:11:53 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-09 14:11:53 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-09 14:11:53 --> Controller Class Initialized
+INFO - 2024-04-09 14:11:53 --> MY_Model class loaded
+INFO - 2024-04-09 14:11:53 --> Model "Media_model" initialized
+INFO - 2024-04-09 14:11:53 --> Model "User_model" initialized
+INFO - 2024-04-09 14:11:53 --> Helper loaded: form_helper
+INFO - 2024-04-09 14:11:53 --> Form Validation Class Initialized
+INFO - 2024-04-09 14:11:53 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/header.php
+INFO - 2024-04-09 14:11:53 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\home.php
+INFO - 2024-04-09 14:11:53 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/footer.php
+INFO - 2024-04-09 14:11:53 --> Final output sent to browser
+DEBUG - 2024-04-09 14:11:53 --> Total execution time: 0.1046
+INFO - 2024-04-09 14:11:54 --> Config Class Initialized
+INFO - 2024-04-09 14:11:54 --> Hooks Class Initialized
+DEBUG - 2024-04-09 14:11:54 --> UTF-8 Support Enabled
+INFO - 2024-04-09 14:11:54 --> Utf8 Class Initialized
+INFO - 2024-04-09 14:11:54 --> URI Class Initialized
+INFO - 2024-04-09 14:11:54 --> Router Class Initialized
+INFO - 2024-04-09 14:11:54 --> Output Class Initialized
+INFO - 2024-04-09 14:11:54 --> Security Class Initialized
+DEBUG - 2024-04-09 14:11:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-09 14:11:54 --> Input Class Initialized
+INFO - 2024-04-09 14:11:54 --> Language Class Initialized
+INFO - 2024-04-09 14:11:55 --> Loader Class Initialized
+INFO - 2024-04-09 14:11:55 --> Helper loaded: url_helper
+INFO - 2024-04-09 14:11:55 --> Database Driver Class Initialized
+DEBUG - 2024-04-09 14:11:55 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-09 14:11:55 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-09 14:11:55 --> Controller Class Initialized
+INFO - 2024-04-09 14:11:55 --> MY_Model class loaded
+INFO - 2024-04-09 14:11:55 --> Model "Media_model" initialized
+INFO - 2024-04-09 14:11:55 --> Model "User_model" initialized
+DEBUG - 2024-04-09 14:11:55 --> Session class already loaded. Second attempt ignored.
+INFO - 2024-04-09 14:11:59 --> Config Class Initialized
+INFO - 2024-04-09 14:11:59 --> Hooks Class Initialized
+DEBUG - 2024-04-09 14:11:59 --> UTF-8 Support Enabled
+INFO - 2024-04-09 14:11:59 --> Utf8 Class Initialized
+INFO - 2024-04-09 14:11:59 --> URI Class Initialized
+INFO - 2024-04-09 14:11:59 --> Router Class Initialized
+INFO - 2024-04-09 14:11:59 --> Output Class Initialized
+INFO - 2024-04-09 14:11:59 --> Security Class Initialized
+DEBUG - 2024-04-09 14:11:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-09 14:11:59 --> Input Class Initialized
+INFO - 2024-04-09 14:11:59 --> Language Class Initialized
+INFO - 2024-04-09 14:11:59 --> Loader Class Initialized
+INFO - 2024-04-09 14:11:59 --> Helper loaded: url_helper
+INFO - 2024-04-09 14:11:59 --> Database Driver Class Initialized
+DEBUG - 2024-04-09 14:11:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-09 14:11:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-09 14:11:59 --> Controller Class Initialized
+INFO - 2024-04-09 14:11:59 --> MY_Model class loaded
+INFO - 2024-04-09 14:11:59 --> Model "Media_model" initialized
+INFO - 2024-04-09 14:11:59 --> Model "User_model" initialized
+DEBUG - 2024-04-09 14:11:59 --> Session class already loaded. Second attempt ignored.
+INFO - 2024-04-09 14:12:02 --> Config Class Initialized
+INFO - 2024-04-09 14:12:02 --> Hooks Class Initialized
+DEBUG - 2024-04-09 14:12:02 --> UTF-8 Support Enabled
+INFO - 2024-04-09 14:12:02 --> Utf8 Class Initialized
+INFO - 2024-04-09 14:12:02 --> URI Class Initialized
+INFO - 2024-04-09 14:12:02 --> Router Class Initialized
+INFO - 2024-04-09 14:12:02 --> Output Class Initialized
+INFO - 2024-04-09 14:12:02 --> Security Class Initialized
+DEBUG - 2024-04-09 14:12:02 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-09 14:12:02 --> Input Class Initialized
+INFO - 2024-04-09 14:12:02 --> Language Class Initialized
+INFO - 2024-04-09 14:12:02 --> Loader Class Initialized
+INFO - 2024-04-09 14:12:02 --> Helper loaded: url_helper
+INFO - 2024-04-09 14:12:02 --> Database Driver Class Initialized
+DEBUG - 2024-04-09 14:12:02 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-09 14:12:02 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-09 14:12:02 --> Controller Class Initialized
+INFO - 2024-04-09 14:12:02 --> MY_Model class loaded
+INFO - 2024-04-09 14:12:02 --> Model "Media_model" initialized
+INFO - 2024-04-09 14:12:02 --> Model "User_model" initialized
+INFO - 2024-04-09 14:12:02 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/header.php
+INFO - 2024-04-09 14:12:02 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/menu.php
+INFO - 2024-04-09 14:12:02 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\main.php
+INFO - 2024-04-09 14:12:02 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/footer.php
+INFO - 2024-04-09 14:12:02 --> Final output sent to browser
+DEBUG - 2024-04-09 14:12:02 --> Total execution time: 0.0990
+INFO - 2024-04-09 15:17:09 --> Config Class Initialized
+INFO - 2024-04-09 15:17:09 --> Hooks Class Initialized
+DEBUG - 2024-04-09 15:17:09 --> UTF-8 Support Enabled
+INFO - 2024-04-09 15:17:09 --> Utf8 Class Initialized
+INFO - 2024-04-09 15:17:09 --> URI Class Initialized
+INFO - 2024-04-09 15:17:09 --> Router Class Initialized
+INFO - 2024-04-09 15:17:09 --> Output Class Initialized
+INFO - 2024-04-09 15:17:09 --> Security Class Initialized
+DEBUG - 2024-04-09 15:17:09 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-09 15:17:09 --> Input Class Initialized
+INFO - 2024-04-09 15:17:09 --> Language Class Initialized
+INFO - 2024-04-09 15:17:09 --> Loader Class Initialized
+INFO - 2024-04-09 15:17:09 --> Helper loaded: url_helper
+INFO - 2024-04-09 15:17:09 --> Database Driver Class Initialized
+DEBUG - 2024-04-09 15:17:10 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-09 15:17:10 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-09 15:17:10 --> Controller Class Initialized
+INFO - 2024-04-09 15:17:10 --> MY_Model class loaded
+INFO - 2024-04-09 15:17:10 --> Model "Media_model" initialized
+INFO - 2024-04-09 15:17:10 --> Model "User_model" initialized
+INFO - 2024-04-09 15:17:10 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/header.php
+INFO - 2024-04-09 15:17:10 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/menu.php
+INFO - 2024-04-09 15:17:10 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\main.php
+INFO - 2024-04-09 15:17:10 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/footer.php
+INFO - 2024-04-09 15:17:10 --> Final output sent to browser
+DEBUG - 2024-04-09 15:17:10 --> Total execution time: 1.2016
