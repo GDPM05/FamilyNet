@@ -83,16 +83,17 @@
         cliente.connect('http://localhost:3000');
         var ajax = new AjaxHandler();
         var friend_id;
+        var conv_id;
         let offset = 0;
         var messages;
         let load = true;
         let scrolling = false;
         $(".friend").click(function(){
-            console.log(friend_id);
+            console.log($(this).children("#conv_id").text());
             var user_name = '<?php echo $user['user'];?>';
             var user_id = <?php echo $user['id'];?>;   
-            var current_friend = $(this).children('#friend_id').text();  
-
+            var current_friend = $(this).find('#friend_id').text();  
+            conv_id = $(this).children("#conv_id").text();
             if(friend_id != null && this.friend_id != current_friend)
                 cliente.change_friend(current_friend);
             else
@@ -114,7 +115,7 @@
                         console.log("Load: ", load);
                         if(load){
                             load = false;
-                            loadMessages();
+                            loadMessages(conv_id);
                         }
                         alturaAtual = $(this)[0].scrollHeight;
                     }
@@ -123,7 +124,7 @@
                 console.log(messages);
             });
 
-            var user = ajax.get('<?php echo base_url('fetch_user');?>/'+friend_id, (data)=>{
+            var user = ajax.get('<?php echo base_url('fetch_user');?>/'+conv_id, (data)=>{
                 console.log("ai", data);
                 $(".left-side > .dm-window > .top-bar > .user-info >.user-img").attr('src', data['pfp']['path']);
                 $(".left-side > .dm-window > .top-bar > .user-info > .user-img").attr('alt', data['pfp']['alt']);
@@ -131,7 +132,7 @@
             });
 
 
-            loadMessages();
+            loadMessages(conv_id);
             
         });
 
@@ -147,14 +148,15 @@
             sendMessage();
         });
 
-        function loadMessages(){
+        function loadMessages(conv_id){
             console.log("Scrolling ", scrolling);
+            console.log("conv_id", conv_id)
             if(scrolling)
                 return;
             console.log("Offset: ", offset);
             console.log("Oi?");
             scrolling = true;
-            ajax.get('<?php echo base_url('get_messages');?>/'+offset+'/'+friend_id, function(data){    
+            ajax.get('<?php echo base_url('get_messages');?>/'+offset+'/'+conv_id, function(data){    
                 var div_class;
                 if(data){ 
                     Object.values(data).forEach(message => {
@@ -207,14 +209,15 @@
             var data = {};
             data['message'] = {};
             data['message']['id_sender'] = '<?php echo $user['id'];?>';
-            data['message']['id_receiver'] = friend_id;
+            data['message']['id_conversation'] = conv_id;
             data['message']['message_text'] = encrypted_msg;
             data['message']['enc_method'] = JSON.stringify(cliente.getMethod());
             data['message']['send_date'] = dataHoraFormatada;
             data['message']['state'] = 0;
             data['message']['read_date'] = '0000-00-00 00:00:00';
 
-            console.log(data['message']['enc_method']);
+
+            console.log(data);
 
             ajax.post('<?php echo base_url('send_message');?>', data, (res)=>{
                 console.log(res);

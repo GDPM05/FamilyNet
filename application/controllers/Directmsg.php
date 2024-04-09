@@ -46,11 +46,11 @@
 
         public function get_messages(){
             $offset = $this->uri->segment(2);
-            $friend_id = $this->uri->segment(3);
+            $conv_id = $this->uri->segment(3);
         
-            $messages = $this->Message_model->fetch_messages(true, 15, $offset, 'send_date DESC', ['id_friend' => $friend_id, 'id_user' => $this->session->userdata('user')['id']]);
+            $messages = $this->Message_model->fetch_messages(true, 15, $offset, 'send_date DESC', ['id_conv' => $conv_id]);
         
-            $this->Message_model->update_message_state($friend_id, $this->session->userdata('user')['id']);
+            $this->Message_model->update_message_state($conv_id, $this->session->userdata('user')['id']);
 
             header('Content-Type: application/json');
             echo json_encode($messages);
@@ -58,7 +58,11 @@
         
 
         public function fetch_user(){
-            $user_id = $this->uri->segment(2);
+            $conv_id = $this->uri->segment(2);
+            $user_id = $this->session->userdata['user']['id'];
+
+            $user_id = $this->UserConversation_model->get_conversation(['id_conv' => $conv_id, 'my_id' => $user_id])['id_user'];
+
             $data['user'] = $this->User_model->fetch(['id' => $user_id], 'id, user, username, pfp');
             $data['user']['pfp'] = $this->get_profile_pic($data['user']['id']);
             header('Content-Type: application/json');
@@ -66,6 +70,7 @@
         }
 
         public function send_message(){
+            //print_r($_POST);
             $data = $_POST['message'];
     
             $this->Message_model->insert($data);

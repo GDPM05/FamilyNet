@@ -2426,3 +2426,145 @@ INFO - 2024-04-08 15:15:37 --> File loaded: C:\Program Files\Ampps\www\FamilyNet
 INFO - 2024-04-08 15:15:37 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/footer.php
 INFO - 2024-04-08 15:15:37 --> Final output sent to browser
 DEBUG - 2024-04-08 15:15:37 --> Total execution time: 0.1591
+INFO - 2024-04-08 15:16:35 --> Config Class Initialized
+INFO - 2024-04-08 15:16:35 --> Hooks Class Initialized
+INFO - 2024-04-08 15:16:35 --> Config Class Initialized
+INFO - 2024-04-08 15:16:35 --> Hooks Class Initialized
+DEBUG - 2024-04-08 15:16:35 --> UTF-8 Support Enabled
+INFO - 2024-04-08 15:16:35 --> Utf8 Class Initialized
+INFO - 2024-04-08 15:16:35 --> URI Class Initialized
+DEBUG - 2024-04-08 15:16:35 --> UTF-8 Support Enabled
+INFO - 2024-04-08 15:16:35 --> Utf8 Class Initialized
+INFO - 2024-04-08 15:16:35 --> URI Class Initialized
+INFO - 2024-04-08 15:16:35 --> Router Class Initialized
+INFO - 2024-04-08 15:16:35 --> Router Class Initialized
+INFO - 2024-04-08 15:16:35 --> Output Class Initialized
+INFO - 2024-04-08 15:16:35 --> Output Class Initialized
+INFO - 2024-04-08 15:16:35 --> Security Class Initialized
+INFO - 2024-04-08 15:16:35 --> Security Class Initialized
+DEBUG - 2024-04-08 15:16:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-08 15:16:35 --> Input Class Initialized
+DEBUG - 2024-04-08 15:16:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-08 15:16:35 --> Input Class Initialized
+INFO - 2024-04-08 15:16:35 --> Language Class Initialized
+INFO - 2024-04-08 15:16:35 --> Language Class Initialized
+ERROR - 2024-04-08 15:16:35 --> 404 Page Not Found: Fetch_user/index
+ERROR - 2024-04-08 15:16:35 --> 404 Page Not Found: Get_messages/0
+INFO - 2024-04-08 15:24:21 --> Config Class Initialized
+INFO - 2024-04-08 15:24:21 --> Hooks Class Initialized
+DEBUG - 2024-04-08 15:24:21 --> UTF-8 Support Enabled
+INFO - 2024-04-08 15:24:21 --> Utf8 Class Initialized
+INFO - 2024-04-08 15:24:21 --> URI Class Initialized
+INFO - 2024-04-08 15:24:21 --> Router Class Initialized
+INFO - 2024-04-08 15:24:21 --> Output Class Initialized
+INFO - 2024-04-08 15:24:21 --> Security Class Initialized
+DEBUG - 2024-04-08 15:24:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-08 15:24:21 --> Input Class Initialized
+INFO - 2024-04-08 15:24:21 --> Language Class Initialized
+INFO - 2024-04-08 15:24:21 --> Loader Class Initialized
+INFO - 2024-04-08 15:24:21 --> Helper loaded: url_helper
+INFO - 2024-04-08 15:24:21 --> Database Driver Class Initialized
+DEBUG - 2024-04-08 15:24:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-08 15:24:21 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-08 15:24:21 --> Controller Class Initialized
+INFO - 2024-04-08 15:24:21 --> MY_Model class loaded
+INFO - 2024-04-08 15:24:21 --> Model "Media_model" initialized
+INFO - 2024-04-08 15:24:21 --> Model "User_model" initialized
+INFO - 2024-04-08 15:24:21 --> Helper loaded: form_helper
+INFO - 2024-04-08 15:24:21 --> Form Validation Class Initialized
+DEBUG - 2024-04-08 15:24:21 --> Session class already loaded. Second attempt ignored.
+INFO - 2024-04-08 15:24:21 --> Model "Friends_model" initialized
+INFO - 2024-04-08 15:24:21 --> Model "Message_model" initialized
+INFO - 2024-04-08 15:24:21 --> Model "Groups_model" initialized
+INFO - 2024-04-08 15:24:21 --> Model "GroupUsers_model" initialized
+INFO - 2024-04-08 15:24:21 --> Model "Conversation_model" initialized
+INFO - 2024-04-08 15:24:21 --> Model "UserConversation_model" initialized
+INFO - 2024-04-08 15:24:21 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/header.php
+INFO - 2024-04-08 15:24:21 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/menu.php
+ERROR - 2024-04-08 15:24:21 --> Severity: Notice --> Undefined variable: friends C:\Program Files\Ampps\www\FamilyNet\application\views\direct_msg.php 71
+ERROR - 2024-04-08 15:24:21 --> Severity: Warning --> Invalid argument supplied for foreach() C:\Program Files\Ampps\www\FamilyNet\application\views\direct_msg.php 71
+INFO - 2024-04-08 15:24:21 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\direct_msg.php
+INFO - 2024-04-08 15:24:21 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/footer.php
+INFO - 2024-04-08 15:24:21 --> Final output sent to browser
+DEBUG - 2024-04-08 15:24:21 --> Total execution time: 0.1168
+INFO - 2024-04-08 15:24:24 --> Config Class Initialized
+INFO - 2024-04-08 15:24:24 --> Hooks Class Initialized
+INFO - 2024-04-08 15:24:24 --> Config Class Initialized
+INFO - 2024-04-08 15:24:24 --> Hooks Class Initialized
+DEBUG - 2024-04-08 15:24:24 --> UTF-8 Support Enabled
+INFO - 2024-04-08 15:24:24 --> Utf8 Class Initialized
+INFO - 2024-04-08 15:24:24 --> URI Class Initialized
+DEBUG - 2024-04-08 15:24:24 --> UTF-8 Support Enabled
+INFO - 2024-04-08 15:24:24 --> Utf8 Class Initialized
+INFO - 2024-04-08 15:24:24 --> Router Class Initialized
+INFO - 2024-04-08 15:24:24 --> Output Class Initialized
+INFO - 2024-04-08 15:24:24 --> Security Class Initialized
+DEBUG - 2024-04-08 15:24:24 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-08 15:24:24 --> Input Class Initialized
+INFO - 2024-04-08 15:24:24 --> Language Class Initialized
+ERROR - 2024-04-08 15:24:24 --> 404 Page Not Found: Fetch_user/index
+INFO - 2024-04-08 15:24:28 --> Config Class Initialized
+INFO - 2024-04-08 15:24:28 --> Hooks Class Initialized
+DEBUG - 2024-04-08 15:24:28 --> UTF-8 Support Enabled
+INFO - 2024-04-08 15:24:28 --> Utf8 Class Initialized
+INFO - 2024-04-08 15:24:28 --> URI Class Initialized
+INFO - 2024-04-08 15:24:28 --> Router Class Initialized
+INFO - 2024-04-08 15:24:28 --> Output Class Initialized
+INFO - 2024-04-08 15:24:28 --> Security Class Initialized
+DEBUG - 2024-04-08 15:24:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-08 15:24:28 --> Input Class Initialized
+INFO - 2024-04-08 15:24:28 --> Language Class Initialized
+INFO - 2024-04-08 15:24:28 --> Loader Class Initialized
+INFO - 2024-04-08 15:24:28 --> Helper loaded: url_helper
+INFO - 2024-04-08 15:24:28 --> Database Driver Class Initialized
+DEBUG - 2024-04-08 15:24:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-04-08 15:24:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-04-08 15:24:28 --> Controller Class Initialized
+INFO - 2024-04-08 15:24:28 --> MY_Model class loaded
+INFO - 2024-04-08 15:24:28 --> Model "Media_model" initialized
+INFO - 2024-04-08 15:24:28 --> Model "User_model" initialized
+INFO - 2024-04-08 15:24:28 --> Helper loaded: form_helper
+INFO - 2024-04-08 15:24:28 --> Form Validation Class Initialized
+DEBUG - 2024-04-08 15:24:28 --> Session class already loaded. Second attempt ignored.
+INFO - 2024-04-08 15:24:28 --> Model "Friends_model" initialized
+INFO - 2024-04-08 15:24:28 --> Model "Message_model" initialized
+INFO - 2024-04-08 15:24:28 --> Model "Groups_model" initialized
+INFO - 2024-04-08 15:24:28 --> Model "GroupUsers_model" initialized
+INFO - 2024-04-08 15:24:28 --> Model "Conversation_model" initialized
+INFO - 2024-04-08 15:24:28 --> Model "UserConversation_model" initialized
+INFO - 2024-04-08 15:24:28 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/header.php
+INFO - 2024-04-08 15:24:28 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/menu.php
+ERROR - 2024-04-08 15:24:28 --> Severity: Notice --> Undefined variable: friends C:\Program Files\Ampps\www\FamilyNet\application\views\direct_msg.php 71
+ERROR - 2024-04-08 15:24:28 --> Severity: Warning --> Invalid argument supplied for foreach() C:\Program Files\Ampps\www\FamilyNet\application\views\direct_msg.php 71
+INFO - 2024-04-08 15:24:28 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\direct_msg.php
+INFO - 2024-04-08 15:24:28 --> File loaded: C:\Program Files\Ampps\www\FamilyNet\application\views\common/footer.php
+INFO - 2024-04-08 15:24:28 --> Final output sent to browser
+DEBUG - 2024-04-08 15:24:28 --> Total execution time: 0.1503
+INFO - 2024-04-08 15:25:09 --> Config Class Initialized
+INFO - 2024-04-08 15:25:09 --> Hooks Class Initialized
+INFO - 2024-04-08 15:25:09 --> Config Class Initialized
+INFO - 2024-04-08 15:25:09 --> Hooks Class Initialized
+DEBUG - 2024-04-08 15:25:09 --> UTF-8 Support Enabled
+INFO - 2024-04-08 15:25:09 --> Utf8 Class Initialized
+INFO - 2024-04-08 15:25:09 --> URI Class Initialized
+DEBUG - 2024-04-08 15:25:09 --> UTF-8 Support Enabled
+INFO - 2024-04-08 15:25:09 --> Utf8 Class Initialized
+INFO - 2024-04-08 15:25:09 --> Router Class Initialized
+INFO - 2024-04-08 15:25:09 --> Output Class Initialized
+INFO - 2024-04-08 15:25:09 --> Security Class Initialized
+DEBUG - 2024-04-08 15:25:09 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-08 15:25:09 --> Input Class Initialized
+INFO - 2024-04-08 15:25:09 --> Language Class Initialized
+ERROR - 2024-04-08 15:25:09 --> 404 Page Not Found: Fetch_user/index
+INFO - 2024-04-08 15:25:44 --> Config Class Initialized
+INFO - 2024-04-08 15:25:44 --> Hooks Class Initialized
+DEBUG - 2024-04-08 15:25:44 --> UTF-8 Support Enabled
+INFO - 2024-04-08 15:25:44 --> Utf8 Class Initialized
+INFO - 2024-04-08 15:25:44 --> URI Class Initialized
+INFO - 2024-04-08 15:25:44 --> Router Class Initialized
+INFO - 2024-04-08 15:25:44 --> Output Class Initialized
+INFO - 2024-04-08 15:25:44 --> Security Class Initialized
+DEBUG - 2024-04-08 15:25:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-04-08 15:25:44 --> Input Class Initialized
+INFO - 2024-04-08 15:25:44 --> Language Class Initialized
+ERROR - 2024-04-08 15:25:44 --> 404 Page Not Found: Fetch_user/index
