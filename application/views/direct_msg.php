@@ -25,11 +25,12 @@
         </button>
         <?php
             // Lista todos os utilizadores que o utilizador já comunicou, mas carrega por partes para evitar sobrecargam, tal como em cima, usar o ajax + a função limit
-            //print_r($conversations);
-            foreach($conversations as $conv){
-                $div = '<div class="friend"><img src="'.$conv['pfp']['path'].'" alt="'.$conv['pfp']['alt'].'"><p class="friend_name">'.$conv['user']['username'].'</p><p class="friend-hidden" id="friend_user">'.$conv['user']['user'].'</p><p class="friend-hidden" id="conv_id">'.$conv['id'].'</p></div>';
-                echo $div;
-            }
+            print_r($conversations);
+            if(!empty($conversations))
+                foreach($conversations as $conv){
+                    $div = '<div class="friend"><img src="'.$conv['pfp']['path'].'" alt="'.$conv['pfp']['alt'].'"><p class="friend_name">'.$conv['user']['username'].'</p><p class="friend-hidden" id="friend_user">'.$conv['user']['user'].'</p><p class="friend-hidden" id="conv_id">'.$conv['id'].'</p></div>';
+                    echo $div;
+                }
         ?>
     </div>
     <div id="create_group" class="modal">

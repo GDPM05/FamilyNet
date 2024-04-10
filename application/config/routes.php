@@ -75,5 +75,6 @@ $route['notification/(:num)'] = 'Notification';
 $route['get_messages/(:num)/(:num)'] = 'Directmsg/get_messages';
 $route['fetch_user/(:num)'] = 'Directmsg/fetch_user';
 $route['send_message'] = 'Directmsg/send_message';
+$route['send_message_private/(:num)'] = 'Directmsg/send_message_private/$1';
 $route['get_friends'] = 'Directmsg/get_friends';
 $route['create_group'] = 'Directmsg/create_group';
