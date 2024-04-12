@@ -27,17 +27,17 @@
             $user_id = $this->session->userdata['user']['id'];
 
             $conversations_ids = $this->UserConversation_model->fetch_all(false, null, null, null, ['id_user' => $user_id]);
-            
+    
+            $conversations = [];
             if(!empty($conversations_ids) && is_array($conversations_ids[count($conversations_ids)-1])){
-                $conversations = [];
                 foreach($conversations_ids as $conv){
-                    $conversations[$conv['id_conv']] = $this->get_conversation_details($conv['id_conv'], $user_id);
+                    $conversations[] = $this->get_conversation_details($conv['id_conv'], $user_id);
                 }
             }else if(!empty($conversations_ids) && !is_array($conversations_ids[count($conversations_ids)-1])){
-                $conversations[$conversations_ids['id_conv']] = $this->get_conversation_details($conversations_ids['id_conv'], $user_id);
+                $conversations[] = $this->get_conversation_details($conversations_ids['id_conv'], $user_id);
             }
 
-            $data['conversations'] = (isset($conversations)) ? $conversations : null;
+            $data['conversations'] = (!empty($conversations)) ? $conversations : null;
             $this->load->view('common/header', $data);
             $this->load->view('common/menu', $this->data);
             $this->load->view('direct_msg', $data);
@@ -178,7 +178,7 @@
             $conversation = [];
             $conversation['id'] = $id;
             $conv = $this->UserConversation_model->get_conversation(['my_id' => $user_id, 'id_conv' => $id])['id_user'];
-            $user = $this->User_model->fetch(['id' => $conv], ['pfp', 'username', 'user']);
+            $user = $this->User_model->fetch(['id' => $conv], ['id', 'pfp', 'username', 'user']);
             $user_pfp = $this->Media_model->fetch(['id' => $user['pfp']]);
             $conversation['user'] = $user;
             $conversation['pfp'] = $user_pfp;
