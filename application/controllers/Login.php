@@ -38,6 +38,7 @@
                     print_r($user);
                     if($this->checkPassword($password, $user['password'])){
                         session_regenerate_id();
+                        unset($user['password']);
                         $this->createSession($user, session_id());
                         redirect(base_url('main'));
                     }else

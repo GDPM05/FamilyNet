@@ -3,12 +3,14 @@
 
     class MY_Controller extends CI_Controller{
         public $data = array();
-
+        public $user_id;
         function __construct(){
             parent::__construct();
             $this->load->model('Media_model');
             $this->load->model('User_model');
             
+            $this->user_id = $this->session->userdata('user')['id'];
+
             if($this->LoggedIn()){
                 $this->data['path'] = $this->get_profile_pic($this->session->userdata('user')['id'])['path'];
             }
