@@ -9,7 +9,7 @@
             $this->load->model('Media_model');
             $this->load->model('User_model');
             
-            $this->user_id = $this->session->userdata('user')['id'];
+            $this->user_id = (isset($this->session->userdata('user')['id'])) ? $this->session->userdata('user')['id'] : null;
 
             if($this->LoggedIn()){
                 $this->data['path'] = $this->get_profile_pic($this->session->userdata('user')['id'])['path'];

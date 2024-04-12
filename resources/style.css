@@ -13,11 +13,54 @@
     font-family: var(--font_family_1);
 }
 
-html, body{
-    height: 100%;
-    /*padding-left: 70px;*/
+body{
+    margin-left: 70px;
 }
 
+.home input{
+    max-width: 50%;
+}
+
+.home .left-side h1{
+    font-size: 120px;
+}   
+
+.home .left-side h2{
+    font-size: 60px;
+}   
+
+.home .right-side form input[type="submit"]{
+    width: 35%;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.home .right-side form input[type="submit"]:hover{
+    background-color: var(--cor_sec);
+    border: 1px solid var(--cor_sec);
+}
+
+i{
+    font-size: 30px;
+}
+
+.d-flex {
+    width: 70px;
+}
+
+
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: auto; /* Ajuste a largura conforme necessário */
+    height: 100vh;
+    overflow: auto;
+    border-right: 2px solid var(--cor_prim);
+}
+
+
+/*
 .home .left-side, .signup .left-side{
     float: left;
     width: calc(60% - 1px);
@@ -218,7 +261,7 @@ form input[type="submit"]:hover{
 .nav.menu-nav {
     list-style-type: none;
     margin: 0;
-    /* margin-left: -140px; */
+    /* margin-left: -140px; 
     padding: 0;
     top: 0;
     width: 70px;
@@ -249,7 +292,7 @@ form input[type="submit"]:hover{
     width: 45px;
     height: 45px;
     border-radius: 100%;
-    /* align-items: center; */
+    /* align-items: center; 
 }
 
 .active a svg{
@@ -483,7 +526,7 @@ form input[type="submit"]:hover{
 
 .results{
     width: 45%;
-    /* background-color: rgba(0,0,0,0.1); */
+    /* background-color: rgba(0,0,0,0.1); 
     margin: auto;
     padding: 15px 0;
 }
@@ -561,18 +604,18 @@ form input[type="submit"]:hover{
     background-color: rgba(var(--cor_prim), 0.6);
 }
 
-.modal {
-    display: none; /* Modal está escondido por padrão */
-    position: fixed; /* Fica em posição fixa na tela */
-    z-index: 1; /* Fica no topo */
-    padding-top: 100px; /* Localização do modal */
+modal {
+    display: none; /* Modal está escondido por padrão 
+    position: fixed; /* Fica em posição fixa na tela 
+    z-index: 1; /* Fica no topo 
+    padding-top: 100px; /* Localização do modal 
     left: 0;
     top: 0;
-    width: 100%; /* Largura total */
-    height: 100%; /* Altura total */
-    overflow: auto; /* Habilita scroll se necessário */
-    background-color: rgb(0,0,0); /* Fundo preto */
-    background-color: rgba(0,0,0,0.4); /* Fundo preto com opacidade */
+    width: 100%; /* Largura total 
+    height: 100%; /* Altura total 
+    overflow: auto; /* Habilita scroll se necessário 
+    background-color: rgb(0,0,0); /* Fundo preto 
+    background-color: rgba(0,0,0,0.4); /* Fundo preto com opacidade 
 }
 
 .modal-content {
@@ -587,7 +630,6 @@ form input[type="submit"]:hover{
     cursor: pointer;
 }
 
-<<<<<<< HEAD
 .modal {
     display: none; 
     position: fixed; 
@@ -606,7 +648,7 @@ form input[type="submit"]:hover{
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    max-width: 500px; /* Adjust as needed */
+    max-width: 500px; /* Adjust as needed 
   }
   
   .close {
@@ -624,7 +666,7 @@ form input[type="submit"]:hover{
   }
   
   .create_group_form {
-    margin: 0 auto; /* Centers the form horizontally */
+    margin: 0 auto; /* Centers the form horizontally 
 }
 
 .create_group_form label {
@@ -639,8 +681,8 @@ form input[type="submit"]:hover{
 .create_group_form select,
 .create_group_form input[type="submit"] {
     display: block;
-    margin: 0 auto 15px; /* Centers the elements horizontally and adds space below each element */
-    text-align: center; /* Centers the text inside the elements */
+    margin: 0 auto 15px; /* Centers the elements horizontally and adds space below each element 
+    text-align: center; /* Centers the text inside the elements 
     font-size: 20px;
 }
 
@@ -689,8 +731,6 @@ form input[type="submit"]:hover{
     background: var(--cor_sec);
 }
 
-
-=======
 .new_family {
     display: flex;
     flex-direction: column;
@@ -726,4 +766,3 @@ form input[type="submit"]:hover{
 .new_family .create_family form .family_members{
     max-width: 300px;
 }
->>>>>>> origin/Family
