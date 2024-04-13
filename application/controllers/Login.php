@@ -35,11 +35,10 @@
                 $password = $this->input->post('password');
 
                 if($user = $this->User_model->fetch(array('email' => $email))){
-                    print_r($user);
+                    //print_r($user);
                     if($this->checkPassword($password, $user['password'])){
                         session_regenerate_id();
-                        unset($user['password']);
-                        $this->createSession($user, session_id());
+                        $this->createSession($user, session_id(), $this->input->post('keep_login'));
                         redirect(base_url('main'));
                     }else
                         $this->data['login_error'] = 'Username or password incorrect.';
@@ -52,12 +51,19 @@
             $this->load->view('common/footer');
         }
 
-        protected function createSession($userdata, $token = null){
+        protected function createSession($userdata, $token = null, $keep_login = "off"){
             $this->session->set_userdata(array(
                 'logged_in' => TRUE,
                 'user' => $userdata,
                 'access_token' => $token
             ));
+        
+
+            if($keep_login == "on"){
+                $userdata['logged_in'] = TRUE;
+                $userdata['access_token'] = $token;
+                setcookie('user_login', serialize($userdata), (time() + (86400 * 3)), '/');
+            }
 
             if(!empty($token)){
                 $insert_token = array('access_token' => $token);
@@ -83,6 +89,7 @@
 
         public function logout(){
             session_destroy();
+            unset($_COOKIE['user_login']);
             $this->data['login_success'] = 'Logout efetuado com sucesso';
             redirect(base_url());     
         }
