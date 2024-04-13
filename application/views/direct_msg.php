@@ -3,59 +3,31 @@
     //print_r($friends);
 ?>
 
-<main class="direct_msg">
-    <div class="left-side">
-        <?php
-            // Lista todas as mensagens trocadas pelos utilizadores, mas carrega por partes para evitar sobrecarga
-            /**
-             * Para carregar apenas determinadas quantidades, basta usar a função limit do sql, junto com ajax, para assim, carregar x número de mensagens e quando o utilizador chegar ao fim 
-             * da página, carregar mais um x, isto serve tanto para as mensgaens, quanto para os "contactos"
-             *
-             */
-        ?>
-
-
+<main class="container-fluid d-flex flex-row direct_msg">
+    <div class="col-9 left-side">
+        <!-- Aqui vai o código do chat -->
     </div>
-    <div class="separation"></div>
-    <div class="right-side">
-        <button class="create_group">
+    <div class="col-3 right-side">
+        <button class="btn btn-primary create_group">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
                 <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
             </svg>
         </button>
-        <?php
-            // Lista todos os utilizadores que o utilizador já comunicou, mas carrega por partes para evitar sobrecargam, tal como em cima, usar o ajax + a função limit
-            //print_r($conversations);
-            foreach($conversations as $conv){
-                $div = '<div class="friend"><img src="'.$conv['pfp']['path'].'" alt="'.$conv['pfp']['alt'].'"><p class="friend_name">'.$conv['user']['username'].'</p><p class="friend-hidden" id="friend_user">'.$conv['user']['user'].'</p><p class="friend-hidden" id="conv_id">'.$conv['id'].'</p></div>';
-                echo $div;
-            }
-        ?>
+        <div class="list-group">
+            <?php foreach ($conversations as $conv): 
+                if(!empty($conv)): ?>
+                <div class="list-group-item list-group-item-action friend">
+                    <img class="rounded-circle mr-2" src="<?=$conv['pfp']['path']?>" alt="<?=$conv['pfp']['alt']?>" style="width: 30px; height: 30px;">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1 friend_name"><?=$conv['user']['username']?></h5>
+                        <small class="text-muted friend-hidden" id="conv_id"><?=$conv['id']?></small>
+                    </div>
+                    <p class="mb-1 friend-hidden" id="friend_user"><?=$conv['user']['user']?></p>
+                </div>
+            <?php endif; endforeach; ?>
+        </div>
     </div>
     <div id="create_group" class="modal">
-        <script>
-            function updateCharacterCount() {
-                var textarea = document.getElementById('gdesc');
-                var count = document.getElementById('characterCount');
-                count.innerText = textarea.value.length + " / 400";
-            }
-            $(document).ready(function() {
-                $("#friend_list").mousedown(function(e) {
-                    e.preventDefault();
-
-                    var select = this;
-                    var scroll = select.scrollTop;
-
-                    e.target.selected = !e.target.selected;
-
-                    setTimeout(function(){select.scrollTop = scroll;}, 0);
-
-                    $(select).focus();
-                }).mousemove(function(e){e.preventDefault()});
-            });
-
-
-        </script>
         <div class="modal-content">
             <span class="close">×</span>
             <form action="<?=base_url("create_group")?>" method="post" class="create_group_form" enctype="multipart/form-data">
@@ -89,11 +61,11 @@
         let load = true;
         let scrolling = false;
         $(".friend").click(function(){
-            console.log($(this).children("#conv_id").text());
+            console.log($(this).children(".conv_id").text());
             var user_name = '<?php echo $user['user'];?>';
             var user_id = <?php echo $user['id'];?>;   
             var current_friend = $(this).find('#friend_id').text();  
-            conv_id = $(this).children("#conv_id").text();
+            conv_id = $(this).find('#conv_id').text();
             if(friend_id != null && this.friend_id != current_friend)
                 cliente.change_friend(current_friend);
             else
@@ -124,6 +96,7 @@
                 console.log(messages);
             });
 
+            
             var user = ajax.get('<?php echo base_url('fetch_user');?>/'+conv_id, (data)=>{
                 console.log("ai", data);
                 $(".left-side > .dm-window > .top-bar > .user-info >.user-img").attr('src', data['pfp']['path']);

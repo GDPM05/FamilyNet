@@ -27,17 +27,17 @@
             $user_id = $this->session->userdata['user']['id'];
 
             $conversations_ids = $this->UserConversation_model->fetch_all(false, null, null, null, ['id_user' => $user_id]);
-            
+    
             $conversations = [];
-            if(is_array($conversations_ids[count($conversations_ids)-1])){
+            if(!empty($conversations_ids) && is_array($conversations_ids[count($conversations_ids)-1])){
                 foreach($conversations_ids as $conv){
-                    $conversations[$conv['id_conv']] = $this->get_conversation_details($conv['id_conv'], $user_id);
+                    $conversations[] = $this->get_conversation_details($conv['id_conv'], $user_id);
                 }
-            }else{
-                $conversations[$conversations_ids['id_conv']] = $this->get_conversation_details($conversations_ids['id_conv'], $user_id);
+            }else if(!empty($conversations_ids) && !is_array($conversations_ids[count($conversations_ids)-1])){
+                $conversations[] = $this->get_conversation_details($conversations_ids['id_conv'], $user_id);
             }
 
-            $data['conversations'] = $conversations;
+            $data['conversations'] = (!empty($conversations)) ? $conversations : null;
             $this->load->view('common/header', $data);
             $this->load->view('common/menu', $this->data);
             $this->load->view('direct_msg', $data);
@@ -154,11 +154,31 @@
             redirect(base_url('direct_msg'));
         }
 
+        public function send_message_private($id_friend = null){
+            print_r($this->UserConversation_model->check_if_exists(['id_user' => $this->session->userdata('user')['id']]));
+            //return;
+            if(empty($this->UserConversation_model->check_if_exists(['id_user' => $this->session->userdata('user')['id']])) && empty($this->UserConversation_model->check_if_exists(['id_user' => $id_friend]))){
+                $conv_id = $this->Conversation_model->insert([]);
+                $this->UserConversation_model->insert([
+                    'id_conv' => $convd_id,
+                    'id_user' => $this->session->userdata('user')['id']
+                ]);
+                $this->UserConversation_model->insert([
+                    'id_conv' => $convd_id,
+                    'id_user' => $id_friend
+                ]);
+            }
+
+           redirect(base_url('direct_msg')); 
+        }
+
         private function get_conversation_details($id, $user_id){
+            if(empty($id) || empty($user_id))
+                return;
             $conversation = [];
             $conversation['id'] = $id;
             $conv = $this->UserConversation_model->get_conversation(['my_id' => $user_id, 'id_conv' => $id])['id_user'];
-            $user = $this->User_model->fetch(['id' => $conv], ['pfp', 'username', 'user']);
+            $user = $this->User_model->fetch(['id' => $conv], ['id', 'pfp', 'username', 'user']);
             $user_pfp = $this->Media_model->fetch(['id' => $user['pfp']]);
             $conversation['user'] = $user;
             $conversation['pfp'] = $user_pfp;

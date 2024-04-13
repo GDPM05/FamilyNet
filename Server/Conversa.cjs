@@ -4,6 +4,7 @@ class Conversa{
     constructor(){
         this.users = [];
         this.cod_enc = '';
+        this.conv_id = null;
         this.uniqueId = null;
     }
 
