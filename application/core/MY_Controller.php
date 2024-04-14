@@ -12,7 +12,7 @@
             $this->user_id = (isset($this->session->userdata('user')['id'])) ? $this->session->userdata('user')['id'] : null;
 
             if($this->LoggedIn()){
-                $this->data['path'] = $this->get_profile_pic($this->session->userdata('user')['id'])['path'];
+                $this->data['path'] = $this->get_profile_pic($this->user_id);
             }
         }
 
@@ -20,14 +20,16 @@
             $user = $this->User_model->fetch(['id' => $user_id]);
             $media = $this->Media_model->fetch(["id" => $user['pfp']]);
 
-            return $media;
+            return $media['path'];
         }
 
         public function LoggedIn(){
-            
-            if(isset($_COOKIE['user_login']) && $_COOKIE['user_login']['logged_in']){
+
+            $user_login = (isset($_COOKIE['user_login'])) ? unserialize($_COOKIE['user_login']) : null;            //print_r($user_login);
+
+            if($user_login !== null && $user_login['logged_in']){
                 $logged_in = true;
-                $this->session->set_userdata($_COOKIE['user_login']);
+                $this->session->set_userdata($user_login);
             }else if($this->session->userdata('logged_in'))
                 $logged_in = (($this->session->userdata('logged_in') !== null && $this->session->userdata('logged_in')) || (isset($_COOKIE['user_login']) && $_COOKIE['user_login']['logged_in']));
             else

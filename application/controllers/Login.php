@@ -73,11 +73,11 @@
         }
 
         public function check_session(){
-            $token = $this->session->userdata('access_token');
+            $token = ($this->session->userdata('access_token') !== null) ? $this->session->userdata('access_token') : unsrialize($_COOKIE['user_login'])['access_token'];
 
             $query = $this->User_model->fetch(array('access_token' => $token));
             if(!$query && $query->token != $token){
-                return false;
+                $this->logout();
             }
             return true;
         }
@@ -89,7 +89,7 @@
 
         public function logout(){
             session_destroy();
-            unset($_COOKIE['user_login']);
+            setcookie('user_login', '', time() - 3600, '/');
             $this->data['login_success'] = 'Logout efetuado com sucesso';
             redirect(base_url());     
         }
