@@ -19,8 +19,6 @@
             </div>
         </div>
     </div>
-    <!-- End of Bootstrap Modal -->
-
     <div class="notifications_container">
         <?php if(!empty($notifications)): ?>
             <?php foreach($notifications as $noti): ?>
@@ -40,7 +38,7 @@
                 </div>
             <?php endforeach; ?>
         <?php else:?>
-            <div class="no_notifications alert alert-info">
+            <div class="no_notifications alert alert-info notification">
                 <p>You don't have any notifications!</p>
             </div>
         <?php endif;?>
@@ -60,6 +58,7 @@
                 $('#mensagemModal').text('Pedido de amizade aceito!');
                 modal.modal('show');
             });
+            location.reload();
         });
 
         btn_decline.click(function(){
@@ -68,6 +67,7 @@
                 $('#mensagemModal').text('Pedido de amizade recusado!');
                 modal.modal('show');
             });
+            location.reload();
         });
     });
 </script>

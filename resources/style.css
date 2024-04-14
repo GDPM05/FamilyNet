@@ -62,6 +62,10 @@ i{
     margin-top: 10px;
 }
 
+.notification{
+    margin-top: 20px;
+}
+
 /*
 .home .left-side, .signup .left-side{
     float: left;

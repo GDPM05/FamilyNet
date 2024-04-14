@@ -80,7 +80,7 @@
                 'sent_date' => date('Y-m-d H:i:s'),
                 'receiver_id' => $user['id'],
                 'sender_id' => $this->session->userdata('user')['id'],
-                'message_text' => $user['username'].' enviou um pedido de amizade'
+                'message_text' => $this->session->userdata('user')['username'].' enviou um pedido de amizade'
             ]);
 
             if($this->Friends_model->error){
@@ -124,6 +124,8 @@
 
             $this->Friends_model->update_invite($user['id'], $this->session->userdata('user')['id'], $status);
             
+            $this->Notification_model->delete(['id' => $this->input->post()['notification_id']]);
+
             $notification_id = $this->Notification_model->insert([
                 'type_id' => 2,
                 'sent_date' => date('Y-m-d H:i:s'),
@@ -142,12 +144,6 @@
                 $message = $this->Notification_model->error_message;
             }
         
-            if(!$error){
-                $this->Notification_model->delete([
-                    'id' => $notification_id
-                ]);
-            }
-
             $data['mensagem'] = $status_message;
             $data['error'] = $error;
             $data['error_message'] = $message;
