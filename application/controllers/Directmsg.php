@@ -158,13 +158,14 @@
             print_r($this->UserConversation_model->check_if_exists(['id_user' => $this->session->userdata('user')['id']]));
             //return;
             if(empty($this->UserConversation_model->check_if_exists(['id_user' => $this->session->userdata('user')['id']])) && empty($this->UserConversation_model->check_if_exists(['id_user' => $id_friend]))){
-                $conv_id = $this->Conversation_model->insert([]);
+                $conv_id = $this->Conversation_model->insert(['title' => md5($id_friend)]);
+    
                 $this->UserConversation_model->insert([
-                    'id_conv' => $convd_id,
+                    'id_conv' => $conv_id,
                     'id_user' => $this->session->userdata('user')['id']
                 ]);
                 $this->UserConversation_model->insert([
-                    'id_conv' => $convd_id,
+                    'id_conv' => $conv_id,
                     'id_user' => $id_friend
                 ]);
             }
