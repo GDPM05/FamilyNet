@@ -87,7 +87,7 @@
         public function get_friends(){
             $user_id = $this->session->userdata['user']['id'];
 
-            $data = $this->Friend_Model->fetch_friends($user_id);
+            $data = $this->Friends_model->fetch_friends($user_id);
 
             if($this->Friends_model->error){
                 $data['error'] = $this->Message_model->error;

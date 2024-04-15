@@ -78,3 +78,4 @@ $route['send_message'] = 'Directmsg/send_message';
 $route['send_message_private/(:num)'] = 'Directmsg/send_message_private/$1';
 $route['get_friends'] = 'Directmsg/get_friends';
 $route['create_group'] = 'Directmsg/create_group';
+$route['get_friends_pr'] = 'Profile/get_friends';

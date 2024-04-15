@@ -153,5 +153,21 @@
             echo json_encode($data);
         }
 
+        public function get_friends(){
+
+            $friends = $this->Friends_model->fetch_friends($this->session->userdata('user')['id']);
+
+            $friend_user = [];
+            foreach($friends as $friend){
+                $user_id = ($friend['id_user1'] == $this->session->userdata('user')['id']) ? $friend['id_user2'] : $friend['id_user2'];
+                $user = $this->User_model->fetch(['id' => $user_id]);
+                $user['pfp'] = $this->Media_model->fetch(['id' => $user['pfp']]);
+                $friend_user[] = $user;
+            }
+
+            header('Content-Type: application/json');
+            echo json_encode($friend_user);
+        }
+
     }
 ?>
