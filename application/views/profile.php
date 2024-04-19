@@ -34,22 +34,22 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post">
+                    <form action="<?=base_url('profile/update_info')?>" method="post">
                         <div class="form-group row">
-                            <label for="email" class="col-sm-2 col-form-label">Email</label>
-                            <div class="col-sm-10">
+                            <label for="email" class="col-sm-3 col-form-label">Email</label>
+                            <div class="col-sm-9">
                                 <input type="email" name="email" id="email" class="form-control" value="<?=$user['email'];?>">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="username" class="col-sm-2 col-form-label">Username</label>
-                            <div class="col-sm-10">
+                            <label for="username" class="col-sm-3 col-form-label">Username</label>
+                            <div class="col-sm-9">
                                 <input type="text" name="username" id="username" class="form-control" value="<?=$user['username'];?>">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="phone" class="col-sm-2 col-form-label">Phone Number</label>
-                            <div class="col-sm-10">
+                            <label for="phone" class="col-sm-3 col-form-label">Phone Number</label>
+                            <div class="col-sm-9">
                                 <input type="text" name="phone" id="phone" class="form-control" value="<?=$user['phone'];?>">
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                 console.log(friend);
                 var div = createDiv(friend);
                 console.log(div);
-                $("#friendsModal .modal-body").append(div); // Corrigido aqui
+                $("#friendsModal .modal-body").html(div); // Corrigido aqui
             });
         });
     });

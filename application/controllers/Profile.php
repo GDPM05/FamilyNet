@@ -7,6 +7,7 @@
             parent::__construct();
             $this->load->model('Friends_model');
             $this->load->model('Notification_model');
+            //$this->load->library('Mailer');
             if(!$this->LoggedIn()){
                 redirect(base_url('logout'));
                 exit;
@@ -23,8 +24,7 @@
             $this->load->view('common/menu', $this->data);
             $this->load->view('profile', $data);
             $this->load->view('common/footer');
-
-        }
+        }   
 
         public function load_profile(){
             $username = $this->uri->segment(2);
@@ -169,5 +169,36 @@
             echo json_encode($friend_user);
         }
 
+        public function update_info(){
+
+            $info = $this->input->post();   
+
+            if(empty($info)){
+                return;
+            }
+
+            $update_data = [
+                'email'   => $info['email'],
+                'username'   => $info['username'],
+                'phone'   => $info['phone']
+            ];
+
+            $this->User_model->update($update_data, ['id' => $this->session->userdata('user')['id']]);
+
+            if($this->User_model->error){
+                return false;
+            }
+
+            $new_userdata = $this->User_model->fetch(['id' => $this->session->userdata('user')['id'], 'id, user, username, email, phone, pfp, birthday, gender, p_role']);
+
+            $this->session->set_userdata('user', $new_userdata);
+
+            redirect(base_url('profile'));
+
+        }
+
+
     }
+
+
 ?>
