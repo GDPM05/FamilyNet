@@ -1,6 +1,6 @@
 <main class="profile text-center">
     <div class="profile_info">
-        <h1 class="profile-name"><img class="profile-pict" src="<?php echo $path;?>"><?php echo $username;?></h1>
+        <h1 class="profile-name"><img class="profile-pict" src="<?php echo $path;?>"><?php echo $user['username'];?></h1>
     </div>
     <!-- Botões -->
     <button id="friendsButton" class="btn btn-primary">
@@ -34,8 +34,30 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <!-- Formulário para editar o perfil aqui -->
+                    <form action="" method="post">
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="email" name="email" id="email" class="form-control" value="<?=$user['email'];?>">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="username" class="col-sm-2 col-form-label">Username</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="username" id="username" class="form-control" value="<?=$user['username'];?>">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="phone" class="col-sm-2 col-form-label">Phone Number</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="phone" id="phone" class="form-control" value="<?=$user['phone'];?>">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-10 offset-sm-2">
+                                <button type="submit" class="btn btn-primary">Confirm</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -69,7 +91,7 @@
     });
 
     function createDiv(friend){
-        var div = "<div class='friend d-flex align-items-center mb-3 w-100'><img class='friend_pfp rounded-circle me-2' src='"+friend.pfp['path']+"' alt='"+friend['username']+"'><p class='friend_name flex-grow-1 mb-0'>"+friend['username']+"</p><button class='see_profile btn btn-primary'><a href='<?=base_url('see_profile')?>"+'/'+friend['id']+"'>See Profile</a></button></div>";
+        var div = "<div class='friend d-flex align-items-center mb-3 w-100'><img class='friend_pfp rounded-circle me-2' src='"+friend.pfp['path']+"' alt='"+friend['username']+"'><p class='friend_name flex-grow-1 mb-0'>"+friend['username']+"</p><button class='see_profile btn btn-primary'><a class='see_friend' href='<?=base_url('see_profile')?>"+'/'+friend['id']+"'>See Profile</a></button></div>";
 
         return div;
     }

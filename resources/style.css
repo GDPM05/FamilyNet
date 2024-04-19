@@ -66,6 +66,20 @@ i{
     margin-top: 20px;
 }
 
+.see_friend {
+    text-decoration: none;
+    color: white;
+}
+
+.see_friend:hover{
+    color: white;
+    text-decoration: none;
+}
+
+.btn-close{
+    border: none;
+    background-color: white;
+}
 
 /*
 .home .left-side, .signup .left-side{

@@ -16,7 +16,7 @@
         public function index() {
             $data = array(
                 'title' => TITLE.' | Profile',
-                'username' => $this->session->userdata['user']['username']
+                'user' => $this->session->userdata['user']
             );
 
             $this->load->view('common/header', $data);
