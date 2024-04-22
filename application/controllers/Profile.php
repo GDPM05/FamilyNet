@@ -189,7 +189,7 @@
                 return false;
             }
 
-            $new_userdata = $this->User_model->fetch(['id' => $this->session->userdata('user')['id'], 'id, user, username, email, phone, pfp, birthday, gender, p_role']);
+            $new_userdata = $this->User_model->fetch(['id' => $this->session->userdata('user')['id'], 'id, user, username, email, phone, pfp, birthday, gender, p_role, category']);
 
             $this->session->set_userdata('user', $new_userdata);
 
