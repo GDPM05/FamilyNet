@@ -8,7 +8,7 @@
         <!-- Aqui vai o código do chat -->
     </div>
     <div class="col-3 right-side">
-        <button class="btn btn-primary create_group">
+        <button class="btn btn-primary create_group" data-toggle="modal" data-target="#create_group">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
                 <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
             </svg>
@@ -18,41 +18,82 @@
             <div class="suggestions">
             </div>
         </div>
-        <div class="list-group">
-            <?php foreach ($conversations as $conv): 
-                if(!empty($conv)): ?>
-                <div class="list-group-item list-group-item-action friend">
-                    <img class="rounded-circle mr-2" src="<?=$conv['pfp']['path']?>" alt="<?=$conv['pfp']['alt']?>" style="width: 30px; height: 30px;">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1 friend_name"><?=$conv['user']['username']?></h5>
-                        <small class="friend-hidden" id="conv_id"><?=$conv['id']?></small>
+        <div class="row-12 friends">
+            <h3>Friends</h3>
+            <div class="list-group">
+                <?php foreach ($conversations as $conv): 
+                    if(!empty($conv)): ?>
+                    <div class="list-group-item list-group-item-action friend">
+                        <img class="rounded-circle mr-2" src="<?=$conv['pfp']['path']?>" alt="<?=$conv['pfp']['alt']?>" style="width: 30px; height: 30px;">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1 friend_name"><?=$conv['user']['username']?></h5>
+                            <small class="friend-hidden" id="conv_id"><?=$conv['id']?></small>
+                        </div>
+                        <p class="mb-1 friend-hidden" id="friend_id"><?=$conv['user']['id']?></p>
                     </div>
-                    <p class="mb-1 friend-hidden" id="friend_id"><?=$conv['user']['id']?></p>
-                </div>
-            <?php endif; endforeach; ?>
+                <?php endif; endforeach; ?>
+            </div>
+        </div>
+        <hr>
+        <div class="row-12 groups">
+            <h3>Groups</h3>
+            <?php
+                foreach($groups as $group): ?>
+                    <div class="list-group-item list-group-item-action group">
+                        <img src="<?=$group['picture']['path']?>" alt="<?=$group['name']?>" class="rounded-circle mr-2" style="width: 30px; height: 30px;">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1 group_name"><?=$group['name']?></h5>
+                            <small class="group-hidden" id="conv_id"><?=$group['id_conversation']?></small>
+                        </div>
+                        <p class="mb-1 group-hidden" id="group_id"><?=$group['id']?></p>
+                    </div>
+            <?php endforeach;?>
         </div>
     </div>
-    <div id="create_group" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <form action="<?=base_url("create_group")?>" method="post" class="create_group_form" enctype="multipart/form-data">
-                <label for="gname">Nome do Grupo</label>
-                <input type="text" name="gname" id="gname">
-                <label for="gpic">Foto do grupo</label>
-                <input type="file" name="gpic" id="gpic">
-                <label for="gdesc">Descrição</label>
-                <textarea name="gdesc" id="gdesc" cols="20" rows="2" maxlength="400" oninput="updateCharacterCount()"></textarea>
-                <p id="characterCount">0 / 400</p>
-                <label for="friend_list">Amigos: </label>
-                <select name="friend_list[]" id="friend_list" multiple>
-                    <?php foreach ($friends as $friend): ?>
-                        <option value="<?=$friend['id']?>"><?=$friend['username']?></option>
-                    <?php endforeach; ?>
-                </select>
-                <input type="submit" value="Criar" name="gcreate">
-            </form>
+    <div class="modal fade" id="create_group" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Criar Grupo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="<?=base_url("create_group")?>" method="post" class="create_group_form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="gname">Group Name</label>
+                        <input type="text" class="form-control" name="gname" id="gname">
+                    </div>
+                    <div class="form-group">
+                        <label for="gpic">Group Picture</label>
+                        <input type="file" class="form-control-file" name="gpic" id="gpic">
+                    </div>
+                    <div class="form-group">
+                        <label for="gdesc">Description</label>
+                        <textarea class="form-control" name="gdesc" id="gdesc" rows="2" maxlength="400" oninput="updateCharacterCount()"></textarea>
+                        <small id="characterCount" class="form-text text-muted">0 / 400</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="friend_list">Friends: </label>
+                        <select class="form-control" name="friend_list[]" id="friend_list" multiple>
+                            <?php foreach ($friends as $friend):?>
+                                <option value="<?=$friend['id']?>"><?=$friend['username']?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="gprivacy">Private</label>
+                        <input type="checkbox" name="gprivacy" id="gprivacy">
+                        <small>Leave unchecked if you want the group to be public</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Criar</button>
+                </form>
+            </div>
         </div>
     </div>
+</div>
+
 </main>
 <script>
     $(()=>{

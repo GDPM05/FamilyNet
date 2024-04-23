@@ -126,6 +126,21 @@ i{
     cursor: pointer;
 }
 
+.create_group{
+    margin-top: 15px;
+}
+
+.friends {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.groups{
+    margin-top: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
 /*
 .home .left-side, .signup .left-side{
     float: left;

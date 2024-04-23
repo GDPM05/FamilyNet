@@ -12,10 +12,15 @@
         <div class="separation col-md-1"></div>
         <div class="right-side col-md-5 d-flex flex-column justify-content-center align-items-center">
             <h2 class="text-center mb-4" style="font-size: 2.5rem;">Sign Up</h2>
+            <?php
+                if(isset($formErrors)){
+                    echo $formErrors;
+                }
+            ?>
             <form action="" method="POST" enctype="multipart/form-data" class="signup_form w-100">
                 <div class="form-group step_one mb-3 text-center">
                     <input type="text" class="form-control form-control-lg mx-auto" style="width: 80%;" placeholder="Name" name="name_in" id="name_in" value="<?=set_value('name_in')?>">
-                    <input type="text" class="form-control form-control-lg mx-auto" style="width: 80%;" placeholder="Username" name="user_in" id="user_in" value="<?=set_value('user_in')?>">
+                    <input type="text" class="form-control form-control-lg mx-auto" style="width: 80%;" placeholder="Username" name="username_in" id="username_in" value="<?=set_value('user_in')?>">
                 </div>
                 <div class="form-group step_two mb-3 text-center" style="display: none">
                     <input type="email" class="form-control form-control-lg mx-auto" style="width: 80%;" placeholder="Email" name="email_in" id="email_in" value="<?=set_value('email_in')?>">

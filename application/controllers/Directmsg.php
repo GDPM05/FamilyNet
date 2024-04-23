@@ -27,7 +27,20 @@
             $user_id = $this->session->userdata['user']['id'];
 
             $conversations_ids = $this->UserConversation_model->fetch_all(false, null, null, null, ['id_user' => $user_id]);
-    
+
+            $friends_ids = $this->Friends_model->fetch_friends($this->session->userdata('user')['id']);
+            
+            $friends_arr = [];
+            foreach($friends_ids as $friends){
+                //print_r($friends);
+                unset($friends['status']);
+                foreach($friends as $id){
+                    //print_r($id);
+                    if($id != $data['user']['id'])
+                        $friends_arr[] = $this->User_model->fetch(['id' => $id]);
+                }
+            }
+
             $conversations = [];
             if(!empty($conversations_ids) && is_array($conversations_ids[count($conversations_ids)-1])){
                 foreach($conversations_ids as $conv){
@@ -37,7 +50,20 @@
                 $conversations[] = $this->get_conversation_details($conversations_ids['id_conv'], $user_id);
             }
 
+            $groups_ids = $this->GroupUsers_model->fetch_all(null, null, null, null, ['id_user' => $data['user']['id']]);
+            $groups = [];
+            foreach($groups_ids as $group){
+                //print_r($group);
+                $groups[] = $this->Groups_model->fetch(['id' => $group['id_group']]);
+            }
+
+            foreach($groups as $group){
+                $groups[array_search($group, $groups)]['picture'] = $this->Media_model->fetch(['id' => $groups[array_search($group, $groups)]['picture']]);
+            }
+
             $data['conversations'] = (!empty($conversations)) ? $conversations : null;
+            $data['friends'] = $friends_arr;
+            $data['groups'] = $groups;
             $this->load->view('common/header', $data);
             $this->load->view('common/menu', $this->data);
             $this->load->view('direct_msg', $data);
@@ -108,7 +134,7 @@
             }
 
             $config['upload_path'] = './media/group_pictures';
-            $config['allowed_types'] = 'gif|jpg|png';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $config['max_size'] = 100;
 
             $this->load->library('upload', $config);
@@ -127,11 +153,15 @@
                 redirect(base_url('direct_msg'));
             
 
+            $conv_id = $this->Conversation_model->insert(['title' => md5($group_info['title'])]);
+
             $group_id = $this->Groups_model->insert([
                 'name' => $group_info['gname'],
                 'n_members' => count($group_info['friend_list']) + 1, # +1 corresponde ao utilizador que criou o grupo
                 'picture' => $group_pic_id,
-                'description' => $group_info['gdesc']
+                'description' => $group_info['gdesc'],
+                'id_conversation' => $conv_id,
+                'privacy' => ($group_info['gprivacy'] == 'on') ? 1 : 0
             ]);
 
             if($this->Groups_model->error)
@@ -151,6 +181,7 @@
                 ]);
             }
 
+            // return;
             redirect(base_url('direct_msg'));
         }
 
