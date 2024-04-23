@@ -43,7 +43,7 @@ class Client{
                 });
                 this.socket.on('friend_online', (socket)=>{
                     console.log((socket) ? "Online" : "Offline");
-                    $(".is_online").html((socket) ? "Online" : "Offline");
+                    $(".is_online").html(((socket) ? "Online" : "Offline"));
                 });
             });
         }catch(error){

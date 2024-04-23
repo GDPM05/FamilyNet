@@ -100,10 +100,11 @@
             
             var user = ajax.get('<?php echo base_url('fetch_user');?>/'+conv_id, (data)=>{
                 console.log("ai", data);
-                $(".left-side > .dm-window > .top-bar > .user-info >.user-img").attr('src', data['pfp']['path']);
-                $(".left-side > .dm-window > .top-bar > .user-info > .user-img").attr('alt', data['pfp']['alt']);
-                $(".left-side > .dm-window > .top-bar > .user-info > .user-name").text(data['username']);
+                $(".card-header > .user-img").attr('src', data['pfp']);
+                $(".card-header > .user-img").attr('alt', data['user']);
+                $(".card-header > div > .user-name").text(data['username']);
             });
+
 
 
             loadMessages(conv_id);

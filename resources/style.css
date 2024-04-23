@@ -81,6 +81,27 @@ i{
     background-color: white;
 }
 
+.card-header {
+    display: flex;
+    justify-content: start; /* Alinha o conteúdo à esquerda */
+    align-items: center;
+    width: 100%; /* Ocupa a largura total */
+}
+
+.user-img {
+    margin-right: 15px; /* Espaçamento entre a imagem e o nome do usuário */
+}
+
+.user-name {
+    margin-bottom: 0; /* Remove a margem inferior do nome do usuário */
+}
+
+.is_online {
+    /* O status 'Offline' aparecerá abaixo do nome do usuário */
+}
+
+
+
 /*
 .home .left-side, .signup .left-side{
     float: left;
