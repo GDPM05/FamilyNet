@@ -22,7 +22,7 @@
                         <h5 class="mb-1 friend_name"><?=$conv['user']['username']?></h5>
                         <small class="text-muted friend-hidden" id="conv_id"><?=$conv['id']?></small>
                     </div>
-                    <p class="mb-1 friend-hidden" id="friend_user"><?=$conv['user']['user']?></p>
+                    <p class="mb-1 friend-hidden" id="friend_id"><?=$conv['user']['id']?></p>
                 </div>
             <?php endif; endforeach; ?>
         </div>
@@ -65,6 +65,7 @@
             var user_name = '<?php echo $user['user'];?>';
             var user_id = <?php echo $user['id'];?>;   
             var current_friend = $(this).find('#friend_id').text();  
+            console.log("Amigo: "+current_friend);
             conv_id = $(this).find('#conv_id').text();
             if(friend_id != null && this.friend_id != current_friend)
                 cliente.change_friend(current_friend);

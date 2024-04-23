@@ -50,6 +50,7 @@ class Server{
         var friend_online = false;
         if(this.user_map[data.id] != null){ // Verifica se este utilizador já está no sistema (com um socket diferente)
             var user = this.users[this.user_map[data.id]]; // Guarda na variavel user este utilizador já existente
+            console.log("User already.");
         }else{
             var user_id = data.id; // Guarda em variável o id do user
             var user_name = data.name; // Guarda em variável o nome do user
@@ -57,6 +58,8 @@ class Server{
             
             var user = new User(user_id, user_name, user_conv); // Criar uma instância da class User
             
+            console.log("New user: "+user.id, user.name, user.id_user_conv); 
+
             do{
                 user.generateUniqueId(); // Gera um id único identificativo para este user
             }while(user[user.uniqueId] != null);
@@ -109,7 +112,9 @@ class Server{
     }
 
     handleMessage(socket, data){ // Método responsável por tratar as mensagens enviadas
+        console.log("Olá");
         var user = this.sockets[socket.id]; // Busca o utilizador ao array de sockets
+        console.log("User:" + user.id_user_conv);
         if(!this.user_map[user.id_user_conv]) // Verifica se o utilizador amigo está no servidor
             return; // Retorna se for o caso
         
