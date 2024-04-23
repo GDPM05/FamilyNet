@@ -13,6 +13,11 @@
                 <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
             </svg>
         </button>
+        <div class="search_friends">
+            <input type="text" class="col-12" id="dm_search_friends">
+            <div class="suggestions">
+            </div>
+        </div>
         <div class="list-group">
             <?php foreach ($conversations as $conv): 
                 if(!empty($conv)): ?>
@@ -20,7 +25,7 @@
                     <img class="rounded-circle mr-2" src="<?=$conv['pfp']['path']?>" alt="<?=$conv['pfp']['alt']?>" style="width: 30px; height: 30px;">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1 friend_name"><?=$conv['user']['username']?></h5>
-                        <small class="text-muted friend-hidden" id="conv_id"><?=$conv['id']?></small>
+                        <small class="friend-hidden" id="conv_id"><?=$conv['id']?></small>
                     </div>
                     <p class="mb-1 friend-hidden" id="friend_id"><?=$conv['user']['id']?></p>
                 </div>
@@ -198,6 +203,54 @@
                 console.log(res);
             });
         }
+
+        /** Pesquisa de amigos */
+
+
+        var search = "";
+        var debounceTimeout;
+
+        $("#dm_search_friends").keyup((e) => {
+            clearTimeout(debounceTimeout);
+
+            debounceTimeout = setTimeout(() => {
+                $(".suggestions .friend_suggest").remove();
+
+                if ((e.keyCode == 8) && ($("#dm_search_friends").val() == "")) {
+                    $(".suggestions").css({ "display": "none" })
+                    console.log("aaa");
+                }
+
+                if ($(".suggestions").css('display') == "none" && ($("#dm_search_friends").val() != ""))
+                    $(".suggestions").css({ "display": "block" })
+
+                $(".suggestions").off('click').on('click', '.friend_suggest', function () {
+                    var id = $(this).find("#user_id").text();
+                    ajax.get("<?=base_url('new_conversation')?>/" + id, (data) => {
+                        if(!data.error){
+                            window.location.reload();
+                        }
+                    });
+                    console.log(id);
+                });
+
+                search = $("#dm_search_friends").val();
+                //console.log(search);
+                if ((e.keyCode != 8 && $("#dm_search_friends").val() != "")) {
+                    ajax.get("<?=base_url('search_friends')?>/" + search, (data) => {
+                        console.log(data);
+                        Object.values(data).forEach(user => {
+                            var div = "<div class='friend_suggest d-flex justify-content-between align-items-center w-100 p-2'>";
+                            div += "<img class='friend_suggest_img rounded-circle' src='" + user.pfp.path + "' alt='Foto de perfil' style='width: 50px; height: 50px;'>";
+                            div += "<p class='friend_suggest_name ml-3 flex-grow-1'>" + user.username + "</p><p id='user_id' class='friend_hidden'>" + user.id + "</p>";
+                            div += "</div>";
+                            $(".suggestions").append(div);
+                        })
+                    });
+                }
+            }, 300); // 300ms debounce
+        });
+
 
     });
 </script>

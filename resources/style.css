@@ -96,11 +96,35 @@ i{
     margin-bottom: 0; /* Remove a margem inferior do nome do usuário */
 }
 
-.is_online {
-    /* O status 'Offline' aparecerá abaixo do nome do usuário */
+.friend-hidden{
+    display: none;
 }
 
+.friend {
+    cursor: pointer;
+    margin-top: 15px;
+}
 
+#dm_search_friends{
+    margin-top: 15px;
+    outline: none;
+    border: 1px solid var(--cor_prim);
+    /* background-color: rgba(0,0,0,0.05); */
+    height: 30px;
+    padding: 5px;
+}
+
+.suggestions{
+    display: none;
+    min-height: 100px;
+    max-height: 200px;
+    border: 1px solid var(--cor_prim);
+    overflow-y: auto;
+}
+
+.friend_suggest{
+    cursor: pointer;
+}
 
 /*
 .home .left-side, .signup .left-side{

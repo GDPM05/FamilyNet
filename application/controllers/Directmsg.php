@@ -186,5 +186,48 @@
             return $conversation;
         }
 
+        public function search_friends($values = ""){
+            header('Content-Type: application/json');
+            if($values == ""){
+                echo json_encode(['error' => true, 'error_msg' => "Invalide values."]);
+                return;
+            }
+
+            $friends = $this->Friends_model->fetch_friends($this->session->userdata('user')['id']);
+
+            $users = $this->User_model->fetch_all_like(['username', $values], null, null, ['id' => $friends, 'multiple' => true]);
+
+            foreach($users as $user){
+                if($user['id'] == $this->session->userdata('user')['id'])
+                    unset($users[array_search($user, $users)]);
+                else{
+                    $users[array_search($user, $users)]['pfp'] = $this->Media_model->fetch(['id' => $users[array_search($user, $users)]['pfp']]);
+                }
+            }
+
+            echo json_encode($users);
+        }
+
+        public function new_conv($id){
+            header('Content-Type: application/json');
+            if(empty($id)){
+                echo json_encode(['error' => true, 'error_msg' => 'Info missing...']);
+                return;
+            }
+
+            $user_id = $this->session->userdata('user')['id'];
+
+            if($this->UserConversation_model->check_if_conv_exists($user_id, $id)){
+                $conv_id = $this->Conversation_model->insert(['title' => md5("".$user_id."".$id)]);
+                $this->UserConversation_model->insert(['id_conv' => $conv_id, 'id_user' => $user_id]);
+                $this->UserConversation_model->insert(['id_conv' => $conv_id, 'id_user' => $id]);
+            }else{
+                echo json_encode(['error' => true, 'error_msg' => 'Users already have a conversation...']);
+                return; 
+            }
+
+             echo json_encode(['error' => false, 'success_msg' => 'Conversation created successfully']);    
+        }   
+
     }
 ?>

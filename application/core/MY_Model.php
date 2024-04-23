@@ -44,9 +44,17 @@
                 return $this->db->get($this->table)->result_array();
         }
 
-        public function fetch_all_like($like, $limit, $start){
+        public function fetch_all_like($like, $limit, $start, $where){
             $this->db->like($like[0], $like[1]);
-            $this->db->limit($limit, $start);
+            if(!empty($limiy) || !empty($start))
+                $this->db->limit($limit, $start);
+            if($where['multiple']){
+                unset($where['multiple']);
+                $this->db->where_in($where);
+            }else{
+                unset($where['multiple']);
+                $this->db->where($where);
+            }
             $query = $this->db->get($this->table);
             return $query->result_array();
         }

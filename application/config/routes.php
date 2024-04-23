@@ -80,3 +80,5 @@ $route['get_friends'] = 'Directmsg/get_friends';
 $route['create_group'] = 'Directmsg/create_group';
 $route['get_friends_pr'] = 'Profile/get_friends';
 $route['profile/update_info'] = 'Profile/update_info';
+$route['search_friends/(:any)'] = 'Directmsg/search_friends/$1';
+$route['new_conversation/(:num)'] = 'Directmsg/new_conv/$1';

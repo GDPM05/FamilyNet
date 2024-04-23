@@ -19,5 +19,16 @@
             $q = $this->db->get($this->table);
             return $q->row_array();
         }
+
+        public function check_if_conv_exists($id_user1, $id_user2){
+            $this->db->select('id_conv');
+            $this->db->where_in('id_user', array($id_user1, $id_user2));
+            $this->db->group_by('id_conv');
+            $this->db->having('COUNT(DISTINCT id_user) = 2'); // Corrected line
+            $query = $this->db->get($this->table);
+            
+            return ($query->num_rows() == 0);
+        }
+        
     }
 
