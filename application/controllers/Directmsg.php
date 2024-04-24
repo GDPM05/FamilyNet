@@ -144,8 +144,10 @@
                 return false;
             }
 
+            $data = $this->upload->data();
+
             $group_pic_id = $this->Media_model->insert([
-                'path' => base_url().'/media/group_pictures',
+                'path' => base_url('/media/')."group_pictures/".$data['raw_name'].$data['file_ext'],
                 'alt' => $group_info['gname']
             ]);
 

@@ -106,17 +106,17 @@
         var messages;
         let load = true;
         let scrolling = false;
-        $(".friend").click(function(){
+        $(".friend, .group").click(function(){
             console.log($(this).children(".conv_id").text());
             var user_name = '<?php echo $user['user'];?>';
             var user_id = <?php echo $user['id'];?>;   
             var current_friend = $(this).find('#friend_id').text();  
-            console.log("Amigo: "+current_friend);
             conv_id = $(this).find('#conv_id').text();
+            console.log("Amigo: "+current_friend);
             if(friend_id != null && this.friend_id != current_friend)
                 cliente.change_friend(current_friend);
             else
-                cliente.emit_userdata({user_name: user_name, user_id:user_id, friend_id: current_friend});
+                cliente.emit_userdata({user_name: user_name, user_id:user_id, id_conv: conv_id, friend: current_friend});
 
             friend_id = current_friend;
             console.log(friend_id);
@@ -238,7 +238,7 @@
             data['message']['read_date'] = '0000-00-00 00:00:00';
 
 
-            console.log(data);
+            console.log("msg: "+data.message.id_conversation);
 
             ajax.post('<?php echo base_url('send_message');?>', data, (res)=>{
                 console.log(res);

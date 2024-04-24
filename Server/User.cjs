@@ -1,11 +1,12 @@
 
 class User{
 
-    constructor(id, name, id_user_conv){
+    constructor(id, name, conv_id, friend_id){
         this.id = id;
         this.name = name;
-        this.id_user_conv = id_user_conv;
+        this.conv_id = conv_id;
         this.uniqueId = null;
+        this.friend_id = friend_id;
     }
 
     generateUniqueId(){ // Gera id único para este utilizador
@@ -22,8 +23,8 @@ class User{
         this.uniqueId = code;
     }
 
-    updateFriend(user){
-        this.id_user_conv = user;
+    updateFriend(conv_id){
+        this.conv_id = conv_id;
     }
 
 }
