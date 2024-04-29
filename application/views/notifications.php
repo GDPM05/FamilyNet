@@ -9,53 +9,67 @@
             <p id="mensagemModal"></p>
         </div>
     </div>
-    <div class="notifications_container">
-        <?php if(!empty($notifications)): ?>
-            <?php foreach($notifications as $noti): ?>
-                <div class="notification">
-                    <p><?php echo $noti['sent_date'];?></p>
-                    <p><?php echo $noti['message_text'];?></p>
-                    <?php if($noti['type_id'] == 1):?>
-                        <div class="add_friend" data-indicator="<?php echo $noti['sender']['id'];?>" data-id="<?php echo $noti['id'];?>">
-                            <button>Add friend</button>
-                        </div>
-                        <div class="deny_friend" data-indicator="<?php echo $noti['sender']['id'];?>" data-id="<?php echo $noti['id'];?>">
-                            <button>Deny invitation</button>
-                        </div>
-                    <?php endif;?>
-                </div>
-            <?php endforeach; ?>
-        <?php else:?>
-            <div class="no_notifications">
-                <p>You don't have any notifications!</p>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+            <div class="notifications_container">
+                <!-- Aqui serão renderizados os itens -->
             </div>
-        <?php endif;?>
+            </div>
+        </div>
     </div>
+
 </main>
 <script>
-    $(document).ready(function(){
+    var nextPage = 2; // Inicialize nextPage com o número da próxima página a ser carregada
+    const ajax = new AjaxHandler();
+    execAjax();
+    $(window).scroll(function() {
+        // Verifique se o usuário chegou ao final da página
+        if($(window).scrollTop() + $(window).height() == $(document).height()) {
+            // Faça uma solicitação AJAX para carregar mais itens
+            execAjax();
+        }
+    });
+
+    function execAjax(){
+        ajax.post('http://localhost:5000/load_notifications', {page: nextPage, id: <?=$user['id']?>}, (data) => {
+            console.log(data);
+            renderItems(data);
+            nextPage++;
+        });
+    }
+
+    function renderItems(items) {
+      items.forEach(function(item) {
+        var buttonsHtml = '';
+        if (item.type_id === 1) {
+          buttonsHtml = `
+            <div class="mt-3">
+              <button type="button" data-indicator=${item.id} class="btn add_friend btn-success mr-2">Accept</button>
+              <button type="button" data-indicator=${item.id} class="btn deny_friend btn-danger">Decline</button>
+            </div>
+          `;
+        }
+        var div = `
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <strong>${item.sent_date}</strong><br>
+            ${item.message_text}
+            ${buttonsHtml}
+          </div>`;
+        $('.notifications_container').append(div);
+      });
+    }
+
+</script>
+<script>
+    $('.alert').ready(function(){
         var ajax = new AjaxHandler();
-        var modal = $("#friend_invitation_modal");
         var btn_add = $(".add_friend");
         var btn_decline = $(".deny_friend");
         var span = $(".close");
-
-        btn_add.click(function(){
-            var notification_id = $(this).data("id"); 
-            ajax.post('<?php echo base_url('invites');?>/'+$(this).data("indicator")+'/1', {notification_id:notification_id}, function() {
-                $('#mensagemModal').text('Pedido de amizade aceito!');
-                modal.show();
-            });
-        });
-
-        btn_decline.click(function(){
-            var notification_id = $(this).data("id"); 
-            ajax.post('<?php echo base_url('invites');?>/'+$(this).data("indicator")+'/2', {notification_id:notification_id}, function() {
-                $('#mensagemModal').text('Pedido de amizade recusado!');
-                modal.show();
-            });
-        });
-
+        var modal = $("#friend_invitation_modal");
         span.click(function(){
             modal.hide();
             setInterval(function(){
@@ -68,6 +82,32 @@
                 modal.hide();
             }
         });
+
+        /**
+         * MUDAR O ACEITE/RECUSANÇO DOS PEDIDOS PARA NODEJS
+         */
+
+        $('.notifications_container').on('click', '.add_friend', function() {
+            console.log("aa");
+            var notification_id = $(this).data("id"); 
+            ajax.post('<?php echo base_url('invites');?>/'+$(this).data("indicator")+'/1', {notification_id:notification_id}, function() {
+                $('#mensagemModal').text('Pedido de amizade aceito!');
+                modal.show();
+            });
+        });
+
+        btn_add.click(function(){
+            
+        });
+
+        btn_decline.click(function(){
+            var notification_id = $(this).data("id"); 
+            ajax.post('<?php echo base_url('invites');?>/'+$(this).data("indicator")+'/2', {notification_id:notification_id}, function() {
+                $('#mensagemModal').text('Pedido de amizade recusado!');
+                modal.show();
+            });
+        });
     });
+    
 
 </script>

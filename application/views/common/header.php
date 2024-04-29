@@ -13,7 +13,8 @@
         <script src="<?php echo base_url('resources/Client.js');?>"></script>
         <script src="<?php echo base_url('resources/AjaxHandler.js');?>"></script>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://pagination.js.org/dist/2.6.0/pagination.min.js"></script> 
         <script src="<?php echo base_url('resources/script.js');?>"></script>
         <title><?php echo $title;?></title>
     </head>
