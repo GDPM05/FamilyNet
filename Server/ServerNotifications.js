@@ -46,8 +46,9 @@ class ServerNotifications {
                 const data = (info.toString().split('&'));
 
                 const get_data = {
-                    'user_id': Number((data[1].split('=')).pop()),
-                    'page': Number((data[0].split('=')).pop())
+                    user_id: Number((data[1].split('=')).pop()),
+                    page: Number((data[0].split('=')).pop()),
+                    limit: (data[2].split('=')).pop()
                 };
 
                 const notifications = await this.db.getUserNotifications(get_data);
@@ -149,7 +150,6 @@ class ServerNotifications {
             });
         });
     }
-
 }
 
 const server = new ServerNotifications(5000);

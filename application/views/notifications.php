@@ -32,22 +32,33 @@
 </main>
 
 <script>
-    var nextPage = 2; // Inicialize nextPage com o número da próxima página a ser carregada
+    var nextPage = 2; 
+    var loading = false; 
+    var totalNotificationsLoaded = 0;
     const ajax = new AjaxHandler();
+    var limit = 20;
     execAjax();
     $(window).scroll(function() {
-        // Verifique se o usuário chegou ao final da página
-        if($(window).scrollTop() + $(window).height() == $(document).height()) {
-            // Faça uma solicitação AJAX para carregar mais itens
-            execAjax();
-        }
+        ajax.post('http://localhost:5000/get_total_notifications', {receiver_id: <?=$user['id']?>}, (data)=>{
+            if($(window).scrollTop() + $(window).height() == $(document).height() && !loading) {
+                loading = true; 
+                console.log(data[0]['num_noti']);
+                if((totalNotificationsLoaded+limit) > data[0]['num_noti']);
+                    limit = Number(data[0]['num_noti']) - totalNotificationsLoaded; 
+                execAjax();
+                console.log(totalNotificationsLoaded);
+                console.log(limit);
+            }
+        })
     });
 
     function execAjax(){
-        ajax.post('http://localhost:5000/load_notifications', {page: nextPage, id: <?=$user['id']?>}, (data) => {
+        ajax.post('http://localhost:5000/load_notifications', {page: (nextPage == 2) ? 1 : nextPage, id: <?=$user['id']?>, limit: limit}, (data) => {
             console.log(data);
             renderItems(data);
             nextPage++;
+            loading = false; 
+            totalNotificationsLoaded += data.length;
         });
     }
 
@@ -87,6 +98,7 @@
                     modal.modal('show'); 
                 }
             });
+            window.location.reload();
         });
         
         $('.notifications_container').on('click', '.deny_friend', function() {
@@ -99,6 +111,7 @@
                     modal.modal('show'); 
                 }
             });
+            window.location.reload();
         });
     }
 

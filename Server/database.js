@@ -23,7 +23,8 @@ async function connect(){
 async function getUserNotifications(data){
     const conn = await connect();
     console.log(data.page);
-    const [rows] = await conn.query("SELECT * FROM notifications WHERE receiver_id = ? LIMIT ? OFFSET ?;", [data.user_id, 20, data.page-1]);
+    console.log(data.limit);
+    const [rows] = await conn.query("SELECT * FROM notifications WHERE receiver_id = ? LIMIT ? OFFSET ?;", [Number(data.user_id), Number(data.limit), Number(data.page-1)]);
 
     return rows;
 }
