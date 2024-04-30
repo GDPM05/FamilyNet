@@ -21,7 +21,7 @@
         public function fetch($where, $fields = null){
             if($fields)
                 $this->db->select($fields);
-            $q = $this->db->get_where($this->table, $where);
+                $q = $this->db->get_where($this->table, $where);
             if($q->num_rows() < 1){
                 $this->error = true;
                 $this->error_message = "Não há registo.";

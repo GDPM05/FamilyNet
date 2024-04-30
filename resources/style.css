@@ -13,11 +13,75 @@
     font-family: var(--font_family_1);
 }
 
-html, body{
-    height: 100%;
-    padding-left: 70px;
+body{
+    margin-left: 90px;
 }
 
+.home input{
+    max-width: 50%;
+}
+
+.home .left-side h1{
+    font-size: 120px;
+}   
+
+.home .left-side h2{
+    font-size: 60px;
+}   
+
+.home .right-side form input[type="submit"]{
+    width: 35%;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.home .right-side form input[type="submit"]:hover{
+    background-color: var(--cor_sec);
+    border: 1px solid var(--cor_sec);
+}
+
+i{
+    font-size: 30px;
+}
+
+.d-flex {
+    width: 70px;
+}
+
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: auto; /* Ajuste a largura conforme necessário */
+    height: 100vh;
+    overflow: auto;
+    border-right: 2px solid var(--cor_prim);
+}
+
+.signup_form input{
+    margin-top: 10px;
+}
+
+.notification{
+    margin-top: 20px;
+}
+
+.see_friend {
+    text-decoration: none;
+    color: white;
+}
+
+.see_friend:hover{
+    color: white;
+    text-decoration: none;
+}
+
+.btn-close{
+    border: none;
+    background-color: white;
+}
+
+/*
 .home .left-side, .signup .left-side{
     float: left;
     width: calc(60% - 1px);
@@ -74,6 +138,22 @@ html, body{
     border: 1px solid var(--cor_prim);
 }
 
+.home .right-side form .keep_login{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home .right-side form .keep_login #keep_login{
+    width: 20px;
+    margin: 0;
+}
+
+.home .right-side form .keep_login #keep_login_p{
+    width: auto;
+}
+
 .home .right-side form label, .signup .right-side form label{
     display: block;
     margin-left: 50px;
@@ -99,6 +179,22 @@ html, body{
     border: 1px solid var(--cor_prim);
 }
 
+form input[type="submit"]{
+    margin-top: 20px;
+    background-color: var(--cor_prim);
+    color: white;
+    cursor: pointer;
+    height: 35px;
+    transition: 0.5s;
+}
+
+form input[type="submit"]:hover{
+    transform: scale(101%);
+    background-color: white;
+    color: var(--cor_prim);
+    border: 1px solid var(--cor_prim);
+}
+
 .home .right-side form .account_help p{
     display: inline-block;
     font-size: 15px;
@@ -115,6 +211,21 @@ html, body{
 
 .home .right-side form .account_help_signup{
     text-align: center;
+}
+
+.home .right-side form .continue_with{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0
+}
+
+.home .right-side form .continue_with button{
+    width: 50px;
+    height: 50px;
+    border: none;
+    background-color: transparent;
 }
 
 .step_two, .step_three, .step_four, .step_five{
@@ -187,7 +298,7 @@ html, body{
 .nav.menu-nav {
     list-style-type: none;
     margin: 0;
-    margin-left: -140px;
+    /* margin-left: -140px; 
     padding: 0;
     top: 0;
     width: 70px;
@@ -218,7 +329,7 @@ html, body{
     width: 45px;
     height: 45px;
     border-radius: 100%;
-    /* align-items: center; */
+    /* align-items: center; 
 }
 
 .active a svg{
@@ -269,7 +380,7 @@ html, body{
     width: 60%;
     margin: auto;
 }
-
+*/
 .direct_msg .left-side .dm-window .user-info{
     height: 70px;
     width: 100%;
@@ -341,7 +452,7 @@ html, body{
     height: 80%;
     justify-self: left !important;
     margin-left: 5px;
-    outline: none;
+    outline: none;   
     border-radius: 8px;
     font-size: 22px;
     padding-left: 5px;
@@ -351,15 +462,16 @@ html, body{
     width: 10%;
     height: 80%;
     border: none;
-    background-color: var(--cor_sec);
+    background-color: white;
     font-size: 22px;
     border-radius: 8px;
-    color: #fff;
+    color: #000;
     margin-left: 0.5%;
     margin-right: 0.5%;
     cursor: pointer;
 }
 
+/*
 .direct_msg .right-side .friend{
     width: 90%;
     background-color: var(--cor_prim);
@@ -452,7 +564,7 @@ html, body{
 
 .results{
     width: 45%;
-    /* background-color: rgba(0,0,0,0.1); */
+    /* background-color: rgba(0,0,0,0.1); 
     margin: auto;
     padding: 15px 0;
 }
@@ -530,18 +642,18 @@ html, body{
     background-color: rgba(var(--cor_prim), 0.6);
 }
 
-.modal {
-    display: none; /* Modal está escondido por padrão */
-    position: fixed; /* Fica em posição fixa na tela */
-    z-index: 1; /* Fica no topo */
-    padding-top: 100px; /* Localização do modal */
+modal {
+    display: none; /* Modal está escondido por padrão 
+    position: fixed; /* Fica em posição fixa na tela 
+    z-index: 1; /* Fica no topo 
+    padding-top: 100px; /* Localização do modal 
     left: 0;
     top: 0;
-    width: 100%; /* Largura total */
-    height: 100%; /* Altura total */
-    overflow: auto; /* Habilita scroll se necessário */
-    background-color: rgb(0,0,0); /* Fundo preto */
-    background-color: rgba(0,0,0,0.4); /* Fundo preto com opacidade */
+    width: 100%; /* Largura total 
+    height: 100%; /* Altura total 
+    overflow: auto; /* Habilita scroll se necessário 
+    background-color: rgb(0,0,0); /* Fundo preto 
+    background-color: rgba(0,0,0,0.4); /* Fundo preto com opacidade 
 }
 
 .modal-content {
@@ -554,4 +666,141 @@ html, body{
 
 .close{
     cursor: pointer;
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    padding-top: 100px; 
+    left: 0;
+    top: 0;
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    max-width: 500px; /* Adjust as needed 
+  }
+  
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .create_group_form {
+    margin: 0 auto; /* Centers the form horizontally 
+}
+
+.create_group_form label {
+    font-size: 22px;
+}
+
+
+.create_group_form label,
+.create_group_form input[type="text"],
+.create_group_form input[type="file"],
+.create_group_form textarea,
+.create_group_form select,
+.create_group_form input[type="submit"] {
+    display: block;
+    margin: 0 auto 15px; /* Centers the elements horizontally and adds space below each element 
+    text-align: center; /* Centers the text inside the elements 
+    font-size: 20px;
+}
+
+.create_group_form input:focus, .create_group_form textarea:focus, .create_group_form select:focus{
+    outline: 2px solid var(--cor_prim);
+}
+
+.create_group_form input[type="text"]{
+    width: 70%;
+    height: 40px;
+    border: 1px solid var(--cor_prim);
+}
+
+.create_group_form select{
+    border: 1px solid var(--cor_prim);
+    width: 70%;
+    height: 80px;
+    font-size: 25px;
+}
+
+.create_group_form textarea{
+    border: 1px solid var(--cor_prim);
+    width: 70%;
+    height: 80px;
+    resize: none;
+    text-align: left;
+    padding: 2px;
+}
+
+.create_group_form #characterCount{
+    margin-left: 75%;
+}
+
+.create_group_form input[type="submit"] {
+    width: 70%;
+    height: 40px;
+    background: var(--cor_prim);
+    transition: 0.2s;
+    cursor: pointer;
+    font-size: 25px;
+    color: white;
+    border: none;
+}
+
+.create_group_form input[type="submit"]:hover {
+    background: var(--cor_sec);
+}
+
+.new_family {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.new_family h2, .new_family .create_family {
+    width: 100%;
+    text-align: center;
+}
+
+.new_family .create_family form label, input[type="submit"] {
+    margin-top: 20px;
+}
+
+.new_family .create_family form input[type="submit"] {
+    border: 1px solid var(--cor_prim);
+    width: 100px;
+}
+
+.new_family .create_family form input[type="checkbox"] {
+    display: inline-block;
+    margin-right: 10px;
+    margin-left: 20px;
+}
+
+.new_family .create_family form p {
+    display: inline-block;
+}
+
+.new_family .create_family form .family_members{
+    max-width: 300px;
 }

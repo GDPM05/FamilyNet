@@ -1,15 +1,20 @@
-<div class="dm-window">
-    <div class="top-bar">
-        <div class="user-info">
-            <img class="user-img" src="" alt="">
-            <h2 class="user-name"></h2>
+<div class="card dm-window h-100" style="width: calc(100% - 250px); margin-left: auto;">
+    <div class="card-header d-flex align-items-center">
+        <img class="user-img rounded-circle mr-2" src="" alt="" style="width: 30px; height: 30px;">
+        <div>
+            <h2 class="user-name mb-0 mr-3"></h2>
+            <p class="is_online mb-0">Offline</p>
         </div>
     </div>
-    <div class="messages">
-
+    <div class="card-body messages" style="overflow-y: auto;">
+        <!-- Aqui vão as mensagens -->
     </div>
-    <div class="bottom-bar">
-        <input type="text" name="message_in" id="message_in">
-        <button id="message_send">Send</button>
+    <div class="card-footer">
+        <div class="input-group">
+            <input type="text" name="message_in" id="message_in" class="form-control">
+            <div class="input-group-append">
+                <button id="message_send" class="btn btn-primary">Send</button>
+            </div>
+        </div>
     </div>
 </div>

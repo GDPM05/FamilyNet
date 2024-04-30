@@ -29,14 +29,15 @@
                 $this->db->order_by($order);
 
             if($where){
-                $this->db->group_start();
+                $this->db->where('id_conversation', $where['id_conv']);
+                /*$this->db->group_start();
                     $this->db->where('id_sender', $where['id_friend']);
                     $this->db->or_where('id_receiver', $where['id_friend']);
                 $this->db->group_end();
                 $this->db->group_start();
                     $this->db->where('id_sender', $where['id_user']);
                     $this->db->or_where('id_receiver', $where['id_user']);
-                $this->db->group_end();
+                $this->db->group_end();*/
             }
 
             if($pag){
@@ -46,6 +47,14 @@
             }else{
                 return $this->db->get($this->table)->result_array();
             }
+        }
+
+        public function update_message_state($conv_id, $user_id){
+            $this->db->set('state', '1');
+            $this->db->where('id_sender !=', $user_id);
+            $this->db->where('id_conversation', $conv_id);
+            $this->db->where('state', '0');
+            $this->db->update('message');
         }
 
     }

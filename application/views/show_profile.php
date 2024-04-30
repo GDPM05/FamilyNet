@@ -23,7 +23,7 @@
             </div>
         <?php else:?>
             <div class="send_message">
-                <button><a href="<?php echo base_url('send_message');?>">Send message</a></button>
+                <button><a href="<?php echo base_url('send_message_private/').$user['id'];?>">Send message</a></button>
             </div>
             <div class="unfriend">
                 <button>Unfriend</button>

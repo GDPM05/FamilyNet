@@ -12,7 +12,7 @@
         public function check_friends($id1 = null, $id2 = null){
             if(empty($id1) || empty($id2))
                 return;
-
+ 
             $this->db->group_start();
             $this->db->where('id_user1', $id1);
             $this->db->where('id_user2', $id2);

@@ -4,9 +4,9 @@
  * Ficheiro de configuração para o evio de emails
  */
 
+$config['protocol'] = 'smtp';
 $config['protocol'] = 'sendmail';
 $config['wordwarp'] = TRUE;
-$config['protocol'] = 'smtp';
 $config['smtp_host'] = 'ssl://smtp.gmail.com';
 $config['smtp_port'] = 465;
 $config['smtp_user'] = 'familynet.social.net@gmail.com';

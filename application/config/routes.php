@@ -49,16 +49,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'home/login';
+$route['default_controller'] = 'Login/login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+$route['google_auth'] = 'auth/google_auth';
+$route['callback'] = 'auth/callback';
+$route['logout'] = 'auth/logout';
 $route['signup'] = 'Signup';
 $route['signup/upload'] = 'Signup/upload';
+$route['complete_signup'] = 'Signup/complete';
+$route['complete_signup_validation'] = 'Signup/complete_validation';
 $route['main'] = 'Main';
 $route['profile'] = 'Profile';
 $route['direct_msg'] = 'Directmsg';
 $route['signup/verify'] = 'Signup/verify';
-$route['logout'] = 'home/logout';
+$route['logout'] = 'Login/logout';
 $route['search'] = 'Search';
 $route['search/(:num)'] = 'Search';
 $route['fetch'] = 'Search/fetch';
@@ -70,3 +75,8 @@ $route['notification/(:num)'] = 'Notification';
 $route['get_messages/(:num)/(:num)'] = 'Directmsg/get_messages';
 $route['fetch_user/(:num)'] = 'Directmsg/fetch_user';
 $route['send_message'] = 'Directmsg/send_message';
+$route['send_message_private/(:num)'] = 'Directmsg/send_message_private/$1';
+$route['get_friends'] = 'Directmsg/get_friends';
+$route['create_group'] = 'Directmsg/create_group';
+$route['get_friends_pr'] = 'Profile/get_friends';
+$route['profile/update_info'] = 'Profile/update_info';

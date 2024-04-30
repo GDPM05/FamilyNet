@@ -1,56 +1,65 @@
-$(()=>{
+$(document).ready(function() {
     var step = 0;
+    var steps = $(".form-group").toArray();
+    var btnNext = $("#signup_submit");
+    var totalSteps = steps.length;
 
-    var steps = [
-        $(".step_one"),
-        $(".step_two"),
-        $(".step_three"),
-        $(".step_four"),
-        $(".step_five")
-    ];
+    // Inicializa o primeiro passo como visível
+    $(steps[step]).show();
+    updateButton();
 
-    console.log(steps[0].children());
-
-    $('.signup_form').on('submit', function(e){
-        if(step < steps.length){ // Corrigido aqui
-            e.preventDefault();
+    // Atualiza o texto do botão com base no passo atual
+    function updateButton() {
+        if (step === totalSteps - 1) {
+            btnNext.text("Submit");
+        } else {
+            btnNext.text("Next");
         }
-    })
+    }
 
-    $("#signup_submit").click(()=>{
-        steps[step].hide();
-        step += 1;
-        steps[step].show();
+    // Atualiza a visibilidade dos passos
+    function updateStep() {
+        $(".form-group").hide();
+        $(steps[step]).show();
+    }
 
-        console.log(step);
-
-        if(step+1 == steps.length){
-            $("#signup_submit").val("Sign Up");
+    // Evento de clique para o botão "Next"
+    btnNext.click(function(e) {
+        e.preventDefault();
+        if (step < totalSteps - 1) {
+            step++;
+            updateStep();
+            updateButton();
+        } else {
+            // Submete o formulário no último passo
+            $(".signup_form").submit();
         }
-        
-        if(step > 0 && $(".signup_prev").hasClass('signup_prev_disabled'))
-            $(".signup_prev").removeClass('signup_prev_disabled')
+    });
 
-        $(".step_count").text(step+1);
+    // Evento de clique para o botão "Previous"
+    $(".btn-secondary").click(function() {
+        if (step > 0) {
+            step--;
+            updateStep();
+            updateButton();
+        }
     });
 
 
-    $(".signup_prev").click(()=>{
-        if(step > 0){
-            steps[step].hide();
-            step -= 1;
-            steps[step].show();
-
-            $(".step_count").text(step+1);
+    $(".create_group").click(function(){
+        $("#create_group").css("display", "block");
+        console.log("airflow");
+      });
+    
+      $(".close").click(function(){
+        $("#create_group").css("display", "none");
+      });
+    
+      $(window).click(function(event) {
+        if ($(event.target).is('#create_group')) {
+          $("#create_group").css("display", "none");
         }
-
-        if($("#signup_submit").val() == 'Sign Up')
-            $("#signup_submit").val("Next");
-
-        if(step == 0 && !$(".signup_prev").hasClass('signup_prev_disabled'))
-            $(".signup_prev").addClass("signup_prev_disabled");
-        
-    });
+      });
 
 })
 
