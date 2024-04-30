@@ -8,7 +8,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Pedido de amizade</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Friend Invitation</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -19,37 +19,12 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-
     <div class="container">
         <div class="row">
             <div class="col">
-            <div class="notifications_container">
-                <!-- Aqui serão renderizados os itens -->
-=======
-    <div class="notifications_container">
-        <?php if(!empty($notifications)): ?>
-            <?php foreach($notifications as $noti): ?>
-                <div class="notification card mb-3">
-                    <div class="card-body">
-                        <p class="card-text"><?php echo $noti['sent_date'];?></p>
-                        <p class="card-text"><?php echo $noti['message_text'];?></p>
-                        <?php if($noti['type_id'] == 1):?>
-                            <div class="add_friend" data-indicator="<?php echo $noti['sender']['id'];?>" data-id="<?php echo $noti['id'];?>">
-                                <button class="btn btn-primary">Add friend</button>
-                            </div>
-                            <div class="deny_friend" data-indicator="<?php echo $noti['sender']['id'];?>" data-id="<?php echo $noti['id'];?>">
-                                <button class="btn btn-danger">Deny invitation</button>
-                            </div>
-                        <?php endif;?>
-                    </div>
+                <div class="notifications_container">
+                    <!-- Aqui serão renderizados os itens -->
                 </div>
-            <?php endforeach; ?>
-        <?php else:?>
-            <div class="no_notifications alert alert-info notification">
-                <p>You don't have any notifications!</p>
->>>>>>> main
-            </div>
             </div>
         </div>
     </div>
@@ -99,77 +74,33 @@
 
 </script>
 <script>
-    $('.alert').ready(function(){
-        var ajax = new AjaxHandler();
-<<<<<<< HEAD
-        var btn_add = $(".add_friend");
-        var btn_decline = $(".deny_friend");
-        var span = $(".close");
-        var modal = $("#friend_invitation_modal");
-        span.click(function(){
-            modal.hide();
-            setInterval(function(){
-                location.reload();
-            }, 300);
-        });
-
-        $(window).click(function(event){
-            if (event.target == modal[0]) {
-                modal.hide();
-            }
-=======
+    window.onload = ()=>{
         var modal = $('#friend_invitation_modal');
-        var btn_add = $(".add_friend");
-        var btn_decline = $(".deny_friend");
-
-        btn_add.click(function(){
-            var notification_id = $(this).data("id"); 
-            ajax.post('<?php echo base_url('invites');?>/'+$(this).data("indicator")+'/1', {notification_id:notification_id}, function() {
-                $('#mensagemModal').text('Pedido de amizade aceito!');
-                modal.modal('show');
-            });
-            location.reload();
-        });
-
-        btn_decline.click(function(){
-            var notification_id = $(this).data("id"); 
-            ajax.post('<?php echo base_url('invites');?>/'+$(this).data("indicator")+'/2', {notification_id:notification_id}, function() {
-                $('#mensagemModal').text('Pedido de amizade recusado!');
-                modal.modal('show');
-            });
-            location.reload();
->>>>>>> main
-        });
-
-        /**
-         * MUDAR O ACEITE/RECUSANÇO DOS PEDIDOS PARA NODEJS
-         */
-
         $('.notifications_container').on('click', '.add_friend', function() {
             console.log("aa");
-            var notification_id = $(this).data("id"); 
-            ajax.post('<?php echo base_url('invites');?>/'+$(this).data("indicator")+'/1', {notification_id:notification_id}, function() {
-                $('#mensagemModal').text('Pedido de amizade aceito!');
-                modal.show();
+            var notification_id = $(this).attr("data-indicator"); 
+            console.log(notification_id);
+            ajax.post('http://localhost:5000/accept_invite', {id: notification_id}, function(data) {
+                console.log(data);
+                if(data.success){
+                    $('#mensagemModal').text('Friend invitation accepted!');
+                    modal.modal('show'); 
+                }
             });
         });
-
-        btn_add.click(function(){
-            
-        });
-
-        btn_decline.click(function(){
-            var notification_id = $(this).data("id"); 
-            ajax.post('<?php echo base_url('invites');?>/'+$(this).data("indicator")+'/2', {notification_id:notification_id}, function() {
-                $('#mensagemModal').text('Pedido de amizade recusado!');
-                modal.show();
+        
+        $('.notifications_container').on('click', '.deny_friend', function() {
+            var notification_id = $(this).attr("data-indicator"); 
+            console.log(notification_id);
+            ajax.post('http://localhost:5000/refuse_invite', {id: notification_id}, function(data) {
+                console.log(data);
+                if(data.success){
+                    $('#mensagemModal').text('Friend invitation refused!');
+                    modal.modal('show'); 
+                }
             });
         });
-    });
-<<<<<<< HEAD
-    
+    }
+
 
 </script>
-=======
-</script>
->>>>>>> main

@@ -16,12 +16,9 @@
         <script src="<?php echo base_url('resources/AjaxHandler.js');?>"></script>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<<<<<<< HEAD
         <script src="https://pagination.js.org/dist/2.6.0/pagination.min.js"></script> 
-=======
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
->>>>>>> main
         <script src="<?php echo base_url('resources/script.js');?>"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
         <title><?php echo $title;?></title>

@@ -12,6 +12,8 @@ class ServerNotifications {
         this.getNotifications();
         this.getTotalNotifications();
         this.loadNotifications();
+        this.acceptInvite();
+        this.refuseInvite();
     }
 
     getNotifications(){
@@ -69,6 +71,80 @@ class ServerNotifications {
 
                 res.setHeader('Content-Type', 'application/json');
                 res.write(JSON.stringify(num_noti));
+                res.end();
+            });
+        });
+    }
+
+    acceptInvite(){
+        this.app.post('/accept_invite', (req, res) => {
+            req.on('data', async (info) => {
+                console.log("aaaa");
+                res.setHeader('Content-Type', 'application/json');
+                const return_data = {};
+
+                const data = (info.toString().split('=')).pop();
+
+                if(data == '' || data == undefined){
+                    return_data.error = true;
+                    return_data.error_message = "There was an error. Try again later.";
+                    res.write(JSON.stringify(return_data));
+                    res.end();
+                    return;
+                }   
+
+                console.log(data);
+
+                const updated = await this.db.updateInvite(data, 1);
+
+                if(!updated){
+                    return_data.error = true;
+                    return_data.error_message = "There was an error. Try again later.";
+                    res.write(JSON.stringify(updated));
+                    res.end();
+                    return;
+                }
+
+                return_data.success = true;
+                return_data.success_message = 'Friend Invite accepted successfully.';
+                res.write(JSON.stringify(return_data));
+                res.end();
+            });
+        });
+    }
+
+    refuseInvite(){
+        this.app.post('/refuse_invite', (req, res) => {
+            req.on('data', async (info) => {
+                console.log("aaaa");
+                res.setHeader('Content-Type', 'application/json');
+                const return_data = {};
+
+                const data = (info.toString().split('=')).pop();
+
+                if(data == '' || data == undefined){
+                    return_data.error = true;
+                    return_data.error_message = "There was an error. Try again later.";
+                    res.write(JSON.stringify(return_data));
+                    res.end();
+                    return;
+                }   
+
+                console.log(data);
+
+                const updated = await this.db.updateInvite(data, 2);
+
+                if(!updated){
+                    return_data.error = true;
+                    return_data.error_message = "There was an error. Try again later.";
+                    res.write(JSON.stringify(updated));
+                    res.end();
+                    return;
+                }
+
+                return_data.success = true;
+                return_data.success_message = 'Friend Invite refused successfully.';
+                res.write(JSON.stringify(return_data));
                 res.end();
             });
         });

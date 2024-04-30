@@ -37,6 +37,34 @@ async function getNotificationsCount(data){
     return rows;
 }
 
-module.exports = {getUserNotifications, getNotificationsCount};
+async function updateInvite(notification_id, status){
+    const conn = await connect();
+
+    try{
+        const [rows] = await conn.query("SELECT receiver_id, sender_id FROM notifications WHERE id = ?", [notification_id]);
+
+        const users_ids = await JSON.parse(JSON.stringify(rows))[0];
+    
+        const invite_id = await conn.query("UPDATE friends SET status=? WHERE id_user1 = ? AND id_user2 = ? OR id_user1 = ? AND id_user2 = ?", [Number(status), users_ids.sender_id, users_ids.receiver_id, users_ids.receiver_id, users_ids.sender_id])['rows'];
+    
+        await conn.query("DELETE FROM notifications WHERE id = ?", [notification_id]);
+    
+        const user = await conn.query("SELECT * FROM user WHERE id = ?;", [users_ids.receiver_id]);
+        //console.log(await conn.query("SELECT * FROM user WHERE id = ?;", [users_ids.receiver_id]));
+        const username = JSON.parse(JSON.stringify(await user))[0][0].username;
+        //console.log("User: "+JSON.stringify(JSON.parse(JSON.stringify(await user))[0][0].username));
+    
+        var currentDate = new Date();
+        var sqlFormattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
+        console.log(sqlFormattedDate); // Outputs: "2024-04-30 10:43:30"
+        await conn.query("INSERT INTO notifications (type_id, sent_date, receiver_id, sender_id, message_text) VALUES (?, ?, ?, ?, ?);",[2, sqlFormattedDate, users_ids.sender_id, users_ids.receiver_id, username+' '+((status == 1) ? 'accpeted' : 'refused')+' your friend invitation.']);    
+        return true;
+    }catch(err){
+        console.log(err);
+        return false;
+    }
+}
+
+module.exports = {getUserNotifications, getNotificationsCount, updateInvite};
 
 
