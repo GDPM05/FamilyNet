@@ -74,8 +74,8 @@
           `;
         }
         var div = `
-          <div class="alert alert-info alert-dismissible fade show" role="alert">
-            <strong>${item.sent_date}</strong><br>
+          <div class="notification alert alert-info alert-dismissible fade show" role="alert">
+            <strong>${(new Date(item.sent_date).toLocaleString()).replace(',', '')}</strong><br>
             ${item.message_text}
             ${buttonsHtml}
           </div>`;
