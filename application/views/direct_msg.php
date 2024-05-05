@@ -110,10 +110,15 @@
             console.log($(this).children(".conv_id").text());
             var user_name = '<?php echo $user['user'];?>';
             var user_id = <?php echo $user['id'];?>;   
-            var current_friend = $(this).find('#friend_id').text();  
+            var current_friend = $(this).find('#friend_id').text(); 
+
+            if(current_friend == friend_id){
+                return;
+            }
+            
             console.log("Amigo: "+current_friend);
             conv_id = $(this).find('#conv_id').text();
-            if(friend_id != null && this.friend_id != current_friend)
+            if(friend_id != null && friend_id != current_friend)
                 cliente.change_friend(current_friend);
             else
                 cliente.emit_userdata({user_name: user_name, user_id:user_id, friend_id: current_friend});
