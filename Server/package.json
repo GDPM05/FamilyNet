@@ -5,7 +5,7 @@
   "main": "Server.cjs",
   "scripts": {
     "test": "test",
-    "start": "node server.cjs",
+    "start": "nodemon server.cjs",
     "start_not": "nodemon ServerNotifications.js"
   },
   "repository": {

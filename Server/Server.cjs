@@ -19,7 +19,7 @@ class Server{
         this.sockets = []; // Array que guarda os sockets
         this.user_map = {}; // Mapa responsável por identificar os utilizadores baseado no seu id único
         this.users = []; // Arary de utilizadores
-        this.showInfo(); // Método para mostrar as informações do servidor
+        //this.showInfo(); // Método para mostrar as informações do servidor
     }
 
     showInfo(){ // Método para mostrar as informações do servidor (apenas em fase de testes)
@@ -56,6 +56,17 @@ class Server{
             var user_name = data.name; // Guarda em variável o nome do user
             var user_conv = data.id_user_conv; // Guarda em variável o id do user que estabelecerá comunicação
             
+            var user_friend = this.users[this.user_map[user_conv]];
+            //console.log("Outro amigo: "+((user_teste != undefined) ? JSON.stringify(user_teste) : user_teste));
+            //console.log("Outro amigo: "+((user_teste != undefined) ? user_teste['id'] : null));
+
+            if(user_friend != undefined){
+                socket.emit('friend_online', true);
+                console.log('onlino')
+            }
+                
+
+
             var user = new User(user_id, user_name, user_conv); // Criar uma instância da class User
             
             console.log("New user: "+user.id, user.name, user.id_user_conv); 
@@ -77,7 +88,7 @@ class Server{
             conversa.generateEncMethod(); // Gera um método de encriptação que será usado pelos utilizadores
             this.conversas[conversa.uniqueId] = conversa; // Guarda a conversa no array de conversas, usando o id unico da conversa como chave
         }
-        
+
         conversa.assoc_user(user.uniqueId); // Associa o utilizador em questão à conversa
         socket.emit('enc_method', conversa.get_method()); // Envia o método de encriptação para o utilizador
         var friendSocketId = this.socket_id_map[this.user_map[user_conv]];

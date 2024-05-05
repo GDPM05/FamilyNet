@@ -42,8 +42,10 @@ class Client{
                     this.enc_method = socket;
                 });
                 this.socket.on('friend_online', (socket)=>{
-                    console.log((socket) ? "Online" : "Offline");
-                    $(".is_online").html(((socket) ? "Online" : "Offline"));
+                    setTimeout(function(){
+                        console.log((socket) ? "Online" : "Offline");
+                        $(".is_online").html(((socket) ? "Online" : "Offline"));
+                    }, 200);
                 });
             });
         }catch(error){

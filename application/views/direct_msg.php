@@ -21,7 +21,7 @@
         <div class="row-12 friends">
             <h3>Friends</h3>
             <div class="list-group">
-                <?php foreach ($conversations as $conv): 
+                <?php foreach ($conversations as $conv):
                     if(!empty($conv)): ?>
                     <div class="list-group-item list-group-item-action friend">
                         <img class="rounded-circle mr-2" src="<?=$conv['pfp']['path']?>" alt="<?=$conv['pfp']['alt']?>" style="width: 30px; height: 30px;">
@@ -145,10 +145,10 @@
 
             
             var user = ajax.get('<?php echo base_url('fetch_user');?>/'+conv_id, (data)=>{
-                console.log("ai", data);
-                $(".card-header > .user-img").attr('src', data['pfp']);
-                $(".card-header > .user-img").attr('alt', data['user']);
-                $(".card-header > div > .user-name").text(data['username']);
+                console.log("aaai", data);
+                $(".card-header > .user-img").attr('src', data.pfp);
+                $(".card-header > .user-img").attr('alt', data.user);
+                $(".card-header > div > .user-name").text(data.username);
             });
 
 

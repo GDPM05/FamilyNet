@@ -441,6 +441,11 @@ form input[type="submit"]:hover{
     margin: auto;
 }
 */
+
+.direct_msg .left-side .dm-window{
+    margin-top: 25px;
+}
+
 .direct_msg .left-side .dm-window .user-info{
     height: 70px;
     width: 100%;
@@ -467,7 +472,7 @@ form input[type="submit"]:hover{
     flex-direction: column-reverse;
     overflow: auto;
     overflow-x: hidden;
-    height: 800px;
+    height: 700px;
 }
 
 .direct_msg .left-side .dm-window .messages .message {
