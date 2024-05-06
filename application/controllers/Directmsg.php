@@ -190,7 +190,7 @@
         public function send_message_private($id_friend = null){
             print_r($this->UserConversation_model->check_if_exists(['id_user' => $this->session->userdata('user')['id']]));
             //return;
-            if(empty($this->UserConversation_model->check_if_exists(['id_user' => $this->session->userdata('user')['id']])) && empty($this->UserConversation_model->check_if_exists(['id_user' => $id_friend]))){
+            if($this->UserConversation_model->check_if_conv_exists($id_friend, $this->session->userdata('user')['id'])){
                 $conv_id = $this->Conversation_model->insert(['title' => md5($id_friend)]);
     
                 $this->UserConversation_model->insert([
