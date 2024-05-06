@@ -21,7 +21,7 @@
         <div class="row-12 friends">
             <h3>Friends</h3>
             <div class="list-group">
-                <?php foreach ($conversations as $conv): 
+                <?php foreach ($conversations as $conv):
                     if(!empty($conv)): ?>
                     <div class="list-group-item list-group-item-action friend">
                         <img class="rounded-circle mr-2" src="<?=$conv['pfp']['path']?>" alt="<?=$conv['pfp']['alt']?>" style="width: 30px; height: 30px;">
@@ -106,17 +106,22 @@
         var messages;
         let load = true;
         let scrolling = false;
-        $(".friend, .group").click(function(){
+        $(".friend").click(function(){
             console.log($(this).children(".conv_id").text());
             var user_name = '<?php echo $user['user'];?>';
             var user_id = <?php echo $user['id'];?>;   
-            var current_friend = $(this).find('#friend_id').text();  
-            conv_id = $(this).find('#conv_id').text();
+            var current_friend = $(this).find('#friend_id').text(); 
+
+            if(current_friend == friend_id){
+                return;
+            }
+            
             console.log("Amigo: "+current_friend);
-            if(friend_id != null && this.friend_id != current_friend)
+            conv_id = $(this).find('#conv_id').text();
+            if(friend_id != null && friend_id != current_friend)
                 cliente.change_friend(current_friend);
             else
-                cliente.emit_userdata({user_name: user_name, user_id:user_id, id_conv: conv_id, friend: current_friend});
+                cliente.emit_userdata({user_name: user_name, user_id:user_id, friend_id: current_friend});
 
             friend_id = current_friend;
             console.log(friend_id);
@@ -145,10 +150,10 @@
 
             
             var user = ajax.get('<?php echo base_url('fetch_user');?>/'+conv_id, (data)=>{
-                console.log("ai", data);
-                $(".card-header > .user-img").attr('src', data['pfp']);
-                $(".card-header > .user-img").attr('alt', data['user']);
-                $(".card-header > div > .user-name").text(data['username']);
+                console.log("aaai", data);
+                $(".card-header > .user-img").attr('src', data.pfp);
+                $(".card-header > .user-img").attr('alt', data.user);
+                $(".card-header > div > .user-name").text(data.username);
             });
 
 
@@ -238,7 +243,7 @@
             data['message']['read_date'] = '0000-00-00 00:00:00';
 
 
-            console.log("msg: "+data.message.id_conversation);
+            console.log(data);
 
             ajax.post('<?php echo base_url('send_message');?>', data, (res)=>{
                 console.log(res);

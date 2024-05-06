@@ -85,7 +85,7 @@
                 console.log(friend);
                 var div = createDiv(friend);
                 console.log(div);
-                $("#friendsModal .modal-body").html(div); // Corrigido aqui
+                $("#friendsModal .modal-body").append(div); // Corrigido aqui
             });
         });
     });

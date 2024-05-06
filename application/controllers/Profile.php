@@ -27,8 +27,8 @@
         }   
 
         public function load_profile(){
-            $username = $this->uri->segment(2);
-            $user = $this->User_model->fetch(array('user' => $username));
+            $info = $this->uri->segment(2);
+            $user = (is_numeric($info)) ?  $this->User_model->fetch(array('id' => $info)) :  $this->User_model->fetch(array('user' => $info));
             $pfp = $this->Media_model->fetch(array('id' => $user['pfp']));
             $this->data['title'] = TITLE.' | '.$user['username'];
             $this->data['user_pfp']['path'] = $pfp['path'];
@@ -157,13 +157,17 @@
 
             $friends = $this->Friends_model->fetch_friends($this->session->userdata('user')['id']);
 
+           // print_r($friends);
+
             $friend_user = [];
             foreach($friends as $friend){
-                $user_id = ($friend['id_user1'] == $this->session->userdata('user')['id']) ? $friend['id_user2'] : $friend['id_user2'];
-                $user = $this->User_model->fetch(['id' => $user_id]);
+                $user_id = ($friend['id_user1'] == $this->session->userdata('user')['id']) ? $friend['id_user2'] : $friend['id_user1'];
+                $user = $this->User_model->fetch(['id' => $user_id], 'id, user, username, pfp');
                 $user['pfp'] = $this->Media_model->fetch(['id' => $user['pfp']]);
                 $friend_user[] = $user;
             }
+
+            //print_r($friend_user);
 
             header('Content-Type: application/json');
             echo json_encode($friend_user);

@@ -3,30 +3,39 @@
 
 ?>
 
-<main>
-    <div id="friend_invitation_modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p id="mensagemModal"></p>
+<main class="container">
+    <div id="friend_invitation_modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p id="mensagemModal"></p>
+                </div>
+            </div>
         </div>
     </div>
-    <h1 class="profile-name"><img class="profile-pict" src="<?php echo $user_pfp['path'];?>" alt="<?php echo $user_pfp['alt'];?>"><?php echo $user['username'];?></h1>
-
-    <div class="user-options">
+    <div class="text-center mt-5">
+        <h1 class="profile-name">
+            <img class="profile-pict rounded-circle" src="<?php echo $user_pfp['path'];?>" alt="<?php echo $user_pfp['alt'];?>"><?php echo $user['username'];?>
+        </h1>
+    </div>
+    <div class="user-options text-center mt-4">
         <?php if($already_friends === TRUE || $already_friends->status == 2):?>
-            <div class="add_friend">
-                <button>Add friend</button>
+            <div class="add_friend d-inline-block mr-2">
+                <button class="btn btn-primary">Add friend</button>
             </div>
         <?php elseif((int)$already_friends->status == 3): ?>
-            <div class="add_friend">
-                <button disabled>Invitation pending</button>
+            <div class="add_friend d-inline-block mr-2">
+                <button class="btn btn-primary" disabled>Invitation pending</button>
             </div>
         <?php else:?>
-            <div class="send_message">
-                <button><a href="<?php echo base_url('send_message_private/').$user['id'];?>">Send message</a></button>
+            <div class="send_message d-inline-block mr-2">
+                <button class="btn btn-primary"><a href="<?php echo base_url('send_message_private/').$user['id'];?>" class="text-white">Send message</a></button>
             </div>
-            <div class="unfriend">
-                <button>Unfriend</button>
+            <div class="unfriend d-inline-block">
+                <button class="btn btn-danger">Unfriend</button>
             </div>
         <?php endif;?>
     </div>
@@ -45,6 +54,7 @@
                 $('#mensagemModal').text("Pedido de amizade enviado com sucesso!");
                 modal.show();
                 console.log(data);
+                document.location.reload();
             });
         });
 
