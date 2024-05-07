@@ -141,6 +141,38 @@ i{
     overflow-y: auto;
 }
 
+.family_menu .btn {
+    max-height: 50px;
+}
+
+.family_menu .side-menus {
+    max-width: 400px;
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.family_menu .side-menus .family_members{
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.family_menu .container{
+    width: 100% !important;
+    /* margin: 0; */
+}
+
+.family_member {
+    cursor:pointer;
+    transition: 0.5s;
+}
+
+.family_member:hover{
+    background-color: rgb(220,220,220);
+}
+
+.hidden {
+    display: none;
+}
 /*
 .home .left-side, .signup .left-side{
     float: left;

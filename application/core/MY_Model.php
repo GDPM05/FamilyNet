@@ -80,7 +80,7 @@
 
             if(!$query){
                 $this->error = true;
-                $this->error_message = 'Internal Error. Try again later.';
+                $this->error_message = 'Internal Error. Try again later. '.$this->db->error;
                 return false;
             }
 

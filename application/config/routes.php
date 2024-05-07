@@ -82,3 +82,7 @@ $route['get_friends_pr'] = 'Profile/get_friends';
 $route['profile/update_info'] = 'Profile/update_info';
 $route['search_friends/(:any)'] = 'Directmsg/search_friends/$1';
 $route['new_conversation/(:num)'] = 'Directmsg/new_conv/$1';
+$route['family_menu'] = 'Family';
+$route['new_family'] = 'Family/new_family';
+$route['child_account'] = 'Family/create_child_account';
+$route['get_family'] = 'Family/get_family';
