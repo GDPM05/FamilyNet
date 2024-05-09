@@ -40,6 +40,9 @@
                 //print_r($data);
             }            
 
+
+            $this->data['family_name'] = $family['family_name'];
+
             $this->load->view('common/header', $this->data);
             $this->load->view('common/menu', $this->data);
             $this->load->view((!empty($family)) ? 'family_menu' : 'new_family', $this->data);

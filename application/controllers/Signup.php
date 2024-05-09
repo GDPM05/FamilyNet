@@ -281,7 +281,6 @@
                 return $e;
             }
 
-
             return true;
         }
 

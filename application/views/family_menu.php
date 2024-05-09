@@ -11,7 +11,7 @@
             </div>
             <div class="side-menus col-md-6 ml-auto">
                 <div class="card my-3">
-                    <div class="card-header">Family</div>
+                    <div class="card-header"><?=$family_name?></div>
                     <ul class="family_members list-group list-group-flush">
                     </ul>
                 </div>
