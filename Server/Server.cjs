@@ -65,8 +65,6 @@ class Server{
                 console.log('onlino')
             }
                 
-
-
             var user = new User(user_id, user_name, user_conv); // Criar uma instância da class User
             
             console.log("New user: "+user.id, user.name, user.id_user_conv); 
@@ -123,7 +121,7 @@ class Server{
     }
 
     handleMessage(socket, data){ // Método responsável por tratar as mensagens enviadas
-        console.log("Olá");
+        console.log(data);
         var user = this.sockets[socket.id]; // Busca o utilizador ao array de sockets
         console.log("User:" + user.id_user_conv);
         if(!this.user_map[user.id_user_conv]) // Verifica se o utilizador amigo está no servidor

@@ -504,7 +504,7 @@ form input[type="submit"]:hover{
     flex-direction: column-reverse;
     overflow: auto;
     overflow-x: hidden;
-    height: 700px;
+    max-height: 700px;
 }
 
 .direct_msg .left-side .dm-window .messages .message {

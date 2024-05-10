@@ -57,7 +57,7 @@ class Client{
     emit_userdata(data){ // Método responsável por enviar os dados do utilizador para o servidor
         console.log(data);
         try{
-            this.socket.emit('user_data', {name: data.user_name, id: data.user_id, id_user_conv: data.friend_id});
+            this.socket.emit('user_data', {name: data.user_name, id: data.user_id, id_conv: data.id_conv, friend: data.friend});
         }catch(error){
             throw error;
         }    
