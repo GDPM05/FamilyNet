@@ -21,6 +21,8 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="<?php echo base_url('resources/script.js');?>"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
+        <script src="<?php echo base_url('resources/profile-js.js');?>"></script>
+        <script src="<?php echo base_url('resources/search-js.js');?>"></script>
         <title><?php echo $title;?></title>
     </head>
 <body>

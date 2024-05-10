@@ -40,7 +40,7 @@
 
             $offset = ($page - 1) * $per_page;
             $_SESSION['data']['offset'] = $offset;
-            $data['query'] = $this->User_model->fetch_all_like(["user", $query], $per_page, $offset, null);
+            $data['query'] = $this->User_model->fetch_all_like(["user", $query], $per_page, $offset, null, "user, username, pfp, id");
 
             foreach($data['query'] as $key => $user){
                 if($user['id'] == $this->session->userdata('user')['id']){

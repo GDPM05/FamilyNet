@@ -44,11 +44,12 @@
                 return $this->db->get($this->table)->result_array();
         }
 
-        public function fetch_all_like($like, $limit, $start, $where){
+        public function fetch_all_like($like, $limit, $start, $where, $fields){
             $this->db->like($like[0], $like[1]);
-            if(!empty($limiy) || !empty($start))
+            if(!empty($limit) || !empty($start))
                 $this->db->limit($limit, $start);
-            
+            if($fields != null)
+                $this->db->select($fields);
             if(!empty($where)){
                 if($where['multiple']){
                     unset($where['multiple']);
