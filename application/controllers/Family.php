@@ -15,12 +15,10 @@
         }
 
         public function index() {
-            $this->data = array(
-                'title' => TITLE.' | Families',
-                'user' => $this->session->userdata['user'],
-                'genders' => $this->Gender_model->fetch_all(),
-            );
-
+            $this->data['title'] = TITLE.' | Families';
+            $this->data['user'] = $this->session->userdata['user'];
+            $this->data['genders'] = $this->Gender_model->fetch_all();
+            
             $user_id = $this->session->userdata['user']['id'];
 
             //print_r($this->session->userdata['user']);
@@ -35,13 +33,13 @@
                     // Verifica qual ID é o do amigo
                     $friend_id = $friend['id_user1'] == $user_id ? $friend['id_user2'] : $friend['id_user1'];
                     $user = $this->User_model->fetch(['id' => $friend_id]);
-                    $data['friends'][] = $user;
+                    $this->data['friends'][] = $user;
                 }
                 //print_r($data);
-            }            
+            }else           
+                $this->data['family_name'] = $family['family_name'];
 
 
-            $this->data['family_name'] = $family['family_name'];
 
             $this->load->view('common/header', $this->data);
             $this->load->view('common/menu', $this->data);
@@ -68,7 +66,7 @@
             
             $family_id = $this->Family_model->insert($insert_data);
 
-            $this->FamilyUser_model->insert(['id_user' => $this->session->userdata('user')['id'], 'id_family' => $family_id['id']]);
+            $this->FamilyUser_model->insert(['id_user' => $this->session->userdata('user')['id'], 'id_family' => $family_id]);
 
             if($this->Family_model->error){
                 $data['error'] = 'Houve um erro durante a criação da família. Tente novamente mais tarde.';
