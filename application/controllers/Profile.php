@@ -16,7 +16,7 @@
 
         public function index() {
             $data = array(
-                'title' => TITLE.' | Profile',
+                'title' => TITLE.' | Perfil',
                 'user' => $this->session->userdata['user']
             );
 

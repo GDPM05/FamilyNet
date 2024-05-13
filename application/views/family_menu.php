@@ -7,8 +7,8 @@
         <div class="row">
             <div class="col-md-6">
                 <!-- Botões Open Chat e Settings -->
-                <button class="btn open_chat btn-primary my-3">Open Chat</button>
-                <button class="btn config btn-secondary my-3">Settings</button>
+                <button class="btn open_chat btn-primary my-3">Abrir chat</button>
+                <button class="btn config btn-secondary my-3">Definições</button>
                 <!-- Novo div abaixo dos botões -->
                 <div class="family_chat hidden my-3">
                     
@@ -55,20 +55,20 @@
                     </ul>
                 </div>
                 <div class="card my-3">
-                    <div class="card-header">Create Child Account</div>
+                    <div class="card-header">Criar conta-criança</div>
                     <div class="card-body">
                         <form action="<?=base_url('child_account')?>" method="post">
                             <p style="color: red"><?if(isset($error) && $error): echo $error_msg; endif;?></p>
                             <div class="form-group">
-                                <label for="name">Name</label>
+                                <label for="name">Nome</label>
                                 <input type="text" name="name" id="name" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="birthday">Birthday</label>
+                                <label for="birthday">Data de Nascimento</label>
                                 <input type="date" name="birthday" id="birthday" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="gender">Gender</label>
+                                <label for="gender">Género</label>
                                 <select name="gender" id="gender" class="form-control">
                                     <?php foreach($genders as $gender): ?>
                                         <option value="<?=$gender['id']?>"><?=$gender['title']?></option>

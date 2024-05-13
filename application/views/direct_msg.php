@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="row-12 friends">
-            <h3>Friends</h3>
+            <h3>Amigos</h3>
             <div class="list-group">
                 <?php foreach ($conversations as $conv):
                     if(!empty($conv)): ?>
@@ -36,7 +36,7 @@
         </div>
         <hr>
         <div class="row-12 groups">
-            <h3>Groups</h3>
+            <h3>Grupos</h3>
             <?php
                 foreach($groups as $group): ?>
                     <div class="list-group-item list-group-item-action group">
@@ -62,20 +62,20 @@
             <div class="modal-body">
                 <form action="<?=base_url("create_group")?>" method="post" class="create_group_form" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="gname">Group Name</label>
+                        <label for="gname">Nome do Grupo</label>
                         <input type="text" class="form-control" name="gname" id="gname">
                     </div>
                     <div class="form-group">
-                        <label for="gpic">Group Picture</label>
+                        <label for="gpic">Imagem do Grupo</label>
                         <input type="file" class="form-control-file" name="gpic" id="gpic">
                     </div>
                     <div class="form-group">
-                        <label for="gdesc">Description</label>
+                        <label for="gdesc">Descrição</label>
                         <textarea class="form-control" name="gdesc" id="gdesc" rows="2" maxlength="400" oninput="updateCharacterCount()"></textarea>
                         <small id="characterCount" class="form-text text-muted">0 / 400</small>
                     </div>
                     <div class="form-group">
-                        <label for="friend_list">Friends: </label>
+                        <label for="friend_list">Amigos: </label>
                         <select class="form-control" name="friend_list[]" id="friend_list" multiple>
                             <?php foreach ($friends as $friend):?>
                                 <option value="<?=$friend['id']?>"><?=$friend['username']?></option>
@@ -83,9 +83,9 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="gprivacy">Private</label>
+                        <label for="gprivacy">Privado</label>
                         <input type="checkbox" name="gprivacy" id="gprivacy">
-                        <small>Leave unchecked if you want the group to be public</small>
+                        <small>Caso queira que o grupo seja público, deixe a caixa desmarcada.</small>
                     </div>
                     <button type="submit" class="btn btn-primary">Criar</button>
                 </form>

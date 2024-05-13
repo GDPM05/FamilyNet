@@ -24,18 +24,18 @@
     <div class="user-options text-center mt-4">
         <?php if($already_friends === TRUE || $already_friends->status == 2):?>
             <div class="add_friend d-inline-block mr-2">
-                <button class="btn btn-primary">Add friend</button>
+                <button class="btn btn-primary">Enviar pedido de amizade</button>
             </div>
         <?php elseif((int)$already_friends->status == 3): ?>
             <div class="add_friend d-inline-block mr-2">
-                <button class="btn btn-primary" disabled>Invitation pending</button>
+                <button class="btn btn-primary" disabled>Pedido pendente</button>
             </div>
         <?php else:?>
             <div class="send_message d-inline-block mr-2">
                 <button class="btn btn-primary"><a href="<?php echo base_url('send_message_private/').$user['id'];?>" class="text-white">Send message</a></button>
             </div>
             <div class="unfriend d-inline-block">
-                <button class="btn btn-danger">Unfriend</button>
+                <button class="btn btn-danger">Remover Amigo</button>
             </div>
         <?php endif;?>
     </div>

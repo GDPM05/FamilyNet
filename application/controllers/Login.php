@@ -27,8 +27,6 @@
                     redirect(base_url('main'));
             }
 
-            echo $this->passwordhash->hashpassword("Johny_123");
-
             $this->form_validation->set_rules('email', 'Email', 'required|trim');
             $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
 

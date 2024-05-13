@@ -5,7 +5,6 @@
 ?>
 
 <main class="new_family container">
-    <!-- FAZER FORM E TUDO PARA CRIAÇÃO DE FAMÍLIA -->
     <h2 class="text-center my-4">Parece que ainda não tem uma família...</h2>
      <div class="create_family">
         <form action="<?=base_url('new_family')?>" method="post" class="new_family">

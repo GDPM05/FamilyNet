@@ -42,20 +42,20 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="username" class="col-sm-3 col-form-label">Username</label>
+                            <label for="username" class="col-sm-3 col-form-label">Nome de utilizador</label>
                             <div class="col-sm-9">
                                 <input type="text" name="username" id="username" class="form-control" value="<?=$user['username'];?>">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="phone" class="col-sm-3 col-form-label">Phone Number</label>
+                            <label for="phone" class="col-sm-3 col-form-label">Número de Telefone</label>
                             <div class="col-sm-9">
                                 <input type="text" name="phone" id="phone" class="form-control" value="<?=$user['phone'];?>">
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-10 offset-sm-2">
-                                <button type="submit" class="btn btn-primary">Confirm</button>
+                                <button type="submit" class="btn btn-primary">Confirmar</button>
                             </div>
                         </div>
                     </form>

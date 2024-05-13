@@ -15,7 +15,7 @@
 
         public function index() {
             $data = array(
-                'title' => TITLE.' | Search',
+                'title' => TITLE.' | Pesquisa',
             );
 
             $this->load->view('common/header', $data);

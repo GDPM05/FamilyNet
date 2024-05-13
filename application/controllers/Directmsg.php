@@ -20,7 +20,7 @@
 
         public function index() {
             $data = array(
-                'title' => TITLE.' | Direct Messages',
+                'title' => TITLE.' | Mensagens Privadas',
                 'user' => $this->session->userdata('user')
             );
 

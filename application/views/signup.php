@@ -19,19 +19,21 @@
             ?>
             <form action="" method="POST" enctype="multipart/form-data" class="signup_form w-100">
                 <div class="form-group step_one mb-3 text-center">
-                    <input type="text" class="form-control form-control-lg mx-auto" style="width: 80%;" placeholder="Name" name="name_in" id="name_in" value="<?=set_value('name_in')?>">
-                    <input type="text" class="form-control form-control-lg mx-auto" style="width: 80%;" placeholder="Username" name="username_in" id="username_in" value="<?=set_value('user_in')?>">
+                    <input type="text" class="form-control form-control-lg mx-auto" style="width: 80%;" placeholder="Nome" name="name_in" id="name_in" value="<?=set_value('name_in')?>">
+                    <input type="text" class="form-control form-control-lg mx-auto" style="width: 80%;" placeholder="Nome de utilizador" name="username_in" id="username_in" value="<?=set_value('user_in')?>">
                 </div>
                 <div class="form-group step_two mb-3 text-center" style="display: none">
                     <input type="email" class="form-control form-control-lg mx-auto" style="width: 80%;" placeholder="Email" name="email_in" id="email_in" value="<?=set_value('email_in')?>">
-                    <input type="text" class="form-control form-control-lg mx-auto mt-2" style="width: 80%;" placeholder="Phone Number (optional)" name="phone_in" id="phone_in" value="<?=set_value('phone_in')?>">
+                    <input type="text" class="form-control form-control-lg mx-auto mt-2" style="width: 80%;" placeholder="Número de telefone (Opcional)" name="phone_in" id="phone_in" value="<?=set_value('phone_in')?>">
                 </div>
                 <div class="form-group step_three mb-3 text-center" style="display: none">
-                    <input type="password" class="form-control form-control-lg mx-auto" style="width: 80%;" placeholder="Password" name="password_in" id="password_in">
-                    <input type="password" class="form-control form-control-lg mx-auto mt-2" style="width: 80%;" placeholder="Repeat Password" name="password_repeat" id="password_repeat"> 
+                    <input type="password" class="form-control form-control-lg mx-auto" style="width: 80%;" placeholder="Palavra passe" name="password_in" id="password_in">
+                    <input type="password" class="form-control form-control-lg mx-auto mt-2" style="width: 80%;" placeholder="Repetir Palavra passe" name="password_repeat" id="password_repeat"> 
                 </div>
                 <div class="form-group step_four mb-3 text-center" style="display: none">
+                    <label for="birthday_in">Data de nascimento</label>
                     <input type="date" class="form-control form-control-lg mx-auto" style="width: 80%;" name="birthday_in" id="birthday_in" value="<?=set_value('birthday_in')?>">
+                    <label for="pfp_in">Foto de perfil</label>
                     <input type="file" class="form-control-file mx-auto mt-2" style="width: 80%;" name="pfp_in" id="pfp_in" value="<?=set_value('pfp_in')?>">     
                 </div>
                 <div class="form-group step_five mb-3 text-center" style="display: none">
@@ -52,18 +54,13 @@
                     <div class="g-recaptcha mt-4 mb-3 mx-auto text-center" style="width: 60%;" data-sitekey="6LegHdEoAAAAAFkJKNg0x3bMdsfW-59c2UqYpLHh"></div>
                 </div> 
                 <div class="account_help_signup text-center mb-3">
-                    <p>Already have an account? <a href="<?php echo base_url();?>">Sign In</a></p>
+                    <p>Já tem uma conta? <a href="<?php echo base_url();?>">Entre</a></p>
                 </div>
                 <div class="next_prev d-flex justify-content-between mt-3 w-100">
-                    <button type="button" class="btn btn-secondary btn-lg w-50">Previous</button>
-                    <button type="submit" class="btn btn-primary btn-lg w-50" id="signup_submit">Next</button>
+                    <button type="button" class="btn btn-secondary btn-lg w-50">Anterior</button>
+                    <button type="submit" class="btn btn-primary btn-lg w-50" id="signup_submit">Próximo</button>
                 </div>
             </form>
         </div>
-
-
-
-
-
     </div>
 </main>

@@ -8,7 +8,7 @@
             <div class="col-md-6">
                 <!-- Barra de pesquisa -->
                 <div class="input-group my-3">
-                    <input type="text" id="search" name="search" class="form-control" placeholder="Search" value="<?php echo (isset($_SESSION['last_search'])) ? $_SESSION['last_search'] : "";?>">
+                    <input type="text" id="search" name="search" class="form-control" placeholder="Pesquisa" value="<?php echo (isset($_SESSION['last_search'])) ? $_SESSION['last_search'] : "";?>">
                 </div>
                 <!-- Elementos do usuário -->
                 <div class="row justify-content-center results">

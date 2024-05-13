@@ -21,16 +21,16 @@
                     <input type="email" name="email" id="email_in" class="form-control mx-auto" value="<?=set_value('email')?>">
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">Palavra Passe</label>
                     <input type="password" name="password" id="password_in" class="form-control mx-auto" >
                 </div>
                 <div class="form-group">
-                    <label for="keep_login">Stay Signed In</label>
+                    <label for="keep_login">Manter o Login</label>
                     <input type="checkbox" name="keep_login" id="keep_login">
                 </div>
                 <div class="account_help">
-                    <p>Don't have an <a href="<?php echo base_url('signup');?>">account</a>?</p>
-                    <p>Forgot your <a href="<?php echo base_url('reset_password');?>">password</a>?</p>
+                    <p>Não tens uma <a href="<?php echo base_url('signup');?>">conta</a>?</p>
+                    <p>Esqueceste a tua <a href="<?php echo base_url('reset_password');?>">palavra passe</a>?</p>
                 </div>
                 <div class="continue_with">
                     <a href="<?=base_url('google_auth')?>" class="google">

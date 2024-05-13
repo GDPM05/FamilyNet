@@ -15,7 +15,7 @@
         }
 
         public function index() {
-            $this->data['title'] = TITLE.' | Families';
+            $this->data['title'] = TITLE.' | Família';
             $this->data['user'] = $this->session->userdata['user'];
             $this->data['genders'] = $this->Gender_model->fetch_all();
             

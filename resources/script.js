@@ -11,9 +11,9 @@ $(document).ready(function() {
     // Atualiza o texto do botão com base no passo atual
     function updateButton() {
         if (step === totalSteps - 1) {
-            btnNext.text("Submit");
+            btnNext.text("Criar Conta");
         } else {
-            btnNext.text("Next");
+            btnNext.text("Próximo");
         }
     }
 
