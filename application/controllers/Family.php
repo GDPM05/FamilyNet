@@ -31,15 +31,24 @@
                 $friends = $this->Friends_model->fetch_friends($user_id);
                 foreach($friends as $friend){
                     // Verifica qual ID é o do amigo
-                    $friend_id = $friend['id_user1'] == $user_id ? $friend['id_user2'] : $friend['id_user1'];
+                    //$friend_id = $friend['id_user1'] == $user_id ? $friend['id_user2'] : $friend['id_user1'];
                     $user = $this->User_model->fetch(['id' => $friend_id]);
                     $this->data['friends'][] = $user;
                 }
                 //print_r($data);
-            }else           
+            }else{
+                $family_members_ids = $this->FamilyUser_model->fetch_all(null, null, null, null, ['id_family' => $family_id['id_family']]);
+                $family_members = [];
+                foreach($family_members_ids as $id){
+                    //print_r($id);
+                    $family_members[] = $this->User_model->fetch(['id' => $id['id_user']], 'id, user, username, pfp, gender, p_role');
+                }
+                $this->data['family_creator'] = $family['id_creator'];
                 $this->data['family_name'] = $family['family_name'];
+                $this->data['family_members'] = $family_members;
+            }
 
-
+            
 
             $this->load->view('common/header', $this->data);
             $this->load->view('common/menu', $this->data);
@@ -116,11 +125,18 @@
                     $return_data['error_msg'] = 'Insert a valid date.';
                 } else {
                     // Insert user data
+
+                    $media_id = $this->Media_model->insert([
+                        'path' => base_url('/media/profile_pictures/default/child.png'),
+                        'alt' => 'child'
+                    ]);
+
                     $insert_data = [
                         'username' => $data['name'],
                         'user' => strtolower(str_replace(' ', '', $data['name'])),
                         'birthday' => $data['birthday'],
                         'gender' => $data['gender'],
+                        'pfp' => $media_id
                     ];
                     $user = $this->User_model->insert($insert_data);
                     print_r($insert_data);
@@ -175,7 +191,7 @@
 
             $family_id = $this->FamilyUser_model->fetch(['id_user' => $user_id]);
 
-            $family_members_ids = $this->FamilyUser_model->fetch_all(null, null, null, null, ['id_family' => $family_id['id_family'], 'id_user != ' => $user_id]);
+            $family_members_ids = $this->FamilyUser_model->fetch_all(null, null, null, null, ['id_family' => $family_id['id_family']]);
 
             $family_members = [];
 

@@ -61,7 +61,7 @@
                 $groups[array_search($group, $groups)]['picture'] = $this->Media_model->fetch(['id' => $groups[array_search($group, $groups)]['picture']]);
             }
 
-            $data['conversations'] = (!empty($conversations)) ? $conversations : null;
+            $data['conversations'] = $conversations; //(!empty($conversations)) ? $conversations : null;
             $data['friends'] = $friends_arr;
             $data['groups'] = $groups;
             $this->load->view('common/header', $data);
@@ -212,7 +212,7 @@
             $conversation = [];
             $conversation['id'] = $id;
             $conv = $this->UserConversation_model->get_conversation(['my_id' => $user_id, 'id_conv' => $id])['id_user'];
-            $user = $this->User_model->fetch(['id' => $conv], ['id', 'pfp', 'username', 'user']);
+            $user = $this->User_model->fetch(['id' => $conv], 'id, pfp, username, user');
             $user_pfp = $this->Media_model->fetch(['id' => $user['pfp']]);
             $conversation['user'] = $user;
             $conversation['pfp'] = $user_pfp;
@@ -228,7 +228,7 @@
 
             $friends = $this->Friends_model->fetch_friends($this->session->userdata('user')['id']);
 
-            $users = $this->User_model->fetch_all_like(['username', $values], null, null, ['id' => $friends, 'multiple' => true]);
+            $users = $this->User_model->fetch_all_like(['username', $values], null, null, ['id' => $friends, 'multiple' => true], null);
 
             foreach($users as $user){
                 if($user['id'] == $this->session->userdata('user')['id'])

@@ -20,15 +20,12 @@
                         <label for="familyName">Nome da Família</label>
                         <input type="text" name="familyName" id="familyName" class="form-control" value="<?=$family_name?>">
                     </div>
-
-                    <!-- Seção para gerenciar membros da família -->
                     <div class="manage-members mt-4">
-                        <h5>Gerenciar Membros da Família</h5>
+                        <h5>Gerir Membros da Família</h5>
                         <ul class="list-group">
                             <?php foreach($family_members as $member): ?>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <?=$member['name']?>
-                                    <!-- Adicionar botões ou links para editar ou remover um membro -->
+                                <li class="list-group-item d-flex justify-content-between align-items-center w-100">
+                                    <? echo ($member['id'] == $family_creator) ? $member['username']." <small>Administrador</small>" : $member['username'];?>
                                     <span>
                                         <a href="<?=base_url('edit_member/'.$member['id'])?>" class="btn btn-warning btn-sm">Editar</a>
                                         <a href="<?=base_url('remove_member/'.$member['id'])?>" class="btn btn-danger btn-sm">Remover</a>
@@ -37,11 +34,7 @@
                             <?php endforeach;?>
                         </ul>
                     </div>
-
-                    <!-- Adicionar outras seções necessárias -->
-
-                    <!-- Botão para salvar alterações -->
-                    <input type="submit" value="Salvar Alterações" class='btn btn-success mt-4'>
+                    <input type="submit" value="Guardar Alterações" class='btn btn-success mt-4'>
                 </form> 
             </div> 
 
@@ -91,12 +84,13 @@
         ajax.get('<?=base_url('get_family')?>', function(data){
             console.log(data);
             Object.values(data).forEach(user => {
+                console.log("Aa",  (user.id == <?=$family_creator?>));
                 console.log(user);
                 var li = "<li style='cursor: pointer;' class='family_member list-group-item'>" +
                          ((user.pfp && user.pfp.hasOwnProperty('path')) ? 
                          "<img style='width: 50px; border-radius: 50%; margin-right: 15px;' src='" + 
                          user.pfp.path + "' alt='" + user.pfp.alt + "'>" : "") + 
-                         user.username + "<p class='hidden'>" + user.id + "</p></li>";
+                         ((user.id == <?=$family_creator?>) ? user.username + "<small style='margin-left: 20px;'>Administrador</small>" : user.username) + "<p class='hidden'>" + user.id + "</p></li>";
                 $(".family_members").append(li);
             });
 

@@ -1,0 +1,4 @@
+ToDo:
+ - Acabar a parte da conta criança, nomeadamente a foto de criança
+ - Fazer a parte do signup de caso esteja por preencher ou tenha algum erro, notifica antes de passar a proxima parte
+ - Ver o que falta alterar
