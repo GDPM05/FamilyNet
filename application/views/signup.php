@@ -12,11 +12,13 @@
         <div class="separation col-md-1"></div>
         <div class="right-side col-md-5 d-flex flex-column justify-content-center align-items-center">
             <h2 class="text-center mb-4" style="font-size: 2.5rem;">Sign Up</h2>
-            <?php
-                if(isset($formErrors)){
-                    echo $formErrors;
-                }
-            ?>
+            <p class="signup_error">
+                <?php
+                    if(isset($formErrors)){
+                        echo $formErrors;
+                    }
+                ?>
+            </p>
             <form action="" method="POST" enctype="multipart/form-data" class="signup_form w-100">
                 <div class="form-group step_one mb-3 text-center">
                     <input type="text" class="form-control form-control-lg mx-auto" style="width: 80%;" placeholder="Nome" name="name_in" id="name_in" value="<?=set_value('name_in')?>">

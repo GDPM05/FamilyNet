@@ -173,6 +173,13 @@ i{
 .hidden {
     display: none;
 }
+
+.profile-pict{
+    max-width: 120px;
+    max-height: 120px;
+    border-radius: 50%;
+}
+
 /*
 .home .left-side, .signup .left-side{
     float: left;

@@ -18,7 +18,7 @@
         <a class="nav-link <?php echo ($this->router->fetch_class() == 'Profile' && $this->router->fetch_method() == 'index') ? 'active' : null;?>" href="<?php echo base_url('profile'); ?>">
             <?php
                 if(!empty($path)): ?>
-                    <img src="<?php echo $path;?>" width="32" height="32">
+                    <img class="profile-pict" src="<?php echo $path;?>" width="32" height="32">
                 <?php else: ?>
                     <i class="bi bi-person-circle"></i>
                 <?php endif; 
