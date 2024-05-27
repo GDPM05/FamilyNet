@@ -1,7 +1,7 @@
 
 // Classe responsável pelo controlo do servidor NodeJs, usado na comunicação de 2 utilizadores
 
-const io = require('socket.io')(3000, {
+const io = require('socket.io')(5000, {
     cors: {
       origin: "*",
     }
@@ -19,7 +19,7 @@ class Server{
         this.sockets = []; // Array que guarda os sockets
         this.user_map = {}; // Mapa responsável por identificar os utilizadores baseado no seu id único
         this.users = []; // Arary de utilizadores
-        this.showInfo(); // Método para mostrar as informações do servidor
+        //this.showInfo(); // Método para mostrar as informações do servidor
     }
 
     showInfo(){ // Método para mostrar as informações do servidor (apenas em fase de testes)
@@ -47,15 +47,28 @@ class Server{
     
     handleUserData(socket, data){ // Método que trata das informações enviadas pelos utilizadores
         console.log(data); 
+        var friend_online = false;
         if(this.user_map[data.id] != null){ // Verifica se este utilizador já está no sistema (com um socket diferente)
             var user = this.users[this.user_map[data.id]]; // Guarda na variavel user este utilizador já existente
+            console.log("User already.");
         }else{
             var user_id = data.id; // Guarda em variável o id do user
             var user_name = data.name; // Guarda em variável o nome do user
             var user_conv = data.id_user_conv; // Guarda em variável o id do user que estabelecerá comunicação
             
+            var user_friend = this.users[this.user_map[user_conv]];
+            //console.log("Outro amigo: "+((user_teste != undefined) ? JSON.stringify(user_teste) : user_teste));
+            //console.log("Outro amigo: "+((user_teste != undefined) ? user_teste['id'] : null));
+
+            if(user_friend != undefined){
+                socket.emit('friend_online', true);
+                console.log('onlino')
+            }
+                
             var user = new User(user_id, user_name, user_conv); // Criar uma instância da class User
             
+            console.log("New user: "+user.id, user.name, user.id_user_conv); 
+
             do{
                 user.generateUniqueId(); // Gera um id único identificativo para este user
             }while(user[user.uniqueId] != null);
@@ -66,15 +79,18 @@ class Server{
         console.log(this.users);
         if(this.users[this.user_map[user_conv]] && this.users[this.user_map[user_conv]].id_user_conv == user_id){ // Verifica se o outro utilizador já está conectado ao servidor e se ele está no servidor para falar connosco
             var conversa = this.conversas[this.user_conv_map[this.user_map[user_conv]]]; // Busca a conversa já existente
+            friend_online = true;
         }else{
             var conversa = new Conversa(); // Cria uma conversa nov
             conversa.generateUniqueId(); // Gera um id único para esta conversa
             conversa.generateEncMethod(); // Gera um método de encriptação que será usado pelos utilizadores
             this.conversas[conversa.uniqueId] = conversa; // Guarda a conversa no array de conversas, usando o id unico da conversa como chave
         }
-        
+
         conversa.assoc_user(user.uniqueId); // Associa o utilizador em questão à conversa
         socket.emit('enc_method', conversa.get_method()); // Envia o método de encriptação para o utilizador
+        var friendSocketId = this.socket_id_map[this.user_map[user_conv]];
+        io.to(friendSocketId).emit('friend_online', friend_online);
         this.user_conv_map[user.uniqueId] = conversa.uniqueId; // Guarda o id unico da conversa no mapa de conversas, usando o id unico do utilizador como chave
         this.conversas[conversa.uniqueId] = conversa; // Guarda a conversa no array de conversas, usando o id único da conversa como chave
         this.socket_id_map[user.uniqueId] = socket.id; // Guarda o socket do utilizador no mapa de sockets usando o id unico do utilizador como chave
@@ -105,7 +121,9 @@ class Server{
     }
 
     handleMessage(socket, data){ // Método responsável por tratar as mensagens enviadas
+        console.log(data);
         var user = this.sockets[socket.id]; // Busca o utilizador ao array de sockets
+        console.log("User:" + user.id_user_conv);
         if(!this.user_map[user.id_user_conv]) // Verifica se o utilizador amigo está no servidor
             return; // Retorna se for o caso
         
@@ -124,8 +142,13 @@ class Server{
         var user = this.sockets[socket.id]; // Busca o user ao array de users
         if(user){ // Verifica se não está vazio
             var conversa = this.conversas[this.user_conv_map[user.uniqueId]]; // Busca a conversa ao array de conversas
-            if(conversa) // Verifica se não está vazio
+            if(conversa){ // Verifica se não está vazio
                 conversa.remove_user(user.uniqueId); // Remove o utilizador em questão da conversa
+                if(this.users[this.user_map[user.id_user_conv]]) {
+                    var friendSocketId = this.socket_id_map[this.user_map[user.id_user_conv]];
+                    io.to(friendSocketId).emit('friend_online', false);
+                }
+            }
 
             if(conversa.numUsers() < 1){ // Verifica se a conversa não tem mais nenhum utilizador
                 var index = Object.keys(this.user_conv_map).find(key => this.user_conv_map[key] === conversa.uniqueId); 

@@ -15,8 +15,9 @@
 
         public function index() {
             $data = array(
-                'title' => TITLE.' | Notifications',
-                'notifications' => array()
+                'title' => TITLE.' | Notificações',
+                'notifications' => array(),
+                'user' => $this->session->userdata('user')
             );
 
             $user = $this->session->userdata('user');

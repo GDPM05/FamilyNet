@@ -3,6 +3,7 @@ class Client{
 
     socket;
     bin_hexa_map;
+
     constructor(io){
         this.io = io;
         this.bin_hexa_map = { // Mapa do valor em hexadecimal correspondente a cada valor binário
@@ -40,6 +41,12 @@ class Client{
                     console.log('ai');
                     this.enc_method = socket;
                 });
+                this.socket.on('friend_online', (socket)=>{
+                    setTimeout(function(){
+                        console.log((socket) ? "Online" : "Offline");
+                        $(".is_online").html(((socket) ? "Online" : "Offline"));
+                    }, 200);
+                });
             });
         }catch(error){
             window.location.href = 'http://localhost/FamilyNet/main'; // Trocar por uma mensagem
@@ -50,7 +57,7 @@ class Client{
     emit_userdata(data){ // Método responsável por enviar os dados do utilizador para o servidor
         console.log(data);
         try{
-            this.socket.emit('user_data', {name: data.user_name, id: data.user_id, id_user_conv: data.friend_id});
+            this.socket.emit('user_data', {name: data.user_name, id: data.user_id, id_conv: data.id_conv, friend: data.friend});
         }catch(error){
             throw error;
         }    

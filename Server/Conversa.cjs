@@ -1,9 +1,10 @@
 
 class Conversa{
 
-    constructor(){
+    constructor(conv_id){
         this.users = [];
         this.cod_enc = '';
+        this.conv_id = conv_id;
         this.uniqueId = null;
     }
 
@@ -18,6 +19,25 @@ class Conversa{
         }
     }
     
+    get_friends(user_id){
+        var users = [];
+        console.log(this.users);
+        console.log(user_id);
+        for(var i = 0; i < this.users.length; i++){
+            if(this.users[i] != user_id)
+                users.push(this.users[i]);
+        }
+        console.log("asdasd" + users);
+        return users
+    }
+
+    friends_online(user_id){
+        for(var i = 0; i < this.users.length; i++)
+            if(this.users[i].uniqueId != user_id)
+                return true
+            else
+                return false;
+    }
 
     numUsers(){
         return this.users.length;

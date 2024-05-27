@@ -250,6 +250,7 @@
             $config['height'] = 100;
             $config['image_library'] = 'gd2';
             $config['create_thumb'] = FALSE;
+            $config['maintain_ratio'] = FALSE;
 
             $this->image_lib->initialize($config);
 
@@ -280,7 +281,6 @@
             }catch(Exception $e){
                 return $e;
             }
-
 
             return true;
         }

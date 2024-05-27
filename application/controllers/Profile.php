@@ -7,6 +7,7 @@
             parent::__construct();
             $this->load->model('Friends_model');
             $this->load->model('Notification_model');
+            //$this->load->library('Mailer');
             if(!$this->LoggedIn()){
                 redirect(base_url('logout'));
                 exit;
@@ -15,20 +16,19 @@
 
         public function index() {
             $data = array(
-                'title' => TITLE.' | Profile',
-                'username' => $this->session->userdata['user']['username']
+                'title' => TITLE.' | Perfil',
+                'user' => $this->session->userdata['user']
             );
 
             $this->load->view('common/header', $data);
             $this->load->view('common/menu', $this->data);
             $this->load->view('profile', $data);
             $this->load->view('common/footer');
-
-        }
+        }   
 
         public function load_profile(){
-            $username = $this->uri->segment(2);
-            $user = $this->User_model->fetch(array('user' => $username));
+            $info = $this->uri->segment(2);
+            $user = (is_numeric($info)) ?  $this->User_model->fetch(array('id' => $info)) :  $this->User_model->fetch(array('user' => $info));
             $pfp = $this->Media_model->fetch(array('id' => $user['pfp']));
             $this->data['title'] = TITLE.' | '.$user['username'];
             $this->data['user_pfp']['path'] = $pfp['path'];
@@ -80,7 +80,7 @@
                 'sent_date' => date('Y-m-d H:i:s'),
                 'receiver_id' => $user['id'],
                 'sender_id' => $this->session->userdata('user')['id'],
-                'message_text' => $user['username'].' enviou um pedido de amizade'
+                'message_text' => $this->session->userdata('user')['username'].' enviou um pedido de amizade'
             ]);
 
             if($this->Friends_model->error){
@@ -124,6 +124,8 @@
 
             $this->Friends_model->update_invite($user['id'], $this->session->userdata('user')['id'], $status);
             
+            $this->Notification_model->delete(['id' => $this->input->post()['notification_id']]);
+
             $notification_id = $this->Notification_model->insert([
                 'type_id' => 2,
                 'sent_date' => date('Y-m-d H:i:s'),
@@ -142,12 +144,6 @@
                 $message = $this->Notification_model->error_message;
             }
         
-            if(!$error){
-                $this->Notification_model->delete([
-                    'id' => $notification_id
-                ]);
-            }
-
             $data['mensagem'] = $status_message;
             $data['error'] = $error;
             $data['error_message'] = $message;
@@ -157,5 +153,56 @@
             echo json_encode($data);
         }
 
+        public function get_friends(){
+
+            $friends = $this->Friends_model->fetch_friends($this->session->userdata('user')['id']);
+
+           // print_r($friends);
+
+            $friend_user = [];
+            foreach($friends as $friend){
+                $user_id = ($friend['id_user1'] == $this->session->userdata('user')['id']) ? $friend['id_user2'] : $friend['id_user1'];
+                $user = $this->User_model->fetch(['id' => $user_id], 'id, user, username, pfp');
+                $user['pfp'] = $this->Media_model->fetch(['id' => $user['pfp']]);
+                $friend_user[] = $user;
+            }
+
+            //print_r($friend_user);
+
+            header('Content-Type: application/json');
+            echo json_encode($friend_user);
+        }
+
+        public function update_info(){
+
+            $info = $this->input->post();   
+
+            if(empty($info)){
+                return;
+            }
+
+            $update_data = [
+                'email'   => $info['email'],
+                'username'   => $info['username'],
+                'phone'   => $info['phone']
+            ];
+
+            $this->User_model->update($update_data, ['id' => $this->session->userdata('user')['id']]);
+
+            if($this->User_model->error){
+                return false;
+            }
+
+            $new_userdata = $this->User_model->fetch(['id' => $this->session->userdata('user')['id'], 'id, user, username, email, phone, pfp, birthday, gender, p_role']);
+
+            $this->session->set_userdata('user', $new_userdata);
+
+            redirect(base_url('profile'));
+
+        }
+
+
     }
+
+
 ?>
