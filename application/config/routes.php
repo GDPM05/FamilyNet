@@ -86,3 +86,5 @@ $route['family_menu'] = 'Family';
 $route['new_family'] = 'Family/new_family';
 $route['child_account'] = 'Family/create_child_account';
 $route['get_family'] = 'Family/get_family';
+$route['new_post'] = 'Main/new_post';
+$route['get_posts/(:num)'] = 'Main/get_posts';

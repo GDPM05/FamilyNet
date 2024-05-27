@@ -11,6 +11,7 @@
             $this->load->library(array('form_validation', 'PasswordHash'));
             $this->passwordhash->init(8, false);
             $this->load->model('User_model');
+            $this->load->model('Media_model');
             //$this->login->init($this->passwordhash);
         }
 
@@ -34,10 +35,11 @@
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
 
-                if($user = $this->User_model->fetch(array('email' => $email))){
+                if($user = $this->User_model->fetch(array('email' => $email), 'user, id, username, pfp, p_role, gender, phone, birthday, access_token, password')){
                     //print_r($user);
                     if($this->checkPassword($password, $user['password'])){
                         session_regenerate_id();
+                        unset($user['password']);
                         $this->createSession($user, session_id(), $this->input->post('keep_login'));
                         redirect(base_url('main'));
                     }else
@@ -52,6 +54,9 @@
         }
 
         protected function createSession($userdata, $token = null, $keep_login = "off"){
+            
+            $userdata['pfp'] = $this->Media_model->fetch(['id' => $userdata['pfp']]);
+
             $this->session->set_userdata(array(
                 'logged_in' => TRUE,
                 'user' => $userdata,
