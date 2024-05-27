@@ -12,7 +12,6 @@
         </div>
         <div class="separation"></div>
         <div class="col-md-6 text-center right-side">
-            <!-- Conteúdo do lado direito -->
             <h2>Login</h2>
             <?php echo (isset($login_error)) ? '<p class="login_error">'.$login_error.'</p>' : "" ?> 
             <form action="" method="POST" class="text-center">

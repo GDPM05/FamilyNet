@@ -107,7 +107,8 @@
                             'acc_creation' => date("Y-m-d H:i:s"),
                             'pfp' => $form_data['media_id'],
                             'gender' => $form_data['gender_in'],
-                            'p_role' => $form_data['p_role']
+                            'p_role' => $form_data['p_role'],
+                            'active' => 0
                         ]);
 
                         if($this->User_model->error)
@@ -127,7 +128,7 @@
                     $this->session->set_userdata(md5('user_id'), $new_user);
                     setcookie(md5('expire'), 1, time() + (60 * 5), '/');
 
-                    if(!$this->send_code($form_data['email_in'], $code)){
+                    if(!$this->send_code($form_data['email_in'], 'Aqui está o código para prosseguir com o login. Tem 5 minutos para introduzir o código. '.$code)){
                         $data['formErrors'] = 'Não foi possível enviar o código, tente outra vez mais tarde.';
                         $this->signup_fail();
                     }
@@ -162,6 +163,8 @@
             $this->form_validation->set_rules('input5', 'Code', 'required|min_length[1]|max_length[1]');
             $this->form_validation->set_rules('input6', 'Code', 'required|min_length[1]|max_length[1]');
 
+            //rint_r()
+
             if($this->form_validation->run() == FALSE)
                 $data['formErrors'] = validation_errors(); 
             else{
@@ -172,15 +175,24 @@
                         $data['formErrors'] = "Internal error.";
                 }                
 
-                if(md5(sha1($code)) == $this->session->userdata(md5('c0d4'))){
+                print_r(md5(sha1($code)));
+                print_r($this->session->userdata(md5('c0d4')));
+
+                if(md5(sha1($code)) == $_COOKIE[md5('c0d4')]){
                     $data['success'] = TRUE;
                 }else{
                     $this->session->set_userdata(md5('n_tries'), ($this->session->userdata(md5('n_tries'))+1));
                 }
             }
 
+            print_r($_COOKIE[md5('id')]);
+
             if(isset($data['success']) && $data['success']){
                 $this->session->unset_userdata(array(md5('n_tries'), md5('c0d4')));
+                $this->User_model->update(['active' => 1], ['id' => $_COOKIE[md5('id')]]);
+                unset($_COOKIE[md5('expire')]);
+                unset($_COOKIE[md5('c0d4')]);
+                unset($_COOKIE[md5('id')]);
                 header('location: '.base_url());
             }
 
@@ -271,12 +283,12 @@
                 unlink($path);
         }
 
-        private function send_code($email, $code){
+        private function send_code($email, $message){
             try{
                 $this->email->from($this->config->item('smtp_user'), 'FamilyNet');
                 $this->email->to($email);
                 $this->email->subject('Código de Verificação');
-                $this->email->message('Aqui está o código para prosseguir com o login. Tem 5 minutos para introduzir o código. '.$code);
+                $this->email->message($message);
                 $this->email->send();
             }catch(Exception $e){
                 return $e;
@@ -353,6 +365,27 @@
             $this->load->view('complete_signup', $data);  // Change the view file name if needed
             $this->load->view('common/footer');
 
+        }
+
+        public function activate_account_external(){
+            $user_id = $_COOKIE[md5('id')];
+            // $this->session->userdata(md5('user_id'));
+            // print_r($this->session->userdata);
+            // var_dump($user_id);
+            $user = $this->User_model->fetch(['id' => $user_id], 'id, username, email');
+
+            $code = $this->generate_code();
+
+            setcookie(md5('c0d4'), md5(sha1($code)), time() + (60 * 5), '/');
+            $this->session->set_userdata(md5('user_id'), $user_id);
+            setcookie(md5('expire'), 1, time() + (60 * 5), '/');
+
+            if(!$this->send_code($user['email'], 'Olá, '.$user['username'].', aqui está código para ativares a tua conta. '.$code)){
+                $data['formErrors'] = 'Não foi possível enviar o código, tente outra vez mais tarde.';
+                redirect(base_url());
+            }
+
+            redirect(base_url('signup/verify'));
         }
     }
 ?>

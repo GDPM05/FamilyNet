@@ -88,3 +88,4 @@ $route['child_account'] = 'Family/create_child_account';
 $route['get_family'] = 'Family/get_family';
 $route['new_post'] = 'Main/new_post';
 $route['get_posts/(:num)'] = 'Main/get_posts';
+$route['activate_account'] = 'Signup/activate_account_external';
