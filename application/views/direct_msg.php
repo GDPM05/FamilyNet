@@ -98,7 +98,7 @@
 <script>
     $(()=>{
         var cliente = new Client(io);
-        cliente.connect('http://localhost:5000');
+        cliente.connect('http://localhost:6258');
         var ajax = new AjaxHandler();
         var friend_id;
         var conv_id;

@@ -37,7 +37,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <form action="<?php echo base_url('/new_post'); ?>" class="post-form" method="post" enctype="multipart/form-data">
                         <div id="preview" class="mb-3 d-flex flex-wrap"></div>
                         <div class="mb-3">
-                            <input type="text" name="post-text" class="form-control" placeholder="O que estás a pensar?" required>
+                            <textarea name="post-text" class="form-control" placeholder="O que estás a pensar?" required></textarea>
+                            <!-- <input type="text" name="post-text" class="form-control" placeholder="O que estás a pensar?" required> -->
                         </div>
                         <div class="mb-3">
                             <label for="file-upload" class="btn btn-outline-secondary">
@@ -139,10 +140,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             console.log(data[key]);
             var post = data[key];
             var like_icon = post.already_like ? '<i class="bi bi-hand-thumbs-up-fill"></i>' : '<i class="bi bi-hand-thumbs-up"></i>';
+            const color_table = [
+                'color_default',
+                'color_friends',
+                'color_family',
+                'color_private'
+            ];
             var div = `
                 <div class="post-container">
                     <div class="post card mb-4 shadow-sm">
-                        <div class="post-header card-header d-flex align-items-center">
+                        <div class="post-header ${color_table[post.post.privacy_level-1]} card-header d-flex align-items-center">
                             <img src="${post.pfp.path}" alt="${post.pfp.alt}" class="rounded-circle me-3" style="width: 50px; height: 50px;">
                             <div>
                                 <strong>${post.username}</strong>

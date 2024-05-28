@@ -352,6 +352,22 @@ html{
     cursor: pointer;
 }
 
+.color_default{
+    border: 2px solid rgba(200,200,200) !important;
+}
+
+.color_friends{
+    border: 2px solid rgb(0, 255, 21) !important;
+}
+
+.color_family{
+    border: 2px solid;
+    /* Defina um gradiente linear para a borda usando as cores primária e secundária */
+    border-image: linear-gradient(to right, var(--cor_prim), var(--cor_sec)) 1;
+    /* Defina a largura da borda como 1px */
+    /* border-width: 2px; */
+}
+
 .new_post {
     position: fixed; /* Define a posição fixa para o botão */
     bottom: 0px; /* Alinha o botão na parte inferior da página */

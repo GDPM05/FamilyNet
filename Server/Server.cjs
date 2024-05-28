@@ -1,7 +1,7 @@
 
 // Classe responsável pelo controlo do servidor NodeJs, usado na comunicação de 2 utilizadores
 
-const io = require('socket.io')(5000, {
+const io = require('socket.io')(6258, {
     cors: {
       origin: "*",
     }

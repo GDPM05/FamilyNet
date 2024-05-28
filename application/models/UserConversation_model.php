@@ -10,10 +10,8 @@
 
         public function get_conversation($where){
             if($where){
-                $this->db->group_start();
-                    $this->db->where('id_conv', $where['id_conv']);
-                    $this->db->where('id_user !=', $where['my_id']);
-                $this->db->group_end();
+                $this->db->where('id_conv', $where['id_conv']);
+                $this->db->where('id_user !=', $where['my_id']);
             }
             
             $q = $this->db->get($this->table);
