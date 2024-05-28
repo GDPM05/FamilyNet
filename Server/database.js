@@ -27,7 +27,7 @@ async function new_notification(id_sender, id_receiver, message, type){
         var currentDate = new Date();
         var sqlFormattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
     
-        await conn.query("INSERT INTO notifications (type_id, sent_date, receiver_id, sender_id, message_text) VALUES (?, ?, ?, ?, ?);",[Number(type), sqlFormattedDate, id_sender, id_receiver, message]);    
+        await conn.query("INSERT INTO notifications (type_id, sent_date, receiver_id, sender_id, message_text) VALUES (?, ?, ?, ?, ?);",[Number(type), sqlFormattedDate, id_receiver, id_sender, message]);    
 
         return true;
     }catch(err) {

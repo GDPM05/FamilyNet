@@ -10,7 +10,8 @@
             <i class="bi bi-search"></i>
         </a>
         <a class="nav-link <?php echo ($this->router->fetch_class() == 'Notification' && $this->router->fetch_method() == 'index') ? 'active' : null;?>" href="<?php echo base_url('notification');?>">
-            <i class="bi bi-bell-fill"></i>
+            <i class="bi bi-bell-fill notification-icon"></i>
+            <span class="notification-badge"></span> <!-- Bolinha adicionada manualmente -->
         </a>
         <a class="nav-link <?php echo ($this->router->fetch_class() == 'Family' && $this->router->fetch_method() == 'index') ? 'active' : null;?>" href="<?php echo base_url('family_menu');?>">
             <i class="bi bi-people-fill"></i>
@@ -26,3 +27,4 @@
         </a>
     </nav>
 </div>
+

@@ -1,8 +1,14 @@
 const app = require('./processRequest');
 const db = require('./database');
 
-class ServerNotifications {
+const io = require('socket.io')(8914, {
+    cors: {
+      origin: "*",
+    }
+});
 
+
+class ServerNotifications {
     constructor(porta){
         this.db = db;
         this.app = app(porta);
@@ -20,8 +26,25 @@ class ServerNotifications {
             notifications: []
         };
 
+        this.online = [];
+
+        io.on('connection', (socket) => {
+            console.log("Entrou: ", socket.id);
+
+            socket.on('user', (userData) => {
+                console.log(userData);
+                this.online[userData] = socket.id; 
+                console.log("Online: ", this.online);
+            });
+
+            socket.on('disconnect', ()=>{
+                delete this.online[socket.id];
+                console.log("Disconnect: ", this.online);
+            });
+        });
+
         setInterval(function(){
-            this.cleanMemory();
+            cleanMemory();
         }, 1000*600*6);
     }
 
@@ -50,7 +73,7 @@ class ServerNotifications {
                 res.setHeader('Content-Type', 'application/json');
                 var return_data = {};
                 const data = (info.toString().split('=')).pop();
-
+                console.log("aa", data);
                 if(data == '' || data == undefined){
                     return_data.error = true;
                     return_data.error_message = 'Invalid data!';
@@ -61,7 +84,7 @@ class ServerNotifications {
 
                 const notifications = await this.db.getUserNotifications(data);
 
-                console.log(notifications);
+                //console.log(notifications);
 
                 res.end();
             });
@@ -92,6 +115,12 @@ class ServerNotifications {
 
                 const noti = await this.db.new_notification(id_sender, id_receiver, message, noti_type);
                 
+                const socket = this.online[id_receiver];
+                console.log(socket);
+                if(socket){
+                    io.to(socket).emit('notification', {msg: "new notification"});
+                }
+
                 const return_data = {
                     success: noti 
                 }
@@ -106,7 +135,7 @@ class ServerNotifications {
         this.app.post('/load_notifications', (req, res) => {
             req.on('data', async (info) => {
                 const data = (info.toString().split('&'));
-
+                console.log("aaa", data);
                 const get_data = {
                     user_id: Number((data[1].split('=')).pop()),
                     page: Number((data[0].split('=')).pop()),
@@ -212,6 +241,10 @@ class ServerNotifications {
                 res.end();
             });
         });
+    }
+
+    teste(){
+
     }
 }
 

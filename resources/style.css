@@ -469,3 +469,18 @@ html{
     margin-right: 0.5%;
     cursor: pointer;
 }
+
+.notification-icon {
+    position: relative;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    border: 1px solid white; /* Optional: adds a white border around the badge */
+}

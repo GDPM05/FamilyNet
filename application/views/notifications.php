@@ -38,7 +38,7 @@
     var limit = 20;
     execAjax();
     $(window).scroll(function() {
-        ajax.post('http://localhost:5000/get_total_notifications', {receiver_id: <?=$user['id']?>}, (data)=>{
+        ajax.post('http://localhost:5910/get_total_notifications', {receiver_id: <?=$user['id']?>}, (data)=>{
             if($(window).scrollTop() + $(window).height() == $(document).height() && !loading) {
                 loading = true; 
                 console.log(data[0]['num_noti']);
@@ -52,7 +52,7 @@
     });
 
     function execAjax(){
-        ajax.post('http://localhost:5000/load_notifications', {page: (nextPage == 2) ? 1 : nextPage, id: <?=$user['id']?>, limit: limit}, (data) => {
+        ajax.post('http://localhost:5910/load_notifications', {page: (nextPage == 2) ? 1 : nextPage, id: <?=$user['id']?>, limit: limit}, (data) => {
             console.log(data);
             renderItems(data);
             nextPage++;
