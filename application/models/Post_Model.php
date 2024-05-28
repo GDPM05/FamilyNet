@@ -21,4 +21,41 @@ class Post_Model extends MY_Model {
 
         return $this->db->get($this->table)->result_array();
     }
+
+    public function add_like($post_id = null){
+
+        if($post_id == null){
+            $this->error = true;
+            return false;
+        }
+
+        $this->db->set('likes', 'likes + 1', FALSE);
+        $this->db->where('id', $post_id);
+        $this->db->update($this->table);
+
+        return true;
+    }
+
+    public function remove_like($post_id = null){
+        if($post_id == null){
+            $this->error = true;
+            return false;
+        }
+
+        $this->db->set('likes', 'likes - 1', FALSE);
+        $this->db->where('id', $post_id);
+        $this->db->update($this->table);
+
+        return true;
+    }
+
+    public function get_likes($post_id = null){
+        if($post_id == null){
+            $this->error = true;
+            return false;
+        }
+        $this->db->select('likes');
+        $this->db->where('id', $post_id);
+        return $this->db->get($this->table)->result_array();
+    }
 }

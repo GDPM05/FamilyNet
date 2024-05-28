@@ -13,6 +13,7 @@
             $this->load->model('Media_Model');
             $this->load->model('PrivacyLevel_Model');
             $this->load->model('Post_Model');
+            $this->load->model('PostLikes_Model');
             $this->load->model('PostMedia_Model');
             $this->load->model('FamilyUser_Model');
             $this->load->model('Friends_Model');
@@ -181,13 +182,81 @@
                         // print_r($md);
                         $user['post']['media'][] = $this->Media_model->fetch(['id' => $md['id_media']]);
                     }
-
+                
+                $user['already_like'] = $this->PostLikes_Model->check_user($this->session->userdata('user')['id'], $user['post']['id']);
                 $result[] = $user;
             }
     
             // Return the filtered posts
             header('Content-Type: application/json');
             echo json_encode($result);
+        }
+
+        public function add_like($id_post = null, $id_user){
+            header('Content-Type: application/json');
+
+            if($id_post == null || $id_user == null){
+                $data['success'] = false;
+                $data['message'] = 'Ocorreu um erro. Tente outra vez mais tarde.';
+                echo json_encode($data);
+                return false;
+            }
+
+            $post_likes = (int) $this->Post_Model->get_likes($id_post);
+
+            // print_r($post_likes);
+
+            $this->Post_Model->add_like($id_post);
+            $this->PostLikes_Model->insert([
+                'id_post' => $id_post,
+                'id_user' => $id_user
+            ]);
+
+            if((isset($this->Post_Model->error) && $this->Post_Model->error) || (isset($this->PostLike_Model->error) && $this->PostLike_Model->error)){
+                $data['success'] = false;
+                $data['message'] = 'Ocorreu um erro. Tente outra vez mais tarde.';
+                echo json_encode($data);
+                return false;
+            }
+
+            $data['success'] = true;
+            $data['current_likes'] = $this->Post_Model->get_likes($id_post);
+            echo json_encode($data);
+            return false;
+        }
+
+        public function remove_like($id_post = null, $id_user = null){
+            header('Content-Type: application/json');
+
+            if($id_post == null || $id_user == null){
+                $data['success'] = false;
+                $data['message'] = 'Ocorreu um erro. Tente outra vez mais tarde.';
+                echo json_encode($data);
+                return false;
+            }
+            
+            $post_likes = (int) $this->Post_Model->get_likes($id_post);
+
+            // print_r($post_likes);
+
+            $this->Post_Model->remove_like($id_post);
+            $this->PostLikes_Model->delete([
+                'id_post' => $id_post,
+                'id_user' => $id_user
+            ]);
+
+
+            if((isset($this->Post_Model->error) && $this->Post_Model->error) || (isset($this->PostLikes_Model->error) && $this->PostLikes_Model->error)){
+                $data['success'] = false;
+                $data['message'] = 'Ocorreu um erro. Tente outra vez mais tarde.';
+                echo json_encode($data);
+                return false;
+            }
+
+            $data['success'] = true;
+            $data['current_likes'] = $this->Post_Model->get_likes($id_post);
+            echo json_encode($data);
+            return false;
         }
     }
 ?>

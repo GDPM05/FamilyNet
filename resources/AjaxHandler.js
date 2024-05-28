@@ -14,11 +14,12 @@ class AjaxHandler{
         });
     }
 
-    post(url, data, callback){
+    post(url, data, callback, c_type){
         $.ajax({
             url: url,
             type: 'POST',
             data: data,
+            contentType: c_type,
             success: function(res) {
                 callback(res);
             },

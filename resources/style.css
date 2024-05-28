@@ -250,28 +250,43 @@ i{
     right: 0;
 }
 
-.fixed-bottom {
-    z-index: 1030; /* Certifique-se de que o formulário esteja acima de outros conteúdos */
+/* Estilo para o formulário de novo post */
+.post-form {
+    max-width: 500px; /* Define a largura máxima do formulário */
+    margin: 0 auto; /* Centraliza o formulário na página */
+    padding: 20px; /* Adiciona espaço interno ao formulário */
+    border: 1px solid #ccc; /* Adiciona uma borda ao redor do formulário */
+    border-radius: 8px; /* Adiciona cantos arredondados ao formulário */
 }
-.post-creation-container {
-    max-width: 800px;
-    margin: 0 auto; /* Centraliza o formulário fixo no fundo da página */
-    padding: 0; /* Remove a borda */
+
+.post-form input[type="text"],
+.post-form select {
+    width: 100%; /* Define a largura total para os campos de texto e seleção */
+    padding: 10px; /* Adiciona preenchimento interno aos campos de entrada */
+    margin-bottom: 15px; /* Adiciona espaço entre os campos de entrada */
+    border: 1px solid #ccc; /* Adiciona uma borda aos campos de entrada */
+    border-radius: 5px; /* Adiciona cantos arredondados aos campos de entrada */
 }
-.post-form .form-control {
-    height: 45px; /* Ajusta a altura do campo de texto */
-    width: 850px;
-    padding-left: 20px; /* Espaçamento interno */
+
+.post-form label {
+    display: block; /* Faz com que as etiquetas ocupem uma linha inteira */
+    font-weight: bold; /* Define a fonte negrito para as etiquetas */
+    margin-bottom: 5px; /* Adiciona espaço entre as etiquetas e os campos de entrada */
 }
-.btn-outline-secondary {
-    border-radius: 50%;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 45px;
-    width: 45px;
+
+.post-form button[type="submit"] {
+    background-color: #007bff; /* Define a cor de fundo do botão */
+    color: #fff; /* Define a cor do texto do botão */
+    border: none; /* Remove a borda do botão */
+    padding: 10px 20px; /* Adiciona preenchimento interno ao botão */
+    border-radius: 5px; /* Adiciona cantos arredondados ao botão */
+    cursor: pointer; /* Muda o cursor para indicar que o botão é clicável */
 }
+
+.post-form button[type="submit"]:hover {
+    background-color: #0056b3; /* Altera a cor de fundo do botão ao passar o mouse sobre ele */
+}
+
 
 .btn-primary {
     border-radius: 30px;
@@ -308,312 +323,42 @@ i{
 .user-posts{
     height: 800px;
     overflow-y: auto;
+    padding: 40px;
+}
+
+.images {
+    min-width:400px;
+    width: auto;
+    overflow-x: auto;
+}
+
+.images img{
+    margin: 20px;
+}
+
+html{
+    overflow-y: hidden !important;
+}
+
+.users_infos{
+    margin-top: 20px;
 }
 
 .btn-files{
     justify-content: center;
 }
 
-/*
-.home .left-side, .signup .left-side{
-    float: left;
-    width: calc(60% - 1px);
-    text-align: center;
-    padding-top: 100px;
-    color: var(--cor_prim);
-}
-
-.home .left-side h1, .signup .left-side h1{
-    font-size: 120px;
-    margin-bottom: 0;
-}
-
-.home .left-side h1 span, .signup .left-side h2 span{
-    color: var(--cor_sec);
-}
-
-.home .left-side h2, .signup .left-side h2{
-    font-size: 60px;
-    margin-top: 0;
-}
-
-.home .right-side, .signup .right-side {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    float: right;
-    width: calc(39% - 1px);
-    height: 800px;
-    
-}
-
-.home .right-side h2, .signup .right-side h2{
-    font-size: 45px;
-    color: var(--cor_prim);
-    margin-bottom: 0;
-}
-
-.home .right-side form, .signup .right-side form{
-    display: block;
-    width: 400px;
-}
-
-.home .right-side form input, .signup .right-side form input{
-    display: block;
-    width: 300px;
-    margin: 10px auto;
-    height: 30px;
-    border: none;
-    border-radius: 10px;
-    font-size: 20px;
-    padding-left: 10px;
-    border: 1px solid var(--cor_prim);
-}
-
-.home .right-side form .keep_login{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.home .right-side form .keep_login #keep_login{
-    width: 20px;
-    margin: 0;
-}
-
-.home .right-side form .keep_login #keep_login_p{
-    width: auto;
-}
-
-.home .right-side form label, .signup .right-side form label{
-    display: block;
-    margin-left: 50px;
-}
-
-.home .right-side form input:focus, .signup .right-side form input:focus{
-    outline: 1px solid var(--cor_prim);
-}
-
-.home .right-side form input[type="submit"], .signup .right-side form input[type="submit"]{
-    margin-top: 20px;
-    background-color: var(--cor_prim);
-    color: white;
+.like {
     cursor: pointer;
-    height: 35px;
-    transition: 0.5s;
 }
 
-.home .right-side form input[type="submit"]:hover, .signup .right-side form input[type="submit"]:hover{
-    transform: scale(101%);
-    background-color: white;
-    color: var(--cor_prim);
-    border: 1px solid var(--cor_prim);
+.new_post {
+    position: fixed; /* Define a posição fixa para o botão */
+    bottom: 0px; /* Alinha o botão na parte inferior da página */
+    left: 50%; /* Alinha o botão no centro horizontalmente */
+    transform: translate(-50%, -50%); /* Move o botão para a esquerda em 50% da sua largura e para cima em 50% da sua altura, para centralizá-lo */
+    z-index: 9999; /* Define um índice Z alto para garantir que o botão esteja acima de outros elementos */
 }
-
-form input[type="submit"]{
-    margin-top: 20px;
-    background-color: var(--cor_prim);
-    color: white;
-    cursor: pointer;
-    height: 35px;
-    transition: 0.5s;
-}
-
-form input[type="submit"]:hover{
-    transform: scale(101%);
-    background-color: white;
-    color: var(--cor_prim);
-    border: 1px solid var(--cor_prim);
-}
-
-.home .right-side form .account_help p{
-    display: inline-block;
-    font-size: 15px;
-    margin: 10px;
-}
-
-.home .separation, .signup .separation{
-    float: left;
-    width: 4px;
-    height: 800px;
-    background-color: #38b6ff;
-    margin-top: 75px;
-}
-
-.home .right-side form .account_help_signup{
-    text-align: center;
-}
-
-.home .right-side form .continue_with{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0
-}
-
-.home .right-side form .continue_with button{
-    width: 50px;
-    height: 50px;
-    border: none;
-    background-color: transparent;
-}
-
-.step_two, .step_three, .step_four, .step_five{
-    display: none;
-}
-
-#signup_submit{
-    display: inline-block;
-    width: 35%;
-}
-
-.signup_prev{
-    display: inline-block;
-    width: 35%;
-    margin-top: 20px;
-    border: none;
-    background-color: var(--cor_prim);
-    color: white;
-    cursor: pointer;
-    height: 35px;
-    transition: 0.5s;
-    border-radius: 10px;
-    font-size: 20px;
-    border: 2px solid var(--cor_prim);
-}
-
-.signup_prev:hover{
-    transform: scale(102%);
-    background-color: white;
-    color: var(--cor_prim);
-}
-
-.next_prev{
-    text-align: center;
-}
-
-.signup_prev_disabled{
-    background-color: gray;
-    cursor: default;
-    border: none;
-}
-
-.signup_prev_disabled:hover{
-    transform: scale(100%);
-    background-color: gray;
-    cursor: default;
-    color: white;
-}
-
-.signup_form input[type="date"], .signup_form input[type="file"]{
-    border: none;
-    background-color: var(--cor_prim);
-    color: white;
-    padding: 5px;
-}
-
-.signup_form select{
-    display: block;
-    margin: 10px auto;
-    width: 300px;
-    height: 35px;
-    border: 2px solid var(--cor_prim);
-}
-
-.signup_form select option{
-    border-radius: 0px;
-}
-
-
-.nav.menu-nav {
-    list-style-type: none;
-    margin: 0;
-    /* margin-left: -140px; 
-    padding: 0;
-    top: 0;
-    width: 70px;
-    position: fixed; 
-    height: 100%; 
-    overflow: auto;
-    border-right: 2px solid var(--cor_prim);
-    z-index: 999;
-}
-
-
-.nav.menu-nav li a {
-    display: block;
-    color: #000;
-    padding: 8px 0;
-    text-decoration: none;
-    text-align: center;
-}
-
-.bi{
-    width: 32px;
-    height: 32px;
-    color: var(--cor_prim);
-    margin: 10px 0;
-}
-
-.nav.menu-nav li a img{
-    width: 45px;
-    height: 45px;
-    border-radius: 100%;
-    /* align-items: center; 
-}
-
-.active a svg{
-    color: var(--cor_sec);
-}
-
-
-.nav.menu-nav li a.active {
-    background-color: #4CAF50;
-    color: white;
-}
-
-
-.nav.menu-nav li a:hover:not(.active) {
-    background-color: #c4c4c4;
-    color: white;
-}
-
-.direct_msg{
-    display: flex;
-}
-
-
-.direct_msg .left-side{
-    width: 65%;
-    height: 100%;
-    justify-self: left;
-}
-
-.direct_msg .right-side{
-    width: 45%;
-    height: 100%;
-    justify-self: right;
-    display: block;
-}
-
-.direct_msg .separation{
-    width: 2px;
-    height: 90%;
-    background-color: #38b6ff;
-    margin-top: 2.5%;
-    top: 0;
-    margin-left: 55%;
-    position: fixed;
-}
-
-.direct_msg .left-side .dm-window{
-    width: 60%;
-    margin: auto;
-}
-*/
 
 .direct_msg .left-side .dm-window{
     margin-top: 25px;
@@ -707,338 +452,4 @@ form input[type="submit"]:hover{
     margin-left: 0.5%;
     margin-right: 0.5%;
     cursor: pointer;
-}
-
-/*
-.direct_msg .right-side .friend{
-    width: 90%;
-    background-color: var(--cor_prim);
-    padding: 10px;
-    border-radius: 55px;
-    display: flex;
-    align-items: center;
-    font-size: 40px;
-    gap: 20px;
-    margin: 8% 4%;
-    color: #fff;
-    cursor: pointer;
-    transition: 0.5s;
-}
-
-.direct_msg .right-side .friend:hover{
-    transform: scale(101%);
-    background-color: #0068f0;
-}
-
-.direct_msg .right-side .friend img{
-    border-radius: 100%;
-}
-
-.direct_msg .friend .friend-hidden{
-    display: none;
-}
-
-
-.profile-name{
-    display: flex;
-    align-items: center;
-    margin-left: 10%;
-    color: var(--cor_prim);
-    font-size: 60px;
-    padding-top: 20px;
-}
-
-.profile-pict{
-    width: 200px;
-    height: 200px;
-    border-radius: 100%;
-    padding-right: 10px;
-}
-
-.vc_h1{
-    color: var(--cor_prim);
-    text-align: center;
-    font-size: 120px;
-}
-
-.vc_form{
-    width: 80%;
-    text-align: center;
-    margin: auto;
-}
-
-.vc_form input{
-    width: 50px;
-    height: 70px;
-    margin: 15px;
-}
-
-.vc_form input[type="submit"]{
-    display: block;
-    margin: auto;
-    width: 250px;
-    height: 50px;
-    background-color: var(--cor_prim);
-    border: none;
-    color: white;
-    font-size: 35px;
-    line-height: 50px;
-    margin-top: 20px;
-    cursor: pointer;
-    transition: 0.5s;
-    border-radius: 2px;
-}
-
-.vc_form input[type="submit"]:hover{
-    transform: scale(102%);
-    background-color: white;
-    color: var(--cor_prim);
-    border: 1px solid var(--cor_prim);
-}
-
-.g-recaptcha{
-    margin: auto;
-}
-
-.results{
-    width: 45%;
-    /* background-color: rgba(0,0,0,0.1); 
-    margin: auto;
-    padding: 15px 0;
-}
-
-.results .user_list{
-    width: 90%;
-    height: 120px;
-    margin: 15px auto;
-    background-color: #3fb8fe6a;
-}
-
-.results .user_list img{
-    width: 100px;
-    margin-left: 10px;
-    margin-top: 10px;
-}
-
-.results .user_list img, .results .user_list .infos{
-    display: inline-block;
-    margin-bottom: -15px;
-}
-
-.results .user_list .infos p{
-    font-size: 25px;
-    margin-left: 30px;
-}
-
-.search-bar{
-    width: 450px;
-    margin: auto;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    text-align: center;
-}
-
-.search-bar input{
-    width: 350px;
-    height: 50px;
-    padding-left: 10px;
-    font-size: 25px;
-    border: 1px solid var(--cor_prim);
-}
-
-.search-bar input:focus{
-    outline: var(--cor_prim) solid 1.3px;
-}
-
-.users_page{
-    text-align: center;
-    font-size: 25px;
-    margin-top: 10px;
-}
-
-.user-options{
-    text-align: center;
-}
-
-.user-options .add_friend, .user-options .send_message{
-    text-align: center;
-}
-
-.user-options .add_friend a, .user-options .send_message a{
-    text-decoration: none;
-    color: black;
-}
-
-.notifications_container{
-    width: 80%;
-    margin: auto;
-}
-
-.notifications_container .notification{
-    width: 60%;
-    margin: auto;
-    background-color: rgba(var(--cor_prim), 0.6);
-}
-
-modal {
-    display: none; /* Modal está escondido por padrão 
-    position: fixed; /* Fica em posição fixa na tela 
-    z-index: 1; /* Fica no topo 
-    padding-top: 100px; /* Localização do modal 
-    left: 0;
-    top: 0;
-    width: 100%; /* Largura total 
-    height: 100%; /* Altura total 
-    overflow: auto; /* Habilita scroll se necessário 
-    background-color: rgb(0,0,0); /* Fundo preto 
-    background-color: rgba(0,0,0,0.4); /* Fundo preto com opacidade 
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-}
-
-.close{
-    cursor: pointer;
-}
-
-.modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1; 
-    padding-top: 100px; 
-    left: 0;
-    top: 0;
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgb(0,0,0); 
-    background-color: rgba(0,0,0,0.4); 
-  }
-  
-  .modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    max-width: 500px; /* Adjust as needed 
-  }
-  
-  .close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  
-  .create_group_form {
-    margin: 0 auto; /* Centers the form horizontally 
-}
-
-.create_group_form label {
-    font-size: 22px;
-}
-
-
-.create_group_form label,
-.create_group_form input[type="text"],
-.create_group_form input[type="file"],
-.create_group_form textarea,
-.create_group_form select,
-.create_group_form input[type="submit"] {
-    display: block;
-    margin: 0 auto 15px; /* Centers the elements horizontally and adds space below each element 
-    text-align: center; /* Centers the text inside the elements 
-    font-size: 20px;
-}
-
-.create_group_form input:focus, .create_group_form textarea:focus, .create_group_form select:focus{
-    outline: 2px solid var(--cor_prim);
-}
-
-.create_group_form input[type="text"]{
-    width: 70%;
-    height: 40px;
-    border: 1px solid var(--cor_prim);
-}
-
-.create_group_form select{
-    border: 1px solid var(--cor_prim);
-    width: 70%;
-    height: 80px;
-    font-size: 25px;
-}
-
-.create_group_form textarea{
-    border: 1px solid var(--cor_prim);
-    width: 70%;
-    height: 80px;
-    resize: none;
-    text-align: left;
-    padding: 2px;
-}
-
-.create_group_form #characterCount{
-    margin-left: 75%;
-}
-
-.create_group_form input[type="submit"] {
-    width: 70%;
-    height: 40px;
-    background: var(--cor_prim);
-    transition: 0.2s;
-    cursor: pointer;
-    font-size: 25px;
-    color: white;
-    border: none;
-}
-
-.create_group_form input[type="submit"]:hover {
-    background: var(--cor_sec);
-}
-
-.new_family {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 50%;
-    margin: 0 auto;
-}
-
-.new_family h2, .new_family .create_family {
-    width: 100%;
-    text-align: center;
-}
-
-.new_family .create_family form label, input[type="submit"] {
-    margin-top: 20px;
-}
-
-.new_family .create_family form input[type="submit"] {
-    border: 1px solid var(--cor_prim);
-    width: 100px;
-}
-
-.new_family .create_family form input[type="checkbox"] {
-    display: inline-block;
-    margin-right: 10px;
-    margin-left: 20px;
-}
-
-.new_family .create_family form p {
-    display: inline-block;
-}
-
-.new_family .create_family form .family_members{
-    max-width: 300px;
 }

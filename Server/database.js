@@ -20,6 +20,22 @@ async function connect(){
     return connection;
 }
 
+async function new_notification(id_sender, id_receiver, message, type){
+    const conn = await connect();
+
+    try{
+        var currentDate = new Date();
+        var sqlFormattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
+    
+        await conn.query("INSERT INTO notifications (type_id, sent_date, receiver_id, sender_id, message_text) VALUES (?, ?, ?, ?, ?);",[Number(type), sqlFormattedDate, id_sender, id_receiver, message]);    
+
+        return true;
+    }catch(err) {
+        console.error(err);
+        return false;
+    }
+}
+
 async function getUserNotifications(data){
     const conn = await connect();
     console.log(data.page);
@@ -66,6 +82,6 @@ async function updateInvite(notification_id, status){
     }
 }
 
-module.exports = {getUserNotifications, getNotificationsCount, updateInvite};
+module.exports = {getUserNotifications, getNotificationsCount, updateInvite, new_notification};
 
 

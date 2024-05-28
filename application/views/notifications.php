@@ -90,7 +90,7 @@
             console.log("aa");
             var notification_id = $(this).attr("data-indicator"); 
             console.log(notification_id);
-            ajax.post('http://localhost:5000/accept_invite', {id: notification_id}, function(data) {
+            ajax.post('http://localhost:5910/accept_invite', {id: notification_id}, function(data) {
                 console.log(data);
                 if(data.success){
                     $('#mensagemModal').text('Friend invitation accepted!');
@@ -103,7 +103,7 @@
         $('.notifications_container').on('click', '.deny_friend', function() {
             var notification_id = $(this).attr("data-indicator"); 
             console.log(notification_id);
-            ajax.post('http://localhost:5000/refuse_invite', {id: notification_id}, function(data) {
+            ajax.post('http://localhost:5910/refuse_invite', {id: notification_id}, function(data) {
                 console.log(data);
                 if(data.success){
                     $('#mensagemModal').text('Friend invitation refused!');

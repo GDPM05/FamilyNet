@@ -1,13 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<main>
+<main id="main-posts">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <!-- Coluna central para posts -->
             <div class="posts col-lg-8 col-md-10 col-sm-12">
                 <div class="user-posts mb-4">
-                    <!-- Exemplo de um post -->
                 </div>
             </div>
             <div class="users_infos col-lg-2 col-md-10 col-sm-12">
@@ -16,6 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <h2><?=$user['username']?></h2>
                 </div>
                 <div class="user-friends">
+                    <h3>Amigos</h3>
                     <?php foreach($friends as $friend): ?> 
                         <div class="friend d-flex align-items-center mb-2">
                             <img src="<?=$friend['pfp']['path']?>" alt="<?=$friend['user']?>" class="img-fluid rounded-circle" style="width: 30px; height: 30px;">
@@ -26,37 +25,55 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
     </div>
-
-    <!-- Formulário fixo no fundo da página -->
-    <div class="post-creation-container fixed-bottom w-100 p-3">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 col-md-10 col-sm-12">
+    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="postModalLabel">Novo Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulário de novo post -->
                     <form action="<?php echo base_url('/new_post'); ?>" class="post-form" method="post" enctype="multipart/form-data">
                         <div id="preview" class="mb-3 d-flex flex-wrap"></div>
-                        <div class="d-flex align-items-center">
-                            <input type="text" name="post-text" class="form-control me-2" placeholder="O que estás a pensar?" style="flex-grow: 1;" required>
-                            <div id="preview" class="mb-3"></div>
-                            <label for="file-upload" id="file-label" class="btn btn-outline-secondary me-2 mb-0 d-flex align-items-center justify-content-center">
-                                <i class="bi bi-paperclip"></i>
+                        <div class="mb-3">
+                            <input type="text" name="post-text" class="form-control" placeholder="O que estás a pensar?" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="file-upload" class="btn btn-outline-secondary">
+                                <i class="bi bi-paperclip"></i> Adicionar Imagens
                             </label>
                             <input id="file-upload" type="file" name="file-upload[]" multiple="multiple" style="display: none;">
-                            <select name="privacy" id="privacy">
+                        </div>
+                        <div class="mb-3">
+                            <select name="privacy" id="privacy" class="form-select">
                                 <?php foreach($privacy as $p):?>
                                     <option value="<?=$p['id']?>"><?=$p['level']?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <button type="submit" class="btn btn-primary">Publicar</button>
                         </div>
+                        <button type="submit" class="btn btn-primary">Publicar</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</main>
+    <button type="button" class="btn btn-primary new_post" data-bs-toggle="modal" data-bs-target="#postModal">
+        Criar Publicação
+    </button>
 
+</main>
 <script>
-       var fileList = [];
+
+</script>
+<script>
+    /*var modal = new bootstrap.Modal(document.getElementById('postModal'), {});
+    modal.show();*/
+    $(".new_post").click(function(){
+        console.log("Botão clicado!"); // Adicione esta linha para verificar se a função está sendo chamada
+        $('#postModal').modal('show');
+    });
+    var fileList = [];
     const max_imgs = 3;
     var fileUpload = document.getElementById('file-upload');
     var fileLabel = $("#file-label");
@@ -121,6 +138,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         Object.keys(data).forEach(function(key){
             console.log(data[key]);
             var post = data[key];
+            var like_icon = post.already_like ? '<i class="bi bi-hand-thumbs-up-fill"></i>' : '<i class="bi bi-hand-thumbs-up"></i>';
             var div = `
                 <div class="post-container">
                     <div class="post card mb-4 shadow-sm">
@@ -135,46 +153,83 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <p>${post.post.text}</p>
                             ${generateMediaContent(post, key)}
                         </div>
+                        <div class="like">
+                            ${like_icon} <p class="num_likes" style="display: inline-block;">${post.post.likes}</p>
+                        </div>
+                        <p class="hidden post_id">${post.post.id}</p> 
+                        <p class="hidden publisher_id">${post.id}</p> 
                     </div>
                 </div>`;
             $(".user-posts").append(div);
         });
+        changeLike();
     });
 
     function generateMediaContent(post, key) {
-        if (post.post.media && post.post.media.length > 1) {
-            var carouselId = 'carousel-' + key;
-            var carouselDiv = `
-                <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        ${generateCarouselItems(post)}
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+        if (post.post.media && post.post.media.length > 0) {
+            var mediaDiv = `
+                <div class="d-flex images overflow-auto">
+                    ${generateMediaItems(post)}
                 </div>`;
-            return carouselDiv;
-        } else if (post.post.media && post.post.media.length === 1) {
-            return `
-                <div>
-                    <img src="${post.post.media[0].path}" alt="${post.post.media[0].alt}" class="img-fluid rounded" style="width: 300px; height: 300px; object-fit: cover; margin: 0 auto;">
-                </div>`;
+            return mediaDiv;
         }
         return '';
     }
 
-    function generateCarouselItems(post) {
-        return post.post.media.map(function(media, index) {
+    function generateMediaItems(post) {
+        return post.post.media.map(function(media) {
             return `
-                <div class="carousel-item${index === 0 ? ' active' : ''}">
-                    <img src="${media.path}" alt="${media.alt}" class="d-block w-100">
+                <div>
+                    <img src="${media.path}" alt="${media.alt}" class="d-block" style="width: 300px; height: 300px;">
                 </div>`;
         }).join('');
     }
 
+    function changeLike(){
+        $(".like").click(function(){
+            console.log("ola");
+            var postId = $(this).siblings('.post_id').text();
+            var publisher = $(this).siblings('.publisher_id').text();
+            var hollow = '<i class="bi bi-hand-thumbs-up"></i>';
+            var filled = '<i class="bi bi-hand-thumbs-up-fill"></i>';
+            var btn = ($(this).html() == '<i class="bi bi-hand-thumbs-up-fill"></i>') ? '<i class="bi bi-hand-thumbs-up"></i>' : '<i class="bi bi-hand-thumbs-up-fill"></i>';
+            var self = this;
+            if($(this).find('i').hasClass('bi-hand-thumbs-up')){
+                console.log('ola2');
+                $(this).find('i').remove();
+                $(this).prepend(filled);
+                ajax.get('<?=base_url('add_like/')?>'+postId+'/'+<?=$user['id']?>, function(data){
+                    console.log(data);
+                    console.log(data.current_likes[0].likes);
+                    if(!data.success){
+                        alert(data.message);
+                    }
+                    console.log(data.current_likes[0].likes);
+                    $(self).find('.num_likes').html(data.current_likes[0].likes);
+
+                });
+                const notification_info = {
+                    receiver_id: publisher,
+                    sender_id: <?=$user['id']?>,
+                    message: '<?=$user['username']?> deu like no seu post!',
+                    type: 3,
+                    post_id: postId
+                }
+                ajax.post('http://localhost:5910/send_notification', notification_info, function(data){
+                    console.log(data);
+                }, 'application/x-www-form-urlencoded; charset=UTF-8');
+            }else{
+                console.log('ola3');
+                $(this).find('i').remove();
+                $(this).prepend(hollow);
+                ajax.get('<?=base_url('remove_like/')?>'+postId+'/'+<?=$user['id']?>, function(data){
+                    console.log(data);
+                    if(!data.success){
+                        alert(data.message);
+                    }
+                    $(self).find('.num_likes').html(data.current_likes[0].likes);
+                });
+            }   
+        });
+    }
 </script>

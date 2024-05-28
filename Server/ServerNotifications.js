@@ -14,6 +14,34 @@ class ServerNotifications {
         this.loadNotifications();
         this.acceptInvite();
         this.refuseInvite();
+        this.sendNotification();
+
+        this.memory = {
+            notifications: []
+        };
+
+        setInterval(function(){
+            this.cleanMemory();
+        }, 1000*600*6);
+    }
+
+    cleanMemory(){
+        for(const key in this.memory.notifications){
+            if (this.memory.notifications.hasOwnProperty(key)) {
+                const notification = this.memory.notifications[key];
+                const noti_date = new Date(notification.time);
+                const oneHourAgo = new Date();
+                oneHourAgo.setHours(oneHourAgo.getHours() - 1);
+
+                const differenceInMilliseconds = currentDate - oneHourAgo;
+
+                const differenceInHours = differenceInMilliseconds / (1000 * 60 * 60);
+
+                if(differenceInHours > 1){
+                    delete this.memory.notifications[key];
+                }
+            }
+        }
     }
 
     getNotifications(){
@@ -40,6 +68,40 @@ class ServerNotifications {
         });
     }
     
+    sendNotification(){
+        this.app.post('/send_notification', (req, res) => {
+            req.on('data', async (info) => {
+                res.setHeader('Content-Type', 'application/json');
+                const data = (info.toString().split('&'));
+                var message = (decodeURIComponent(data[2]));
+                message = message.substring(message.indexOf('=')+1, message.length).replaceAll('+', ' ');
+                console.log(message);
+                const id_receiver = Number((data[0].split('=')).pop());
+                const id_sender = Number((data[1].split('=')).pop());
+                const noti_type = Number((data[3].split('=')).pop());
+                const post_id = Number((data[4].split('=')).pop());
+
+                if(this.memory.notifications[post_id] != undefined && this.memory.notifications[post_id] == id_sender) {
+                    res.end();
+                    return;
+                }
+
+                this.memory.notifications[post_id] = id_sender;
+
+                console.log(this.memory);
+
+                const noti = await this.db.new_notification(id_sender, id_receiver, message, noti_type);
+                
+                const return_data = {
+                    success: noti 
+                }
+
+                res.write(JSON.stringify(return_data));
+                res.end();
+            })
+        });
+    }
+
     loadNotifications(){
         this.app.post('/load_notifications', (req, res) => {
             req.on('data', async (info) => {
@@ -64,6 +126,7 @@ class ServerNotifications {
     getTotalNotifications(){
         this.app.post('/get_total_notifications', (req, res) => {
             req.on('data', async (info) => {
+                res.setHeader('Content-Type', 'application/json');
                 const data = (info.toString().split('=')).pop();
 
                 console.log(data);
@@ -152,5 +215,5 @@ class ServerNotifications {
     }
 }
 
-const server = new ServerNotifications(5000);
+const server = new ServerNotifications(5910);
 server.start();
