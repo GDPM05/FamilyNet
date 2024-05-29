@@ -4,9 +4,9 @@ $(document).ready(function() {
     var btnNext = $("#signup_submit");
     var totalSteps = steps.length;
 
-    window.addEventListener('scroll', function() {
-        window.scrollTo(0, 0);
-    });
+    // window.addEventListener('scroll', function() {
+    //     window.scrollTo(0, 0);
+    // });
 
     // Inicializa o primeiro passo como visível
     $(steps[step]).show();

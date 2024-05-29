@@ -35,7 +35,8 @@
     var loading = false; 
     var totalNotificationsLoaded = 0;
     const ajax = new AjaxHandler();
-    var limit = 20;
+    var limit = 90;
+    $(window).css({'overflow-y': 'auto'})
     execAjax();
     $(window).scroll(function() {
         ajax.post('http://localhost:5910/get_total_notifications', {receiver_id: <?=$user['id']?>}, (data)=>{

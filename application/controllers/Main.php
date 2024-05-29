@@ -165,7 +165,7 @@
                     // Family-only post
                     $family_id = $this->FamilyUser_Model->fetch(['id_user' => $user_id]);
                     //var_dump($family_id);
-                    if ($this->FamilyUser_Model->check_if_exists(['id_family' => $family_id['id_family'], 'id_user' => $post['id_sender']])) {
+                    if ($family_id && $this->FamilyUser_Model->check_if_exists(['id_family' => $family_id['id_family'], 'id_user' => $post['id_sender']])) {
                         $user['post'] = $post;
                     }
                 } elseif ($post['privacy_level'] == 4) {

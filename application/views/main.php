@@ -187,37 +187,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         var isLoading = false;
         var page = 1;
 
-        function loadComments(postId) {
-            if (isLoading) return; // Evita múltiplas chamadas enquanto carrega
-            isLoading = true;
+        // function loadComments(postId) {
+        //     if (isLoading) return; // Evita múltiplas chamadas enquanto carrega
+        //     isLoading = true;
 
-            ajax.get('<?=base_url('get_comments/')?>' + page + '/' + postId, function(data) {
-                if (data.length > 0) {
-                    data.forEach(comment => {
-                        const newComment = `
-                            <div class="comment d-flex mb-2">
-                                <img src="${comment["pfp"]["path"]}" alt="Foto de perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
-                                <div class="comment-body p-2 bg-light rounded">
-                                    <strong>${comment["username"]["username"]}</strong>
-                                    <p class="mb-1">${comment["text"]}</p>
-                                </div>
-                            </div>`;
-                        $('.comments-list').prepend(newComment);
-                    });
+        //     ajax.get('<?=base_url('get_comments/')?>' + page + '/' + postId, function(data) {
+        //         if (data.length > 0) {
+        //             data.forEach(comment => {
+        //                 const newComment = `
+        //                     <div class="comment d-flex mb-2">
+        //                         <img src="${comment["pfp"]["path"]}" alt="Foto de perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+        //                         <div class="comment-body p-2 bg-light rounded">
+        //                             <strong>${comment["username"]["username"]}</strong>
+        //                             <p class="mb-1">${comment["text"]}</p>
+        //                         </div>
+        //                     </div>`;
+        //                 $('.comments-list').prepend(newComment);
+        //             });
 
-                    isLoading = false;
-                    page++;
-                } else {
-                    // Se não houver mais comentários, você pode desativar a detecção de rolagem.
-                    // O usuário pode rolar novamente para recarregar se necessário.
-                    $('.comments-list').off('scroll');
-                }
-            });
-        }
+        //             isLoading = false;
+        //             page++;
+        //         } else {
+        //             // Se não houver mais comentários, você pode desativar a detecção de rolagem.
+        //             // O usuário pode rolar novamente para recarregar se necessário.
+        //             $('.comments-list').off('scroll');
+        //         }
+        //     });
+        // }
 
-        $('.comments-list').scroll(function() {
-            console.log("Rolou a lista de comentários!"); // Esta mensagem será registrada no console sempre que a lista de comentários for rolada
-        });
+        // $('.comments-list').scroll(function() {
+        //     console.log("Rolou a lista de comentários!"); // Esta mensagem será registrada no console sempre que a lista de comentários for rolada
+        // });
 
 
 
