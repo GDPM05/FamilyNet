@@ -17,6 +17,8 @@
             $this->load->model('PostMedia_Model');
             $this->load->model('FamilyUser_Model');
             $this->load->model('Friends_Model');
+            $this->load->model('Comments_Model');
+            $this->load->model('User_Model');
         }
 
         public function index() {
@@ -257,6 +259,51 @@
             $data['current_likes'] = $this->Post_Model->get_likes($id_post);
             echo json_encode($data);
             return false;
+        }
+
+        public function add_comment(){
+            header('Content-Type: application/json');
+            $data = $this->input->post();
+            // print_r($data);
+
+            $insert_data = [
+                'text' => $data['comment'],
+                'id_post' => $data['post_id'],
+                'id_user' => $this->session->userdata('user')['id'],
+                'sent_date' => date('Y-m-d H:i:s')
+            ];
+
+            $this->Comments_Model->insert($insert_data);
+
+            if($this->Comments_Model->error){
+                $return_data['success'] = false;
+                echo json_encode($return_data);
+                return;
+            }
+
+            $return_data['success'] = true;
+            echo json_encode($return_data);
+            return true;
+        }
+
+        public function get_comments($page = 1, $id_post = null){
+            header('Content-Type: application/json');
+            $limit = 10;
+            $offset = $page * $limit;
+
+            $comments = [];
+
+            $comments = $this->Comments_Model->fetch_all(true, $limit, $page, null, ['id_post' => $id_post]);
+            
+            foreach($comments as $key => $comment){
+                $comments[$key]['username'] = $this->User_Model->fetch(['id' => $comments[$key]['id_user']], 'username, pfp');
+                $comments[$key]['pfp'] = $this->Media_Model->fetch(['id' => $comments[$key]['username']['pfp']], 'path');
+                unset($comments[$key]['username']['pfp']);
+                // print_r($comment);
+            }
+
+            echo json_encode($comments);
+            return true;
         }
     }
 ?>

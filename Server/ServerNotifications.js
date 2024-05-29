@@ -43,8 +43,8 @@ class ServerNotifications {
             });
         });
 
-        setInterval(function(){
-            cleanMemory();
+        setInterval(()=>{
+            this.cleanMemory();
         }, 1000*600*6);
     }
 

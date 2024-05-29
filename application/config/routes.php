@@ -91,3 +91,5 @@ $route['get_posts/(:num)'] = 'Main/get_posts';
 $route['add_like/(:num)/(:num)'] = 'Main/add_like/$1/$2';
 $route['remove_like/(:num)/(:num)'] = 'Main/remove_like/$1/$2';
 $route['activate_account'] = 'Signup/activate_account_external';
+$route['add_comment'] = 'Main/add_comment';
+$route['get_comments/(:num)/(:num)'] = 'Main/get_comments/$1/$2';

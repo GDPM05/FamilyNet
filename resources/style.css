@@ -484,3 +484,21 @@ html{
     border-radius: 50%;
     border: 1px solid white; /* Optional: adds a white border around the badge */
 }
+
+.like i{
+    color: var(--cor_prim) !important;
+    transition: 0.5s;
+}
+
+.like:hover i {
+    color: var(--cor_sec) !important;
+}
+
+.comments-list{
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.comment{
+    width: 100% !important;
+}
