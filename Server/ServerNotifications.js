@@ -37,6 +37,19 @@ class ServerNotifications {
                 console.log("Online: ", this.online);
             });
 
+            socket.on('send_simple_notification', (user) => {
+                if(user == null)
+                    return false;
+                
+                const socket = this.online[user];
+                console.log(socket);
+                if(socket)
+                    io.to(socket).emit('notification', {msg: "new notification"});
+                else
+                    return false;
+
+            });
+
             socket.on('disconnect', ()=>{
                 delete this.online[socket.id];
                 console.log("Disconnect: ", this.online);

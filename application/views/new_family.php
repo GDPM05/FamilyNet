@@ -15,12 +15,16 @@
             <div class="form-group">
                 <label for="family_members">Familiares</label>
                 <div class="family_members">
-                    <?php foreach ($friends as $friend):?>
+                    <?php if(!isset($friends)):
+                        echo '<p>Adicione os seus familiares como amigos para os adicionar à sua família.</p>';
+                        else:
+                         foreach ($friends as $friend):?>
                         <div class="form-check">
                             <input type="checkbox" name="<?=$friend['user']?>" class="form-check-input" id="<?=$friend['user']?>">
                             <label class="form-check-label" for="<?=$friend['user']?>"><?=$friend['username']?></label>
                         </div>
-                    <?php endforeach;?>
+                    <?php endforeach;
+                    endif;?>
                 </div>
             </div>
             <input type="submit" value="Criar" name="submit" class="btn btn-primary">

@@ -28,8 +28,18 @@ class NotificationClient {
             console.log(err);
         }
     }
+
+    send_simple_notification(receiver_id){
+        try{
+            this.socket.emit('send_simple_notification', receiver_id);
+        }catch(err){
+            console.log(err);
+        }
+    }
 }
 
 
-const client = new NotificationClient(io);
-client.connect('http://localhost:8914');
+const not_client = new NotificationClient(io);
+not_client.connect('http://localhost:8914');
+
+global.not_clinet = not_client;

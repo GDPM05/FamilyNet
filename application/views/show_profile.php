@@ -52,6 +52,7 @@
         btn_add.click(function(){
             ajax.post('<?php echo base_url('send_invite').'/'.$user['id'];?>', null, (data)=>{
                 $('#mensagemModal').text("Pedido de amizade enviado com sucesso!");
+                not_client.send_simple_notification(<?=$user['id']?>);
                 modal.show();
                 console.log(data);
                 document.location.reload();
@@ -59,7 +60,7 @@
         });
 
         btn_decline.click(function(){
-            ajax.post('<?php echo base_url('invites/'.$user['id'].'/'.'2');?>', {notification_id}, (data)=>{
+            ajax.get('<?php echo base_url('invites/'.$user['id'].'/'.'2');?>', (data)=>{
                 $('#mensagemModal').text(data.mensagem);
                 modal.show();
                 console.log(data);

@@ -109,7 +109,7 @@
         
             switch($status){
                 case 1:
-                    $type_id = 2;
+                    $type_id = 1;
                     $status_message = $this->session->userdata('user')['username'].' aceitou o seu pedido de amizade!';
                     break;
                 case 2:
@@ -124,10 +124,11 @@
 
             $this->Friends_model->update_invite($user['id'], $this->session->userdata('user')['id'], $status);
             
-            $this->Notification_model->delete(['id' => $this->input->post()['notification_id']]);
+            if(isset($this->input->post()['notification_id']))
+                $this->Notification_model->delete(['id' => $$this->input->post()['notification_id']]);
 
             $notification_id = $this->Notification_model->insert([
-                'type_id' => 2,
+                'type_id' => $type_id,
                 'sent_date' => date('Y-m-d H:i:s'),
                 'receiver_id' => $user['id'],
                 'sender_id' =>  $this->session->userdata('user')['id'],

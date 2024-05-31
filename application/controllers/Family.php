@@ -31,7 +31,7 @@
                 $friends = $this->Friends_model->fetch_friends($user_id);
                 foreach($friends as $friend){
                     // Verifica qual ID é o do amigo
-                    //$friend_id = $friend['id_user1'] == $user_id ? $friend['id_user2'] : $friend['id_user1'];
+                    $friend_id = $friend['id_user1'] == $user_id ? $friend['id_user2'] : $friend['id_user1'];
                     $user = $this->User_model->fetch(['id' => $friend_id]);
                     $this->data['friends'][] = $user;
                 }

@@ -11,7 +11,7 @@ $(document).ready(function(){
 
     function createDiv(user){
         //console.log(user);
-        var div = '<div class="col-md-4 d-flex flex-column align-items-center text-center mb-3"><div class="user_list"><input type="hidden" name="user_id" value="'+user.id+'"><img src="'+user.pfp+'" alt="'+user.user+'" title="'+user.user+'"><div class="infos"><p>'+user.username+'</p><p>'+user.p_role+'</p></div><button><a href="http://localhost/FamilyNet/see_profile'+user.user+'">See Profile</a></button></div></div>';
+        var div = '<div class="col-md-4 d-flex flex-column align-items-center text-center mb-3"><div class="user_list"><input type="hidden" name="user_id" value="'+user.id+'"><img src="'+user.pfp+'" alt="'+user.user+'" title="'+user.user+'"><div class="infos"><p>'+user.username+'</p><p>'+user.p_role+'</p></div><button><a href="http://localhost/FamilyNet/see_profile/'+user.user+'">See Profile</a></button></div></div>';
         return div;
     }
 
