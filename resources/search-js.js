@@ -38,7 +38,7 @@ $(document).ready(function(){
         console.log(query, page);
         debounceTimeout = setTimeout(function(){
             if(query != "") {
-                ajax.post("http://localhost/FamilyNet/fetch", {query:query, page:page}, function(results) {
+                ajax.post("http://192.168.40.158/FamilyNet/fetch", {query:query, page:page}, function(results) {
                     console.log(results);
                     $(".results").html('<div class="row">');
                     console.log(results.query);

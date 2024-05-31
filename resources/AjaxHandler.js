@@ -5,6 +5,7 @@ class AjaxHandler{
         $.ajax({
             url: url,
             type: 'GET',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function(res){
                 callback(res);
             },
@@ -19,7 +20,7 @@ class AjaxHandler{
             url: url,
             type: 'POST',
             data: data,
-            contentType: c_type,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function(res) {
                 callback(res);
             },
