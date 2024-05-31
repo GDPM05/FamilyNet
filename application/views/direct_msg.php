@@ -107,10 +107,12 @@
         let load = true;
         let scrolling = false;
         $(".friend").click(function(){
-            console.log($(this).children(".conv_id").text());
+            console.log("aaaaaa",$(this).find(".conv_id").text());
             var user_name = '<?php echo $user['user'];?>';
             var user_id = <?php echo $user['id'];?>;   
             var current_friend = $(this).find('#friend_id').text(); 
+            var id_conv = $(this).find
+            console.log
 
             if(current_friend == friend_id){
                 return;
@@ -118,10 +120,11 @@
             
             console.log("Amigo: "+current_friend);
             conv_id = $(this).find('#conv_id').text();
+            console.log("banana", conv_id);
             if(friend_id != null && friend_id != current_friend)
                 cliente.change_friend(current_friend);
             else
-                cliente.emit_userdata({user_name: user_name, user_id:user_id, friend_id: current_friend});
+                cliente.emit_userdata({user_name: user_name, user_id:user_id, friend_id: current_friend, id_conv: conv_id});
 
             friend_id = current_friend;
             console.log(friend_id);

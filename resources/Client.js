@@ -32,7 +32,7 @@ class Client{
 
             this.socket.on('connect_error', (error) => {
                 console.log('connect_error event fired', error);
-                window.location.href = 'http://localhost/FamilyNet/main'; // Trocar por uma mensagem
+                window.location.href = 'http://192.168.40.158/FamilyNet/main'; // Trocar por uma mensagem
             });
 
             this.socket.on('connect', () => {
@@ -49,7 +49,7 @@ class Client{
                 });
             });
         }catch(error){
-            window.location.href = 'http://localhost/FamilyNet/main'; // Trocar por uma mensagem
+            window.location.href = 'http://192.168.40.158/FamilyNet/main'; // Trocar por uma mensagem
             throw error;
         }
     }
@@ -57,7 +57,8 @@ class Client{
     emit_userdata(data){ // Método responsável por enviar os dados do utilizador para o servidor
         console.log(data);
         try{
-            this.socket.emit('user_data', {name: data.user_name, id: data.user_id, id_conv: data.id_conv, friend: data.friend});
+            console.log(data);
+            this.socket.emit('user_data', {name: data.user_name, id: data.user_id, id_conv: data.id_conv, friend: data.friend_id});
         }catch(error){
             throw error;
         }    

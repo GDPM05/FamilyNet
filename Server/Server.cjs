@@ -54,8 +54,11 @@ class Server{
         }else{
             var user_id = data.id; // Guarda em variável o id do user
             var user_name = data.name; // Guarda em variável o nome do user
-            var user_conv = data.id_user_conv; // Guarda em variável o id do user que estabelecerá comunicação
-            
+            var user_conv = data.friend; // Guarda em variável o id do user que estabelecerá comunicação
+            var conv_id = data.id_conv; 
+
+            console.log(user_id, user_name, user_conv, conv_id);
+
             var user_friend = this.users[this.user_map[user_conv]];
             //console.log("Outro amigo: "+((user_teste != undefined) ? JSON.stringify(user_teste) : user_teste));
             //console.log("Outro amigo: "+((user_teste != undefined) ? user_teste['id'] : null));
@@ -65,7 +68,7 @@ class Server{
                 console.log('onlino')
             }
                 
-            var user = new User(user_id, user_name, user_conv); // Criar uma instância da class User
+            var user = new User(user_id, user_name,conv_id ,user_conv); // Criar uma instância da class User
             
             console.log("New user: "+user.id, user.name, user.id_user_conv); 
 
@@ -123,13 +126,15 @@ class Server{
     handleMessage(socket, data){ // Método responsável por tratar as mensagens enviadas
         console.log(data);
         var user = this.sockets[socket.id]; // Busca o utilizador ao array de sockets
-        console.log("User:" + user.id_user_conv);
-        if(!this.user_map[user.id_user_conv]) // Verifica se o utilizador amigo está no servidor
+        console.log("User:" + this.user_map[user.friend_id]);
+        if(!this.user_map[user.friend_id]){// Verifica se o utilizador amigo está no servidor
+            console.log("Não está!");
             return; // Retorna se for o caso
-        
+        } 
+
         var conv_id = this.user_conv_map[user.uniqueId]; // Busca o id da conversa
         var conv = this.conversas[conv_id]; // Busca a conversa
-
+        console.log("Conv_Users: ", conv['conv_id']);
         for(var i = 0; i < conv['users'].length; i++){ // Percorre todos os utilizadores
             if(user.uniqueId != conv['users'][i]){ // Verifica se o id unico dos utilizadores é diferente do utilizador que enviou a mensagem
                 var index = conv['users'][i]; 
