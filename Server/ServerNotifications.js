@@ -60,19 +60,20 @@ class ServerNotifications {
             this.cleanMemory();
         }, 1000*600*6);
     }
-
     cleanMemory(){
+        const currentDate = new Date(); // Adiciona esta linha para definir a data atual
+    
         for(const key in this.memory.notifications){
             if (this.memory.notifications.hasOwnProperty(key)) {
                 const notification = this.memory.notifications[key];
                 const noti_date = new Date(notification.time);
                 const oneHourAgo = new Date();
                 oneHourAgo.setHours(oneHourAgo.getHours() - 1);
-
-                const differenceInMilliseconds = currentDate - oneHourAgo;
-
+    
+                const differenceInMilliseconds = currentDate - noti_date; // Deve ser noti_date em vez de oneHourAgo
+    
                 const differenceInHours = differenceInMilliseconds / (1000 * 60 * 60);
-
+    
                 if(differenceInHours > 1){
                     delete this.memory.notifications[key];
                 }

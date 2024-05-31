@@ -42,4 +42,4 @@ class NotificationClient {
 const not_client = new NotificationClient(io);
 not_client.connect('http://localhost:8914');
 
-global.not_clinet = not_client;
+window.not_clinet = not_client;

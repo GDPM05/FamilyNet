@@ -336,9 +336,9 @@ i{
     margin: 20px;
 }
 
-/* html{
-    overflow-y: hidden !important;
-} */
+.btn-load-more {
+    align-items: center;
+}
 
 .users_infos{
     margin-top: 20px;

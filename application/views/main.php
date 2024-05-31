@@ -168,8 +168,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="comments-section">
                                 <button class="toggle-comments btn btn-link">Ver Comentários</button>
                                 <div class="comments-list" style="display: none;">
-                                    <div class="existing-comments">
-                                    </div>
                                 </div>
                                 <div class="new-comment mt-3">
                                     <textarea class="form-control comment-text" placeholder="Escreva um comentário..."></textarea>
@@ -184,50 +182,65 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             changeLike();
         });
 
-        var isLoading = false;
         var page = 1;
 
-        // function loadComments(postId) {
-        //     if (isLoading) return; // Evita múltiplas chamadas enquanto carrega
-        //     isLoading = true;
+        function loadComments(postId) {
+            ajax.get('<?=base_url('get_comments/')?>' + page + '/' + postId, function(data) {
+                console.log(data);
+                // delete data.comments;
+                if (data.comments != null && data.comments.length > 0) {
+                    data.comments.forEach(comment => {
+                        console.log(comment);
+                        const newComment = `
+                            <div class="comment d-flex mb-2">
+                                <img src="${comment["pfp"]["path"]}" alt="Foto de perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                                <div class="comment-body p-2 bg-light rounded">
+                                    <strong>${comment["username"]["username"]}</strong>
+                                    <p class="mb-1">${comment["text"]}</p>
+                                </div>
+                            </div>`;
+                        if(page > 1){
+                            $('.comments-list').find('.btn_more').remove();
+                            $('.comments-list').append(newComment);
+                        }else
+                            $('.comments-list').prepend(newComment);
+                    });
+                    if(data.n_comments > $('.comments-list').find('.comment').length && $('.comments-list').find('.btn_more').length < 1){
+                        console.log("akjsd");
+                        const button = `<div class="text-center btn_more justify-content-center mt-3">
+                                            <button class="btn btn-primary d-flex justify-content-center align-items-center" style="height: 50px; width: 50px; margin: auto" id="loadMore">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                        </div>`;
+                        $('.comments-list').append(button);
+                    }
 
-        //     ajax.get('<?=base_url('get_comments/')?>' + page + '/' + postId, function(data) {
-        //         if (data.length > 0) {
-        //             data.forEach(comment => {
-        //                 const newComment = `
-        //                     <div class="comment d-flex mb-2">
-        //                         <img src="${comment["pfp"]["path"]}" alt="Foto de perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
-        //                         <div class="comment-body p-2 bg-light rounded">
-        //                             <strong>${comment["username"]["username"]}</strong>
-        //                             <p class="mb-1">${comment["text"]}</p>
-        //                         </div>
-        //                     </div>`;
-        //                 $('.comments-list').prepend(newComment);
-        //             });
-
-        //             isLoading = false;
-        //             page++;
-        //         } else {
-        //             // Se não houver mais comentários, você pode desativar a detecção de rolagem.
-        //             // O usuário pode rolar novamente para recarregar se necessário.
-        //             $('.comments-list').off('scroll');
-        //         }
-        //     });
-        // }
-
-        // $('.comments-list').scroll(function() {
-        //     console.log("Rolou a lista de comentários!"); // Esta mensagem será registrada no console sempre que a lista de comentários for rolada
-        // });
-
+                    $("#loadMore").click(function(){
+                        console.log("Maiiisss");
+                        page += 1;
+                        loadComments(postId);
+                    });
+                } else {
+                    $('.comments-list').append('<p class="text-center">Ainda não há comentários.</p>')
+                }
+            });
+        }
 
 
         function initializeCommentHandlers() {
             // Mostrar/esconder comentários
-            $('.user-posts').on('click', '.toggle-comments', function() {
-                $(this).next('.comments-list').toggle();
+            $('.toggle-comments').on('click', function(){
+                console.log("aaa");
+                if($(this).next('.comments-list').find('.comment').length > 0){
+                    $(this).next('.comments-list').remove();
+                    page = 1;
+                }
+                $(this).next('.comments-list').toggle(); //css({'display': 'block'});
                 var postId = $(this).closest('.post').find('.post_id').text();
+                console.log(postId);
+                window.postId = postId;
                 loadComments(postId);
-            });
+            })
 
             // Adicionar comentário
             $('.user-posts').on('click', '.submit-comment', function() {

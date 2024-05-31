@@ -289,20 +289,23 @@
         public function get_comments($page = 1, $id_post = null){
             header('Content-Type: application/json');
             $limit = 10;
-            $offset = $page * $limit;
+            $offset = ($page - 1) * $limit;
+
+            $return_data = [];
 
             $comments = [];
-
-            $comments = $this->Comments_Model->fetch_all(true, $limit, $page, null, ['id_post' => $id_post]);
             
+            $comments = $this->Comments_Model->fetch_all(true, $limit, $offset, null, ['id_post' => $id_post]);
+            // echo $this->Comments_Model->db->last_query();
             foreach($comments as $key => $comment){
                 $comments[$key]['username'] = $this->User_Model->fetch(['id' => $comments[$key]['id_user']], 'username, pfp');
                 $comments[$key]['pfp'] = $this->Media_Model->fetch(['id' => $comments[$key]['username']['pfp']], 'path');
                 unset($comments[$key]['username']['pfp']);
                 // print_r($comment);
             }
-
-            echo json_encode($comments);
+            $return_data['comments'] = $comments;
+            $return_data['n_comments'] = $this->Comments_Model->get_count(['id_post' => $id_post]);
+            echo json_encode($return_data);
             return true;
         }
     }
