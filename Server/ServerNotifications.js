@@ -118,12 +118,12 @@ class ServerNotifications {
                 const noti_type = Number((data[3].split('=')).pop());
                 const post_id = Number((data[4].split('=')).pop());
 
-                if(this.memory.notifications[post_id] != undefined && this.memory.notifications[post_id] == id_sender) {
-                    res.end();
-                    return;
-                }
+                // if(this.memory.notifications[post_id] != undefined && this.memory.notifications[post_id] == id_sender) {
+                //     res.end();
+                //     return;
+                // }
 
-                this.memory.notifications[post_id] = id_sender;
+                // this.memory.notifications[post_id] = id_sender;
 
                 console.log(this.memory);
 

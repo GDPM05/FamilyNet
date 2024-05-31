@@ -344,6 +344,13 @@ i{
     margin-top: 20px;
 }
 
+.comment_notification {
+    background-color: white; 
+    padding: 2px;
+    border-radius: 5px;
+    width: 100%;
+}
+
 .btn-files{
     justify-content: center;
 }
@@ -494,11 +501,21 @@ i{
     color: var(--cor_sec) !important;
 }
 
-.comments-list{
+.comments-list {
     max-height: 150px;
     overflow-y: auto;
 }
 
-.comment{
+.comments-list .comment {
+    display: flex;
     width: 100% !important;
+    justify-content: space-between; /* Adicionado para separar o comentário do botão de deletar */
+}
+
+.comments-list .comment-body {
+    flex-grow: 1; /* Faz com que a área do comentário ocupe o máximo de espaço possível */
+}
+
+.comments-list .comment #deleteButton {
+    float: right;
 }

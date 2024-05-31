@@ -62,6 +62,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <button type="button" class="btn btn-primary new_post" data-bs-toggle="modal" data-bs-target="#postModal">
         Criar Publicação
     </button>
+                                    <!-- Modal de confirmação para deletar comentário -->
+    <div class="modal fade" id="deleteCommentModal" tabindex="-1" aria-labelledby="deleteCommentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteCommentModalLabel">Tem a certeza?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    Tem a certeza de que deseja apagar este comentário?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelDelete" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Apagar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </main>
 <script>
@@ -184,21 +202,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         var page = 1;
 
-        function loadComments(postId) {
+        function loadComments(postId, self) {
             ajax.get('<?=base_url('get_comments/')?>' + page + '/' + postId, function(data) {
                 console.log(data);
-                // delete data.comments;
+                if($(self).closest('.post').find('.publisher_id').text() == <?=$user['id']?>){
+                    console.log('Dono do Post');
+                    var button_del = `<button class="btn btn-danger" id="deleteButton">
+                                        <i class="bi bi-trash-fill"></i> 
+                                    </button>`;
+                }else{
+                    var button_del = "";
+                }
                 if (data.comments != null && data.comments.length > 0) {
                     data.comments.forEach(comment => {
                         console.log(comment);
                         const newComment = `
-                            <div class="comment d-flex mb-2">
-                                <img src="${comment["pfp"]["path"]}" alt="Foto de perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
-                                <div class="comment-body p-2 bg-light rounded">
-                                    <strong>${comment["username"]["username"]}</strong>
-                                    <p class="mb-1">${comment["text"]}</p>
-                                </div>
-                            </div>`;
+                        <div class="comment d-flex mb-2">
+                            <p class="hidden comment-id">${comment.id}</p>
+                            <p class="hidden user-id">${comment.id_user}</p>
+                            <img src="<?=$_SESSION['user']['pfp']['path']?>" alt="Foto de perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                            <div class="comment-body p-2 bg-light rounded">
+                                <strong><?=$_SESSION['user']['username']?></strong>
+                                <p class="mb-1">${comment.text}${button_del}</p>
+                            </div>
+                        </div>`;
                         if(page > 1){
                             $('.comments-list').find('.btn_more').remove();
                             $('.comments-list').append(newComment);
@@ -216,12 +243,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     }
 
                     $("#loadMore").click(function(){
-                        console.log("Maiiisss");
                         page += 1;
-                        loadComments(postId);
+                        loadComments(postId, self);
                     });
                 } else {
-                    $('.comments-list').append('<p class="text-center">Ainda não há comentários.</p>')
+                    $('.comments-list').append('<p class="no-comments text-center">Ainda não há comentários.</p>')
                 }
             });
         }
@@ -232,14 +258,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $('.toggle-comments').on('click', function(){
                 console.log("aaa");
                 if($(this).next('.comments-list').find('.comment').length > 0){
-                    $(this).next('.comments-list').remove();
+                    $(this).next('.comments-list').find('.comment').remove();
                     page = 1;
                 }
                 $(this).next('.comments-list').toggle(); //css({'display': 'block'});
                 var postId = $(this).closest('.post').find('.post_id').text();
+                var self = this;
                 console.log(postId);
                 window.postId = postId;
-                loadComments(postId);
+                loadComments(postId, self);
             })
 
             // Adicionar comentário
@@ -250,11 +277,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     return;
                 }
                 var postId = $(this).closest('.post').find('.post_id').text();
+                var publisher = $(this).closest('.post').find('.publisher_id').text();
                 var self = this;
 
                 // Envia o comentário para o servidor
                 ajax.post('<?=base_url('add_comment')?>', { post_id: postId, comment: commentText }, function(response) {
-                    if (response.success) {
+                        if (response.success) {
+                            const notification_info = {
+                            receiver_id: publisher,
+                            sender_id: <?=$user['id']?>,
+                            message: '<?=$user['username']?> comentou no seu post: <br/><span class="comment_notification">'+commentText+'</span>',
+                            type: 3,
+                            post_id: postId
+                        };
+                        ajax.post('http://localhost:5910/send_notification', notification_info, function(data){
+                        }, 'application/x-www-form-urlencoded; charset=UTF-8');
                         // Adiciona o comentário à lista de comentários
                         var newComment = `
                                 <div class="comment d-flex mb-2">
@@ -264,20 +301,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <p class="mb-1">${commentText}</p>
                                     </div>
                                 </div>`;
-                        $(self).closest('.comments-list').find('.existing-comments').append(newComment);
+                        $('.no-comments').remove();
+                        $(self).closest('.post').find('.comments-list').prepend(newComment);
                         $(self).siblings('.comment-text').val(''); // Limpa o campo de comentário
                     } else {
                         alert("Erro ao adicionar comentário.");
                     }
                 });
             });
-            function newComment(text, pfp, username){
-                
-                return newComment;
-            }
-        }
+            $('.user-posts').on('click', '#deleteButton', function() {
+                commentToDelete = $(this).closest('.comment'); // Armazena o comentário a ser deletado
+                $('#deleteCommentModal').modal('show'); // Exibe o modal de confirmação
+            });
 
-        
+            $("#cancelDelete").click(function(){
+                $("#deleteCommentModal").modal('hide');
+            });
+
+            $('#confirmDeleteButton').on('click', function() {
+                var commentId = commentToDelete.find('.comment-id').text(); // Assumindo que o comentário tem um ID
+                var postId = commentToDelete.closest('.post').find('.post_id').text();
+                var userId = commentToDelete.closest('.post').find('.user-id').text();
+                var comment = commentToDelete.closest('.post').find('.comment').find('.comment-body').find('p').text();
+                ajax.post('<?=base_url('delete_comment')?>', { comment_id: commentId, post_id: postId, userId: userId, comment: comment}, function(response) {
+                    if (response.success) {
+                        commentToDelete.remove(); 
+                        $('#deleteCommentModal').modal('hide'); 
+                        alert('Comentário apagado com sucesso!');
+                        not_client.send_simple_notification(userId);
+                    } else {
+                        alert("Erro ao apagar o comentário.");
+                    }
+                });
+            });
+            
+        }
 
         function generateMediaContent(post, key) {
             if (post.post.media && post.post.media.length > 0) {

@@ -14,6 +14,7 @@
             $this->load->model('PrivacyLevel_Model');
             $this->load->model('Post_Model');
             $this->load->model('PostLikes_Model');
+            $this->load->model('Notification_Model');
             $this->load->model('PostMedia_Model');
             $this->load->model('FamilyUser_Model');
             $this->load->model('Friends_Model');
@@ -102,14 +103,9 @@
                             ];
                             $this->PostMedia_Model->insert($post_media_data);
                         }
-                    } else {
-                        // Tratar erro se o arquivo não puder ser movido
-                    }
-                } else {
-                    // Tratar erro de upload
+                    } 
                 }
             }
-            
             redirect(base_url(''));
         }
         
@@ -305,6 +301,38 @@
             }
             $return_data['comments'] = $comments;
             $return_data['n_comments'] = $this->Comments_Model->get_count(['id_post' => $id_post]);
+            echo json_encode($return_data);
+            return true;
+        }
+
+        public function delete_comment(){
+            header('Content-Type: application/json');
+            $data = $this->input->post();
+            $return_data = ['success' => true];
+            $this->Comments_Model->delete(['id' => $data['comment_id']]);
+
+            if($this->Comments_Model->error){
+                $return_data['success'] = false;
+                echo json_encode($return_data);
+                return false;
+            }
+
+            $insert_data = [
+                'type_id' => 2,
+                'sent_date' => date('Y-m-d H:i:s'),
+                'receiver_id' => $data['userId'],
+                'sender_id' => $this->session->userdata('user')['id'],
+                'message_text' => $this->session->userdata('user')['username'].' Apagou um comentário seu na sua publicação. <br/>"'.$data['comment'].'"'
+            ];
+
+            $this->Notification_Model->insert($insert_data);
+
+            if($this->Notification_Model->error){
+                $return_data['success'] = false;
+                echo json_encode($insert_data);
+                return false;
+            }
+
             echo json_encode($return_data);
             return true;
         }
