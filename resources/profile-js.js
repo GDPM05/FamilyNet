@@ -13,7 +13,7 @@ $(()=>{
     $("#friendsButton").click(function(){
         console.log("aa");
         friendsModal.show();
-        ajax.get("http://localhost/FamilyNet/get_friends_pr", (friends)=>{
+        ajax.get("http://192.168.1.70/FamilyNet/get_friends_pr", (friends)=>{
             Object.values(friends).forEach(function(friend){
                 console.log(friend);
                 var div = createDiv(friend);
@@ -24,7 +24,7 @@ $(()=>{
     });
 
     function createDiv(friend){
-        var div = "<div class='friend d-flex align-items-center mb-3 w-100'><img class='friend_pfp rounded-circle me-2' src='"+friend.pfp['path']+"' alt='"+friend['username']+"'><p class='friend_name flex-grow-1 mb-0'>"+friend['username']+"</p><button class='see_profile btn btn-primary'><a class='see_friend' href='http://localhost/FamilyNet/see_profile"+'/'+friend['id']+"'>See Profile</a></button></div>";
+        var div = "<div class='friend d-flex align-items-center mb-3 w-100'><img class='friend_pfp rounded-circle me-2' src='"+friend.pfp['path']+"' alt='"+friend['username']+"'><p class='friend_name flex-grow-1 mb-0'>"+friend['username']+"</p><button class='see_profile btn btn-primary'><a class='see_friend' href='http://192.168.1.70/FamilyNet/see_profile"+'/'+friend['id']+"'>See Profile</a></button></div>";
 
         return div;
     }

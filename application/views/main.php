@@ -290,7 +290,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             type: 3,
                             post_id: postId
                         };
-                        ajax.post('http://192.168.40.158:5910/send_notification', notification_info, function(data){
+                        ajax.post('http://192.168.1.70:5910/send_notification', notification_info, function(data){
                         }, 'application/x-www-form-urlencoded; charset=UTF-8');
                         // Adiciona o comentário à lista de comentários
                         var newComment = `
@@ -380,7 +380,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         type: 3,
                         post_id: postId
                     }
-                    ajax.post('http://192.168.40.158:5910/send_notification', notification_info, function(data){
+                    ajax.post('http://192.168.1.70:5910/send_notification', notification_info, function(data){
                     }, 'application/x-www-form-urlencoded; charset=UTF-8');
                 }else{
                     $(this).find('i').remove();

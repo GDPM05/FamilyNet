@@ -70,7 +70,7 @@ class Server{
                 
             var user = new User(user_id, user_name,conv_id ,user_conv); // Criar uma instância da class User
             
-            console.log("New user: "+user.id, user.name, user.id_user_conv); 
+            console.log("New user: "+user.id, user.name, user.friend_id, user.conv_id); 
 
             do{
                 user.generateUniqueId(); // Gera um id único identificativo para este user
@@ -80,11 +80,11 @@ class Server{
             this.users[user.uniqueId] = user; // Guarda o user no array de users, usando o id único como chave
         }
         console.log(this.users);
-        if(this.users[this.user_map[user_conv]] && this.users[this.user_map[user_conv]].id_user_conv == user_id){ // Verifica se o outro utilizador já está conectado ao servidor e se ele está no servidor para falar connosco
+        if(this.users[this.user_map[user_conv]] && this.users[this.user_map[user_conv]].friend_id == user_id){ // Verifica se o outro utilizador já está conectado ao servidor e se ele está no servidor para falar connosco
             var conversa = this.conversas[this.user_conv_map[this.user_map[user_conv]]]; // Busca a conversa já existente
             friend_online = true;
         }else{
-            var conversa = new Conversa(); // Cria uma conversa nov
+            var conversa = new Conversa(conv_id); // Cria uma conversa nov
             conversa.generateUniqueId(); // Gera um id único para esta conversa
             conversa.generateEncMethod(); // Gera um método de encriptação que será usado pelos utilizadores
             this.conversas[conversa.uniqueId] = conversa; // Guarda a conversa no array de conversas, usando o id unico da conversa como chave
@@ -134,6 +134,7 @@ class Server{
 
         var conv_id = this.user_conv_map[user.uniqueId]; // Busca o id da conversa
         var conv = this.conversas[conv_id]; // Busca a conversa
+        console.log(conv);
         console.log("Conv_Users: ", conv['conv_id']);
         for(var i = 0; i < conv['users'].length; i++){ // Percorre todos os utilizadores
             if(user.uniqueId != conv['users'][i]){ // Verifica se o id unico dos utilizadores é diferente do utilizador que enviou a mensagem

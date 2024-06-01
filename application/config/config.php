@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 | If it is not set, then CodeIgniter will try to guess the protocol and
 | path to your installation, but due to security concerns the hostname will
-| be set to $_SERVER['SERVER_ADDR'] if available, or 192.168.40.158 otherwise.
+| be set to $_SERVER['SERVER_ADDR'] if available, or 192.168.1.70 otherwise.
 | The auto-detection mechanism exists only for convenience during
 | development and MUST NOT be used in production!
 |
@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://192.168.40.158/FamilyNet/';
+$config['base_url'] = 'http://192.168.1.70/FamilyNet/';
 
 /*
 |--------------------------------------------------------------------------
