@@ -220,9 +220,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="comment d-flex mb-2">
                             <p class="hidden comment-id">${comment.id}</p>
                             <p class="hidden user-id">${comment.id_user}</p>
-                            <img src="<?=$_SESSION['user']['pfp']['path']?>" alt="Foto de perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                            <img src="${comment.pfp}" alt="Foto de perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
                             <div class="comment-body p-2 bg-light rounded">
-                                <strong><?=$_SESSION['user']['username']?></strong>
+                                <strong>${comment.username.username}</strong>
                                 <p class="mb-1">${comment.text}${button_del}</p>
                             </div>
                         </div>`;
