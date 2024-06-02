@@ -29,7 +29,6 @@
                     user: '<?=$_SESSION['user']['user']?>'
                 }
         </script>
-        <script src="<?php echo base_url('resources/search-js.js');?>"></script>
         <script src="<?php echo base_url('resources/NotificationClient.js');?>"></script>
         <title><?php echo $title;?></title>
     </head>

@@ -174,10 +174,31 @@ i{
     display: none;
 }
 
-.profile-pict{
-    max-width: 120px;
-    max-height: 120px;
-    border-radius: 50%;
+.see_profile {
+    line-height: 30px !important;
+}
+
+
+/* Estilo do perfil do usuário */
+.profile-pict {
+    max-width: 200px; /* ou outro tamanho conforme necessário */
+    max-height: 200px !important; /* mantenha a proporção quadrada */
+    border-radius: 50%; /* torna a imagem redonda */
+    object-fit: cover; /* garante que a imagem cubra todo o espaço disponível */
+    justify-content: center !important;  
+    margin: auto !important; 
+    margin-top: 10px !important;
+}
+
+/* Estilo do título do card */
+.card-title {
+    font-size: 1.25rem; /* tamanho da fonte do título */
+    margin-bottom: 0.75rem; /* espaço abaixo do título */
+}
+
+/* Estilo do texto do card */
+.card-text {
+    font-size: 1rem; /* tamanho da fonte do texto */
 }
 
 .users_infos{

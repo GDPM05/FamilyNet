@@ -12,16 +12,9 @@
             $this->user_id = (isset($this->session->userdata('user')['id'])) ? $this->session->userdata('user')['id'] : null;
 
             if($this->LoggedIn()){
-                $this->data['path'] = $this->get_profile_pic($this->user_id);
+                $this->data['path'] = $this->get_profile_pic($this->user_id)['path'];
             }
-        }
-
-        public function get_profile_pic($user_id){
-            $user = $this->User_model->fetch(['id' => $user_id]);
-            $media = $this->Media_model->fetch(["id" => $user['pfp']]);
-
-            return $media['path'];
-        }
+        }   
 
         public function LoggedIn(){
 
@@ -36,6 +29,18 @@
                 $logged_in = false;        
             
             return $logged_in;
+        }
+
+        public function get_profile_pic($userId){
+        
+            if(empty($userId))
+                return false;
+            
+            $pfp_id = $this->User_model->fetch(['id' => $userId], 'pfp');
+    
+            $pfp = $this->Media_model->fetch(['id' => $pfp_id['pfp']]);
+    
+            return $pfp;
         }
     }
 

@@ -89,7 +89,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     /*var modal = new bootstrap.Modal(document.getElementById('postModal'), {});
     modal.show();*/
     $(".new_post").click(function(){
-        console.log("Botão clicado!"); // Adicione esta linha para verificar se a função está sendo chamada
+        //console.log("Botão clicado!"); // Adicione esta linha para verificar se a função está sendo chamada
         $('#postModal').modal('show');
     });
     var fileList = [];
@@ -154,7 +154,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         var page = 1;
 
         ajax.get('<?=base_url('get_posts/')?>'+page, function(data){
-            console.log(data);
+            //console.log(data);
             Object.keys(data).forEach(function(key){
                 var post = data[key];
                 var like_icon = post.already_like ? '<i class="bi bi-hand-thumbs-up-fill"></i>' : '<i class="bi bi-hand-thumbs-up"></i>';
@@ -204,9 +204,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         function loadComments(postId, self) {
             ajax.get('<?=base_url('get_comments/')?>' + page + '/' + postId, function(data) {
-                console.log(data);
+                //console.log(data);
                 if($(self).closest('.post').find('.publisher_id').text() == <?=$user['id']?>){
-                    console.log('Dono do Post');
+                    //console.log('Dono do Post');
                     var button_del = `<button class="btn btn-danger" id="deleteButton">
                                         <i class="bi bi-trash-fill"></i> 
                                     </button>`;
@@ -215,7 +215,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 }
                 if (data.comments != null && data.comments.length > 0) {
                     data.comments.forEach(comment => {
-                        console.log(comment);
+                        //console.log(comment);
                         const newComment = `
                         <div class="comment d-flex mb-2">
                             <p class="hidden comment-id">${comment.id}</p>
@@ -233,7 +233,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             $('.comments-list').prepend(newComment);
                     });
                     if(data.n_comments > $('.comments-list').find('.comment').length && $('.comments-list').find('.btn_more').length < 1){
-                        console.log("akjsd");
+                        //console.log("akjsd");
                         const button = `<div class="text-center btn_more justify-content-center mt-3">
                                             <button class="btn btn-primary d-flex justify-content-center align-items-center" style="height: 50px; width: 50px; margin: auto" id="loadMore">
                                                 <i class="bi bi-plus-lg"></i>
@@ -256,7 +256,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         function initializeCommentHandlers() {
             // Mostrar/esconder comentários
             $('.toggle-comments').on('click', function(){
-                console.log("aaa");
+                //console.log("aaa");
                 if($(this).next('.comments-list').find('.comment').length > 0){
                     $(this).next('.comments-list').find('.comment').remove();
                     page = 1;
@@ -264,7 +264,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $(this).next('.comments-list').toggle(); //css({'display': 'block'});
                 var postId = $(this).closest('.post').find('.post_id').text();
                 var self = this;
-                console.log(postId);
+                //console.log(postId);
                 window.postId = postId;
                 loadComments(postId, self);
             })
