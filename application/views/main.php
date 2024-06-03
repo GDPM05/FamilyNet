@@ -204,23 +204,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         function loadComments(postId, self) {
             ajax.get('<?=base_url('get_comments/')?>' + page + '/' + postId, function(data) {
-                //console.log(data);
-                if($(self).closest('.post').find('.publisher_id').text() == <?=$user['id']?>){
-                    //console.log('Dono do Post');
-                    var button_del = `<button class="btn btn-danger" id="deleteButton">
-                                        <i class="bi bi-trash-fill"></i> 
-                                    </button>`;
-                }else{
-                    var button_del = "";
-                }
                 if (data.comments != null && data.comments.length > 0) {
                     data.comments.forEach(comment => {
+                        if($(self).closest('.post').find('.publisher_id').text() == <?=$user['id']?> || comment.id_user == <?=$user['id']?>){
+                            //console.log('Dono do Post');
+                            var button_del = `<button class="btn btn-danger" id="deleteButton">
+                                                <i class="bi bi-trash-fill"></i> 
+                                            </button>`;
+                        }else{
+                            var button_del = "";
+                        }
                         //console.log(comment);
+                        console.log(comment);
                         const newComment = `
                         <div class="comment d-flex mb-2">
                             <p class="hidden comment-id">${comment.id}</p>
                             <p class="hidden user-id">${comment.id_user}</p>
-                            <img src="${comment.pfp}" alt="Foto de perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                            <img src="${comment.pfp.path}" alt="Foto de perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
                             <div class="comment-body p-2 bg-light rounded">
                                 <strong>${comment.username.username}</strong>
                                 <p class="mb-1">${comment.text}${button_del}</p>
@@ -233,7 +233,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             $('.comments-list').prepend(newComment);
                     });
                     if(data.n_comments > $('.comments-list').find('.comment').length && $('.comments-list').find('.btn_more').length < 1){
-                        //console.log("akjsd");
                         const button = `<div class="text-center btn_more justify-content-center mt-3">
                                             <button class="btn btn-primary d-flex justify-content-center align-items-center" style="height: 50px; width: 50px; margin: auto" id="loadMore">
                                                 <i class="bi bi-plus-lg"></i>
@@ -281,7 +280,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 var self = this;
 
                 // Envia o comentário para o servidor
-                ajax.post('<?=base_url('add_comment')?>', { post_id: postId, comment: commentText }, function(response) {
+                ajax.post('<?=base_url('add_comment')?>', { post_id: postId, comment: commentText.trim()}, function(response) {
                         if (response.success) {
                             const notification_info = {
                             receiver_id: publisher,
@@ -298,7 +297,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <img src="<?=$_SESSION['user']['pfp']['path']?>" alt="Foto de perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
                                     <div class="comment-body p-2 bg-light rounded">
                                         <strong><?=$_SESSION['user']['username']?></strong>
-                                        <p class="mb-1">${commentText}</p>
+                                        <p class="mb-1">${commentText}
+                                            <button class="btn btn-danger" id="deleteButton">
+                                                <i class="bi bi-trash-fill"></i> 
+                                            </button>
+                                        </p>
                                     </div>
                                 </div>`;
                         $('.no-comments').remove();

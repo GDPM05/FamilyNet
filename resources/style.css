@@ -402,6 +402,12 @@ i{
     left: 50%; /* Alinha o botão no centro horizontalmente */
     transform: translate(-50%, -50%); /* Move o botão para a esquerda em 50% da sua largura e para cima em 50% da sua altura, para centralizá-lo */
     z-index: 9999; /* Define um índice Z alto para garantir que o botão esteja acima de outros elementos */
+    transition: 0.5s;
+}
+
+.new_post:hover{
+    background-color: var(--cor_sec) !important;
+    border: none;
 }
 
 .direct_msg .left-side .dm-window{
