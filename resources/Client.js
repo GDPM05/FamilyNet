@@ -31,11 +31,11 @@ class Client{
             this.socket = this.io.connect(url);
 
             this.socket.on('connect_error', (error) => {
-                console.log('connect_error event fired', error);
-                window.location.href = 'http://192.168.40.158/FamilyNet/main'; // Trocar por uma mensagem
+                console.log(error);
             });
 
             this.socket.on('connect', () => {
+                $('.loading').css({'display': 'none'});
                 this.socket.on('new_msg', this.receive_message.bind(this, this.socket));
                 this.socket.on('enc_method', (socket)=>{
                     console.log('ai');
@@ -49,7 +49,8 @@ class Client{
                 });
             });
         }catch(error){
-            window.location.href = 'http://192.168.40.158/FamilyNet/main'; // Trocar por uma mensagem
+            // window.location.href = 'http://localhost/FamilyNet/main'; // Trocar por uma mensagem
+            $("#modalFullScreen").toggle();
             throw error;
         }
     }
@@ -68,9 +69,9 @@ class Client{
         return this.enc_method;
     }
 
-    change_friend(friend_id){ // Método responsável por alterar o id do utilizador amigo no servidor
+    change_friend(data){ // Método responsável por alterar o id do utilizador amigo no servidor
         try{
-            this.socket.emit('change_friend', {friend_id: friend_id});
+            this.socket.emit('change_friend', data);
         }catch(error){
             throw error;
         }

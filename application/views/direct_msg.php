@@ -4,8 +4,10 @@
 ?>
 
 <main class="container-fluid d-flex flex-row direct_msg">
+    <div class="loading">
+        <img src="<?=base_url('resources/Logo.png')?>">
+    </div>
     <div class="col-9 left-side">
-        <!-- Aqui vai o código do chat -->
     </div>
     <div class="col-3 right-side">
         <button class="btn btn-primary create_group" data-toggle="modal" data-target="#create_group">
@@ -106,6 +108,8 @@
         var messages;
         let load = true;
         let scrolling = false;
+        window.conv_type = null;
+
         $(".friend").click(function(){
             console.log("aaaaaa",$(this).find(".conv_id").text());
             var user_name = '<?php echo $user['user'];?>';
@@ -117,17 +121,80 @@
             if(current_friend == friend_id){
                 return;
             }
-            
+
+            console.log("aaa", window.conv_type);
+
             console.log("Amigo: "+current_friend);
             conv_id = $(this).find('#conv_id').text();
             console.log("banana", conv_id);
-            if(friend_id != null && friend_id != current_friend)
-                cliente.change_friend(current_friend);
-            else
+            if((window.conv_type != null)){
+                cliente.change_friend({friends: current_friend, conv_id: conv_id});
+            }else
                 cliente.emit_userdata({user_name: user_name, user_id:user_id, friend_id: current_friend, id_conv: conv_id});
 
             friend_id = current_friend;
             console.log(friend_id);
+            window.conv_type = 1;
+            ajax.get('<?php echo base_url('resources/html/dm-mode.html');?>', (data)=>{
+                $(".left-side").html(data);
+                messages = $(".messages");
+                messages.on('scroll', function(){
+                    console.log("Load 1", load);
+                    //console.log(-($(this).scrollTop()) + $(this).innerHeight());
+                    var alturaAtual = $(this)[0].scrollHeight;
+
+                    if ((-($(this).scrollTop()) + $(this).innerHeight() >= alturaAtual - 5)) {
+                        console.log('Scroll máximo atingido');
+                        console.log("Load: ", load);
+                        if(load){
+                            load = false;
+                            loadMessages(conv_id);
+                        }
+                        alturaAtual = $(this)[0].scrollHeight;
+                    }
+                    //console.log("aa");
+                });
+                console.log(messages);
+            });
+
+            window.conv_id = conv_id;
+
+            var user = ajax.get('<?php echo base_url('fetch_user');?>/'+conv_id, (data)=>{
+                console.log("aaai", data);
+                $(".card-header > .user-img").attr('src', data.pfp);
+                $(".card-header > .user-img").attr('alt', data.user);
+                $(".card-header > div > .user-name").text(data.username);
+            });
+
+
+
+            loadMessages(conv_id);
+            
+        });
+
+        $('.group').click(function(){
+            const conv_id = $(this).find('#conv_id').text();
+            var members_ids = [];
+            var user_name = '<?php echo $user['user'];?>';
+            var user_id = <?php echo $user['id'];?>;   
+
+            ajax.get('<?=base_url('/get_group_members/')?>'+conv_id, (data)=>{
+                console.log("Membros", data.data[1]);
+
+                Object.values(data.data).forEach(member => {
+                    members_ids.push(member.id);
+                });
+
+                console.log("conv_id", conv_id);
+                console.log("members_ids", members_ids);
+
+                if(window.conv_type != null)
+                    cliente.change_friend({friends: members_ids, conv_id: conv_id});
+                else
+                    cliente.emit_userdata({user_name: user_name, user_id:user_id, friend_id: members_ids, id_conv: conv_id});
+
+                window.conv_type = 0;
+            });
 
             ajax.get('<?php echo base_url('resources/html/dm-mode.html');?>', (data)=>{
                 $(".left-side").html(data);
@@ -151,15 +218,14 @@
                 console.log(messages);
             });
 
-            
-            var user = ajax.get('<?php echo base_url('fetch_user');?>/'+conv_id, (data)=>{
+            window.conv_id = conv_id;
+
+            var user = ajax.get('<?php echo base_url('fetch_conv');?>/'+conv_id, (data)=>{
                 console.log("aaai", data);
-                $(".card-header > .user-img").attr('src', data.pfp);
-                $(".card-header > .user-img").attr('alt', data.user);
-                $(".card-header > div > .user-name").text(data.username);
+                $(".card-header > .user-img").attr('src', data.data['picture']['path']);
+                $(".card-header > .user-img").attr('alt', data.data['picture']['path']);
+                $(".card-header > div > .user-name").text(data.data['name']);
             });
-
-
 
             loadMessages(conv_id);
             
@@ -238,7 +304,7 @@
             var data = {};
             data['message'] = {};
             data['message']['id_sender'] = '<?php echo $user['id'];?>';
-            data['message']['id_conversation'] = conv_id;
+            data['message']['id_conversation'] = window.conv_id;
             data['message']['message_text'] = encrypted_msg;
             data['message']['enc_method'] = JSON.stringify(cliente.getMethod());
             data['message']['send_date'] = dataHoraFormatada;

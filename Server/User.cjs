@@ -23,7 +23,11 @@ class User{
         this.uniqueId = code;
     }
 
-    updateFriend(conv_id){
+    updateFriend(friend_id){
+        this.friend_id = friend_id;
+    }
+
+    updateConv(conv_id){
         this.conv_id = conv_id;
     }
 

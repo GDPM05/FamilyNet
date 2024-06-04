@@ -262,5 +262,80 @@
              echo json_encode(['error' => false, 'success_msg' => 'Conversation created successfully']);    
         }   
 
+        public function get_group_members($conv_id = null){
+            header('Content-Type: application/json');
+            
+            if(!$conv_id){
+                echo json_encode(['success' => false, 'message' => 'Ocorreu um erro. Tente novamente mais tarde.']);
+                return false;
+            }
+
+            $group = $this->Groups_model->fetch(['id_conversation' => $conv_id]);
+
+            if(empty($group)){
+                echo json_encode(['success' => false, 'message' => 'Ocorreu um erro. Tente novamente mais tarde.']);
+                return false;
+            }
+
+            $group_members = $this->GroupUsers_model->fetch_all(false, null, null, null, ['id_group' => $group['id']]);
+
+            if(empty($group_members)){
+                echo json_encode(['success' => false, 'message' => 'Ocorreu um erro. Tente novamente mais tarde.']);
+                return false;
+            }
+
+            foreach($group_members as $key => $info){
+                if($group_members[$key]['id_user'] == $this->session->userdata('user')['id']){
+                    unset($group_members[$key]);
+                    continue;
+                }
+
+                $group_members[$key] = $this->User_model->fetch(['id' => $group_members[$key]['id_user']], 'id, username, user, pfp');
+
+                if(empty($group_members[$key])){
+                    echo json_encode(['success' => false, 'message' => 'Ocorreu um erro. Tente novamente mais tarde.']);
+                    return false;
+                }
+
+                $group_members[$key]['pfp'] = $this->Media_model->fetch(['id' => $group_members[$key]['pfp']]);
+                
+                if(empty($group_members[$key]['pfp'])){
+                    echo json_encode(['success' => false, 'message' => 'Ocorreu um erro. Tente novamente mais tarde.']);
+                    return false;
+                }
+            }
+
+            echo json_encode(['success' => true, 'message' => '', 'data' => $group_members]);
+            return true;
+        }
+
+        public function fetch_conversation($id_conv = null){
+            header('Content-Type: application/json');
+
+            if($id_conv == null){
+                echo json_encode(['success' => false, 'message' => 'Ocorreu um erro. Tente novamente mais tarde.']);
+                return false;
+            }
+
+            $conversa = $this->Groups_model->fetch(['id_conversation' => $id_conv]);
+
+            if(empty($conversa)){
+                echo json_encode(['success' => false, 'message' => 'Ocorreu um erro. Tente novamente mais tarde.']);
+                return false;
+            }
+
+            $return_data = [
+                'success' => true,
+                'data' => [
+                    'name' => $conversa['name'],
+                    'picture' => $this->Media_model->fetch(['id' => $conversa['picture']]),
+                    'description' => $conversa['description']
+                ]
+            ];
+
+            echo json_encode($return_data);
+            return true;
+        }
+
     }
 ?>

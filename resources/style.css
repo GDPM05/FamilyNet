@@ -13,8 +13,42 @@
     font-family: var(--font_family_1);
 }
 
+.loading {
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    position: absolute;
+    background: rgba(0,0,0,0.5);
+    display: flex; /* Adicionado para usar Flexbox */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    margin-left: -12px;
+}
+
+@keyframes crescer {
+    0% {
+        transform: scale(0.5); /* Começa com metade do tamanho */
+    }
+    50% {
+        transform: scale(1); /* Aumenta até o tamanho original */
+    }
+
+    100% {
+        transform: scale(0.5); /* Aumenta até o tamanho original */
+    }
+}
+
+.loading img {
+    animation: crescer 2s infinite; /* Aplica a animação chamada 'crescer' que dura 2 segundos e se repete infinitamente */
+    max-width: 100%; /* Garante que a imagem não ultrapasse o container */
+    max-height: 100%; /* Garante que a imagem não ultrapasse o container */
+    margin: auto; /* Centraliza a imagem no espaço disponível */
+}
+
+
 body{
-    margin-left: 90px;
+    /* margin-left: 90px; */
+    overflow-x: hidden !important;
 }
 
 .home input{

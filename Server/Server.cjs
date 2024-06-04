@@ -59,16 +59,27 @@ class Server{
 
             console.log(user_id, user_name, user_conv, conv_id);
 
-            var user_friend = this.users[this.user_map[user_conv]];
-            //console.log("Outro amigo: "+((user_teste != undefined) ? JSON.stringify(user_teste) : user_teste));
-            //console.log("Outro amigo: "+((user_teste != undefined) ? user_teste['id'] : null));
-
-            if(user_friend != undefined){
-                socket.emit('friend_online', true);
-                console.log('onlino')
+            var user_friends;
+            if(Array.isArray(user_conv)){
+                user_friends = [];
+                for(var i = 0; i < user_conv.length; i++){
+                    console.log(user_conv[i]);
+                    user_friends.push(this.users[this.user_map[user_conv[i]]]);
+                };
+            }else{
+                user_friends = this.users[this.user_map[user_conv]];
             }
-                
-            var user = new User(user_id, user_name,conv_id ,user_conv); // Criar uma instância da class User
+
+            console.log(user_friends);
+
+            if(user_friends != undefined){
+                socket.emit('friend_online', true);
+                console.log('onlino');
+            }
+
+            console.log("User friends", user_friends);
+
+            var user = new User(user_id, user_name, conv_id ,user_conv); // Criar uma instância da class User
             
             console.log("New user: "+user.id, user.name, user.friend_id, user.conv_id); 
 
@@ -80,11 +91,23 @@ class Server{
             this.users[user.uniqueId] = user; // Guarda o user no array de users, usando o id único como chave
         }
         console.log(this.users);
-        if(this.users[this.user_map[user_conv]] && this.users[this.user_map[user_conv]].friend_id == user_id){ // Verifica se o outro utilizador já está conectado ao servidor e se ele está no servidor para falar connosco
-            var conversa = this.conversas[this.user_conv_map[this.user_map[user_conv]]]; // Busca a conversa já existente
-            friend_online = true;
-        }else{
-            var conversa = new Conversa(conv_id); // Cria uma conversa nov
+        // Esta verificação tem de ser feita com 1 array.
+        var conversa = null;
+        if(Array.isArray(user_friends))
+            for(var i = 0; i < user_friends.length; i++){
+                var friend = user_friends[i];
+                if(friend != undefined)
+                    if((user_friends.friend_id == user.id || friend.friend_id.includes(user_id)) && friend.conv_id == conv_id)
+                        conversa = this.conversas[this.user_conv_map[friend.uniqueId]];
+            }
+        else{
+            var friend = user_friends;
+            if(friend.conv_id == conv_id)
+                conversa = this.conversas[this.user_conv_map[friend.uniqueId]];
+        }
+
+        if(conversa == null){
+            conversa = new Conversa(conv_id); // Cria uma conversa nov
             conversa.generateUniqueId(); // Gera um id único para esta conversa
             conversa.generateEncMethod(); // Gera um método de encriptação que será usado pelos utilizadores
             this.conversas[conversa.uniqueId] = conversa; // Guarda a conversa no array de conversas, usando o id unico da conversa como chave
@@ -103,7 +126,10 @@ class Server{
     
     handleFriendChange(socket, data){ // Método responsável pela mudança de utilizadores na conversa
         var user = this.sockets[socket.id]; // Busca o utilizador ao array de sockets
-        user.updateFriend(data.friend_id); // Atualiza o id do amigo no objeto do utilizador
+        console.log(socket.id);
+        console.log(user);
+        console.log(data);
+        user.updateFriend(data.friends); // Atualiza o id do amigo no objeto do utilizador
         var user_uniqueId = user.uniqueId; // Guarda o id unico do user numa variavel
 
         var conversa_id = this.user_conv_map[user_uniqueId]; // Busca o id da conversa ao mapa de conversas, cujo usa o id unico do user como chave
@@ -113,9 +139,30 @@ class Server{
         if(conversa.numUsers() < 1) // Verifica se já não há nenhum utilizador na conversa
             delete this.conversas[conversa]; // Apaga a conversa do array de conversas se esse for o caso
 
-        conversa = new Conversa(); // Cria uma conversa nova 
-        conversa.generateUniqueId(); // Gera um id único 
-        conversa.generateEncMethod(); // Gera um método de encriptação
+        conversa = null;
+
+        if(Array.isArray(data.friends))
+            for(var i = 0; i < data.friends.length; i++){
+                var friend = this.users[this.user_map[data.friends[i].user_id]];
+                
+                if(friend != undefined)
+                    if((friend.friend_id == user.id || friend.friend_id.includes(user.id)) && friend.conv_i == data.conv_id)
+                        conversa = this.conversas[this.user_conv_map[friend.uniqueId]];
+            }
+        else{
+            var friend = this.users[this.user_map[data.friends.user_id]];
+            if(friend.conv_id == data.conv_id)
+                conversa = this.conversas[this.user_conv_map[friend.uniqueId]];
+        }
+
+        if(conversa == null){
+            conversa = new Conversa(data.conv_id); // Cria uma conversa nov
+            conversa.generateUniqueId(); // Gera um id único para esta conversa
+            conversa.generateEncMethod(); // Gera um método de encriptação que será usado pelos utilizadores
+            this.conversas[conversa.uniqueId] = conversa; // Guarda a conversa no array de conversas, usando o id unico da conversa como chave
+        }
+
+        user.updateConv(conversa.id)
 
         socket.emit('enc_method', conversa.get_method()); // Envia o novo método ao utilizador
         this.users[user.uniqueId] = user; // Guarda o utilizador no array de users
