@@ -32,6 +32,7 @@ class Client{
 
             this.socket.on('connect_error', (error) => {
                 console.log(error);
+                $(".loading").toggle();
             });
 
             this.socket.on('connect', () => {
@@ -50,7 +51,7 @@ class Client{
             });
         }catch(error){
             // window.location.href = 'http://localhost/FamilyNet/main'; // Trocar por uma mensagem
-            $("#modalFullScreen").toggle();
+            $(".loading").toggle();
             throw error;
         }
     }

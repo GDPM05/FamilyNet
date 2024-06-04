@@ -13,6 +13,7 @@ $(()=>{
     $("#friendsButton").click(function(){
         console.log("aa");
         friendsModal.show();
+        $("#friendsModal").find('.friend').remove();
         ajax.get("http://localhost/FamilyNet/get_friends_pr", (friends)=>{
             Object.values(friends).forEach(function(friend){
                 console.log(friend);

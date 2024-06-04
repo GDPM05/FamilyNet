@@ -135,14 +135,18 @@
             friend_id = current_friend;
             console.log(friend_id);
             window.conv_type = 1;
+            setTimeout(()=>{
+                $(".loading").css({visibility: 'visible'});
+            }, 200);
             ajax.get('<?php echo base_url('resources/html/dm-mode.html');?>', (data)=>{
+                $(".loading").toggle();
                 $(".left-side").html(data);
                 messages = $(".messages");
                 messages.on('scroll', function(){
                     console.log("Load 1", load);
                     //console.log(-($(this).scrollTop()) + $(this).innerHeight());
                     var alturaAtual = $(this)[0].scrollHeight;
-
+                    
                     if ((-($(this).scrollTop()) + $(this).innerHeight() >= alturaAtual - 5)) {
                         console.log('Scroll máximo atingido');
                         console.log("Load: ", load);
@@ -195,8 +199,9 @@
 
                 window.conv_type = 0;
             });
-
+            $(".loading").toggle();
             ajax.get('<?php echo base_url('resources/html/dm-mode.html');?>', (data)=>{
+                $(".loading").toggle();
                 $(".left-side").html(data);
                 messages = $(".messages");
                 messages.on('scroll', function(){

@@ -139,6 +139,10 @@ i{
     margin-top: 15px;
 }
 
+.post-image{
+    object-fit: cover;
+}
+
 #dm_search_friends{
     margin-top: 15px;
     outline: none;

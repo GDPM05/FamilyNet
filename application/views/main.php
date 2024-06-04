@@ -355,7 +355,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             return post.post.media.map(function(media) {
                 return `
                     <div>
-                        <img src="${media.path}" alt="${media.alt}" class="d-block" style="width: 300px; height: 300px;">
+                        <img src="${media.path}" alt="${media.alt}" class="d-block post-image" style="width: 300px; height: 300px;">
                     </div>`;
             }).join('');
         }
