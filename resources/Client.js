@@ -32,15 +32,16 @@ class Client{
 
             this.socket.on('connect_error', (error) => {
                 console.log(error);
-                $(".loading").toggle();
+                $(".loading").css({display: 'block'});
             });
 
             this.socket.on('connect', () => {
-                $('.loading').css({'display': 'none'});
+                $('.loading').css({display: 'none'});
                 this.socket.on('new_msg', this.receive_message.bind(this, this.socket));
                 this.socket.on('enc_method', (socket)=>{
                     console.log('ai');
                     this.enc_method = socket;
+                    $(".loading").css({display: 'none'});
                 });
                 this.socket.on('friend_online', (socket)=>{
                     setTimeout(function(){
@@ -51,7 +52,7 @@ class Client{
             });
         }catch(error){
             // window.location.href = 'http://localhost/FamilyNet/main'; // Trocar por uma mensagem
-            $(".loading").toggle();
+            $(".loading").css({display: 'block'});
             throw error;
         }
     }

@@ -58,8 +58,8 @@ class Server{
             var conv_id = data.id_conv; 
 
             console.log(user_id, user_name, user_conv, conv_id);
-
-            var user_friends;
+            console.log("aaaa", user_conv);
+            var user_friends = null;
             if(Array.isArray(user_conv)){
                 user_friends = [];
                 for(var i = 0; i < user_conv.length; i++){
@@ -91,22 +91,25 @@ class Server{
             this.users[user.uniqueId] = user; // Guarda o user no array de users, usando o id único como chave
         }
         console.log(this.users);
+        console.log(user_friends);
         // Esta verificação tem de ser feita com 1 array.
         var conversa = null;
-        if(Array.isArray(user_friends))
-            for(var i = 0; i < user_friends.length; i++){
-                var friend = user_friends[i];
-                if(friend != undefined)
-                    if((user_friends.friend_id == user.id || friend.friend_id.includes(user_id)) && friend.conv_id == conv_id)
-                        conversa = this.conversas[this.user_conv_map[friend.uniqueId]];
+        if(user_friends != null){
+            if(Array.isArray(user_friends))
+                for(var i = 0; i < user_friends.length; i++){
+                    var friend = user_friends[i];
+                    if(friend != undefined)
+                        if((user_friends.friend_id == user.id || friend.friend_id.includes(user_id)) && friend.conv_id == conv_id)
+                            conversa = this.conversas[this.user_conv_map[friend.uniqueId]];
+                }
+            else{
+                var friend = user_friends;
+                console.log(user_friends);
+                console.log(friend);
+                if(friend.conv_id == conv_id)
+                    conversa = this.conversas[this.user_conv_map[friend.uniqueId]];
             }
-        else{
-            var friend = user_friends;
-            if(friend.conv_id == conv_id)
-                conversa = this.conversas[this.user_conv_map[friend.uniqueId]];
-        }
-
-        if(conversa == null){
+        }else{
             conversa = new Conversa(conv_id); // Cria uma conversa nov
             conversa.generateUniqueId(); // Gera um id único para esta conversa
             conversa.generateEncMethod(); // Gera um método de encriptação que será usado pelos utilizadores
@@ -151,7 +154,7 @@ class Server{
             }
         else{
             var friend = this.users[this.user_map[data.friends.user_id]];
-            if(friend.conv_id == data.conv_id)
+            if(friend != null && friend.conv_id == data.conv_id)
                 conversa = this.conversas[this.user_conv_map[friend.uniqueId]];
         }
 

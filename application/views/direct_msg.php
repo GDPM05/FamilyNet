@@ -165,7 +165,7 @@
 
             var user = ajax.get('<?php echo base_url('fetch_user');?>/'+conv_id, (data)=>{
                 console.log("aaai", data);
-                $(".card-header > .user-img").attr('src', data.pfp);
+                $(".card-header > .user-img").attr('src', data.pfp.path);
                 $(".card-header > .user-img").attr('alt', data.user);
                 $(".card-header > div > .user-name").text(data.username);
             });
@@ -228,7 +228,7 @@
             var user = ajax.get('<?php echo base_url('fetch_conv');?>/'+conv_id, (data)=>{
                 console.log("aaai", data);
                 $(".card-header > .user-img").attr('src', data.data['picture']['path']);
-                $(".card-header > .user-img").attr('alt', data.data['picture']['path']);
+                $(".card-header > .user-img").attr('alt', data.data['picture']['alt']);
                 $(".card-header > div > .user-name").text(data.data['name']);
             });
 
