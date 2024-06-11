@@ -336,5 +336,64 @@
             echo json_encode($return_data);
             return true;
         }
+
+        public function delete_post($post_id = null){
+            header('Content-Type: application/json');
+            if(empty($post_id)){
+                $return_data['success'] = false;
+                echo json_encode($return_data);
+                return false;
+            }
+
+            $post = $this->Post_Model->fetch(['id' => $post_id]);
+
+            if(empty($post)){
+                $return_data['success'] = false;
+                echo json_encode($return_data);
+                return false;
+            }
+
+            if($post['id_sender'] != $this->session->userdata('user')['id']){
+                $return_data['success'] = false;
+                echo json_encode($return_data);
+                return false;
+            }
+
+            $this->Post_Model->delete(['id' => $post_id]);
+
+            if($this->Post_Model->error){
+                $return_data['success'] = false;
+                echo json_encode($return_data);
+                return false;
+            }
+
+            $this->PostLikes_Model->delete(['id_post' => $post_id]);
+
+            if($this->PostLikes_Model->error){
+                $return_data['success'] = false;
+                echo json_encode($return_data);
+                return false;
+            }
+
+            $this->PostMedia_Model->delete(['id_post' => $post_id]);
+
+            if($this->PostMedia_Model->error){
+                $return_data['success'] = false;
+                echo json_encode($return_data);
+                return false;
+            }
+
+            $this->Comments_Model->delete(['id_post' => $post_id]);
+
+            if($this->Comments_Model->error){
+                $return_data['success'] = false;
+                echo json_encode($return_data);
+                return false;
+            }
+
+            $return_data['success'] = false;
+            echo json_encode($return_data);
+            return false;
+        }
     }
 ?>

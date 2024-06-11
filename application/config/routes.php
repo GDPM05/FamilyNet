@@ -90,6 +90,7 @@ $route['child_account'] = 'Family/create_child_account';
 $route['get_family'] = 'Family/get_family';
 $route['new_post'] = 'Main/new_post';
 $route['get_posts/(:num)'] = 'Main/get_posts';
+$route['delete_post/(:num)'] = 'Main/delete_post/$1';
 $route['add_like/(:num)/(:num)'] = 'Main/add_like/$1/$2';
 $route['remove_like/(:num)/(:num)'] = 'Main/remove_like/$1/$2';
 $route['activate_account'] = 'Signup/activate_account_external';

@@ -157,6 +157,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             //console.log(data);
             Object.keys(data).forEach(function(key){
                 var post = data[key];
+                var delete_btn = '';
+                if(post.id == <?=$user['id']?>){
+                    delete_btn = `<button class="btn btn-danger delete-post ms-auto" style="margin-left: auto;">Apagar</button>`
+                }  
                 var like_icon = post.already_like ? '<i class="bi bi-hand-thumbs-up-fill"></i>' : '<i class="bi bi-hand-thumbs-up"></i>';
                 const color_table = [
                     'color_default',
@@ -165,39 +169,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     'color_private'
                 ];
                 var div = `
-                    <div class="post-container">
-                        <div class="post card mb-4 shadow-sm">
-                            <div class="post-header ${color_table[post.post.privacy_level-1]} card-header d-flex align-items-center">
-                                <img src="${post.pfp.path}" alt="${post.pfp.alt}" class="rounded-circle me-3" style="width: 50px; height: 50px;">
-                                <div>
-                                    <strong>${post.username}</strong>
-                                    <p class="mb-0 text-muted" style="font-size: 12px;">${post.post.sent_date}</p>
+                            <div class="post-container">
+                                <div class="post card mb-4 shadow-sm">
+                                    <div class="post-header ${color_table[post.post.privacy_level-1]} card-header d-flex align-items-center">
+                                        <img src="${post.pfp.path}" alt="${post.pfp.alt}" class="rounded-circle me-3" style="width: 50px; height: 50px;">
+                                        <div>
+                                            <strong>${post.username}</strong>
+                                            <p class="mb-0 text-muted" style="font-size: 12px;">${post.post.sent_date}</p>
+                                        </div>
+                                        ${delete_btn}
+                                    </div>
+                                    <div class="post-content card-body">
+                                        <p>${post.post.text}</p>
+                                        ${generateMediaContent(post, key)}
+                                    </div>
+                                    <div class="like">
+                                        ${like_icon} <p class="num_likes" style="display: inline-block;">${post.post.likes}</p>
+                                    </div>
+                                    <p class="hidden post_id">${post.post.id}</p> 
+                                    <p class="hidden publisher_id">${post.id}</p> 
+                                    <div class="comments-section">
+                                        <button class="toggle-comments btn btn-link">Ver Comentários</button>
+                                        <div class="comments-list" style="display: none;">
+                                        </div>
+                                        <div class="new-comment mt-3">
+                                            <textarea class="form-control comment-text" placeholder="Escreva um comentário..."></textarea>
+                                            <button class="btn btn-primary submit-comment mt-2">Comentar</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="post-content card-body">
-                                <p>${post.post.text}</p>
-                                ${generateMediaContent(post, key)}
-                            </div>
-                            <div class="like">
-                                ${like_icon} <p class="num_likes" style="display: inline-block;">${post.post.likes}</p>
-                            </div>
-                            <p class="hidden post_id">${post.post.id}</p> 
-                            <p class="hidden publisher_id">${post.id}</p> 
-                            <div class="comments-section">
-                                <button class="toggle-comments btn btn-link">Ver Comentários</button>
-                                <div class="comments-list" style="display: none;">
-                                </div>
-                                <div class="new-comment mt-3">
-                                    <textarea class="form-control comment-text" placeholder="Escreva um comentário..."></textarea>
-                                    <button class="btn btn-primary submit-comment mt-2">Comentar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
+                            </div>`;
+
                 $(".user-posts").append(div);
+
+                $('.delete-post').click(function(){
+                    $(".loading").toggle();
+                    ajax.get('<?=base_url('delete_post')?>/'+post.post.id, function(data){
+                        if(data.success){
+                            $(".loading").toggle();
+                            window.location.reload();
+                        }else{
+                            $(".loading").addClass('loading-failed');
+                            setTimeout(()=>{
+                                window.location.reload();
+                            }, 2000);
+                        }
+                    })
+                })
             });
             initializeCommentHandlers();
             changeLike();
+            $(".loading").toggle();
         });
 
         var page = 1;

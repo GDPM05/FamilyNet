@@ -33,4 +33,7 @@
         <title><?php echo $title;?></title>
     </head>
 <body>
+<div class="loading">
+    <img src="<?=base_url('resources/Logo.png')?>">
+</div>
 

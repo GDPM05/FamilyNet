@@ -4,9 +4,6 @@
 ?>
 
 <main class="container-fluid d-flex flex-row direct_msg">
-    <div class="loading">
-        <img src="<?=base_url('resources/Logo.png')?>">
-    </div>
     <div class="col-9 left-side">
     </div>
     <div class="col-3 right-side">
