@@ -152,7 +152,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     $(document).ready(function() {
         const ajax = new AjaxHandler();
         var page = 1;
-
+        $(".loading").css({visibility: 'visible'});
         ajax.get('<?=base_url('get_posts/')?>'+page, function(data){
             //console.log(data);
             Object.keys(data).forEach(function(key){
@@ -219,7 +219,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             });
             initializeCommentHandlers();
             changeLike();
-            $(".loading").toggle();
+            $(".loading").css({visibility: 'none'});
+            console.log('Toggled');
         });
 
         var page = 1;

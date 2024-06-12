@@ -1,4 +1,7 @@
 $(document).ready(function() {
+    $('.loading').toggle();
+    console.log('toggled');
+
     var step = 0;
     var steps = $(".form-group").toArray();
     var btnNext = $("#signup_submit");

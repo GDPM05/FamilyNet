@@ -75,21 +75,18 @@
                 mkdir($upload_dir, 0777, true);
             }
         
-            // Iterar sobre os arquivos enviados
             foreach ($_FILES['file-upload']['tmp_name'] as $key => $tmp_name) {
-                // Verificar se o arquivo foi enviado sem erros
                 if ($_FILES['file-upload']['error'][$key] === UPLOAD_ERR_OK) {
                     $file_name = basename($_FILES['file-upload']['name'][$key]);
                     $target_file = $upload_dir . $file_name;
             
-                    // Mover o arquivo para o diretório de destino
                     if (move_uploaded_file($tmp_name, $target_file)) {
                         // Redimensionar a imagem para 400x400
                         $resize_result = $this->resize_image($target_file, 200, 200);
                         if (!$resize_result['status']) {
                             echo "Erro ao redimensionar a imagem $file_name: " . $resize_result['message'];
                         } else {
-                            // Inserir dados da mídia no modelo Media_Model
+                            $resize_result['file_path'] = base_url().substr($resize_result['file_path'], 1, strlen($resize_result['file_path']));
                             $media_data = [
                                 'path' => $resize_result['file_path'],
                                 'alt' => md5($resize_result['file_path'])  // Valor associado à imagem, você pode ajustar conforme necessário
@@ -375,13 +372,31 @@
                 return false;
             }
 
-            $this->PostMedia_Model->delete(['id_post' => $post_id]);
+            $media_ids = $this->PostMedia_Model->fetch_all(false, null, null, null, ['id_post' => $post_id]);
 
-            if($this->PostMedia_Model->error){
-                $return_data['success'] = false;
-                echo json_encode($return_data);
-                return false;
+            foreach ($media_ids as $media_id) {
+                $media = $this->Media_Model->fetch(['id' => $media_id['id_media']]);
+
+                $full_path = $media['path'];
+                $media_position = strpos($full_path, 'media');
+
+                if ($media_position !== false) {
+                    $path = './'.substr($full_path, $media_position);
+                }
+
+                if(file_exists($path)) {
+                    unlink($path);
+                }
+
+                $this->PostMedia_Model->delete(['id_post' => $post_id, 'id_media' => $media_id['id_media']]);
+
+                if($this->PostMedia_Model->error){
+                    $return_data['success'] = false;
+                    echo json_encode($return_data);
+                    return false;
+                }
             }
+
 
             $this->Comments_Model->delete(['id_post' => $post_id]);
 
@@ -391,7 +406,7 @@
                 return false;
             }
 
-            $return_data['success'] = false;
+            $return_data['success'] = true;
             echo json_encode($return_data);
             return false;
         }
