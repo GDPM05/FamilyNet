@@ -9,9 +9,13 @@
             parent::__construct();
 
             $this->load->library(array('form_validation', 'PasswordHash'));
+            $this->config->load('email');
             $this->passwordhash->init(8, false);
             $this->load->model('User_model');
             $this->load->model('Media_model');
+            $this->load->library('Mailer');
+            $this->load->model('ResetPassword_Model');
+            $this->data['title'] = TITLE;
             //$this->login->init($this->passwordhash);
         }
 
@@ -103,6 +107,102 @@
             setcookie('user_login', '', time() - 3600, '/');
             $this->data['login_success'] = 'Logout efetuado com sucesso';
             redirect(base_url());     
+        }
+
+        public function reset_password(){
+            $char_list = 'abcderfghijklmnopqrstuvwxyz1234567890';
+            $url_code = '';
+            for($i = 0; $i < 20; $i++){
+                $url_code .= $char_list[random_int(0, strlen($char_list)-1)];
+            }
+
+            $url = base_url('reset_password/').$url_code;
+            
+            redirect($url);
+        }
+
+        private function send_email($email, $subject, $message){
+            try{
+                $this->email->from($this->config->item('smtp_user'), 'FamilyNet');
+                $this->email->to($email);
+                $this->email->subject($subject);
+                $this->email->message($message);
+                $this->email->send();
+            }catch(Exception $e){
+                return $e;
+            }
+
+            return true;
+        }
+
+        public function verify_reset_password(){
+            $url_code = $this->uri->segment(2);
+            
+            $email = $this->input->post();
+
+            $char_list = 'abcderfghijklmnopqrstuvwxyz1234567890';
+            $url_code = '';
+            $code = '';
+            for($i = 0; $i < 20; $i++){
+                $url_code .= $char_list[random_int(0, strlen($char_list)-1)];
+            }
+
+            $url = base_url('password_reset/').$url_code;
+
+            if(!empty($email)){
+                $subject = 'Reposição de Password';
+                $message = 'Aceda ao link a baixo para repor a sua palavra passe. <a href="'.$url.'">Repor Password</a>';
+                $this->send_email($email, $subject, $message);
+
+                $this->ResetPassword_Model->insert([
+                    'email' => $email['email'],
+                    'url_code' => $url_code
+                ]);
+
+                setcookie(md5('email'), md5($email['email']), time() + (60 * 10), '/');
+
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true]);
+                return true;
+            }
+
+            $this->load->view('common/header', $this->data);
+            $this->load->view('verify_reset_pass', $this->data);
+            $this->load->view('common/footer');
+        }
+
+        public function password_reset(){
+
+            $code = $this->uri->segment(2);
+            $email = $_COOKIE[md5('email')];
+
+            $request = $this->ResetPassword_Model->fetch(['url_code' => $code]);
+
+            if(md5($request['email']) !== $email){
+                redirect(base_url('error/password_reset'));
+                return false;
+            }
+
+            $data = $this->input->post();
+            
+            if(!empty($data)){
+                $this->User_model->update(
+                    ['password' => $this->passwordhash->HashPassword($data['password'])],
+                    ['email' => $request['email']]
+                );
+
+                $this->send_email($request['email'], 'A sua palavra passe foi alterada.', 'A sua palavra passe foi alterada com sucesso!');
+
+                $this->ResetPassword_Model->delete(['email' => $email]);
+
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true]);
+                return true;
+            }
+
+            $this->load->view('common/header', $this->data);
+            $this->load->view('password_redefinition', $this->data);
+            $this->load->view('common/footer');     
         }
     }
 ?>

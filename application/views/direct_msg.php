@@ -136,7 +136,7 @@
                 $(".loading").css({visibility: 'visible'});
             }, 200);
             ajax.get('<?php echo base_url('resources/html/dm-mode.html');?>', (data)=>{
-                $(".loading").toggle();
+                $(".loading").css({visibility: 'none'});
                 $(".left-side").html(data);
                 messages = $(".messages");
                 messages.on('scroll', function(){

@@ -16,9 +16,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="user-friends">
                     <h3>Amigos</h3>
                     <?php foreach($friends as $friend): ?> 
-                        <div class="friend d-flex align-items-center mb-2">
+                        <div class="friend-main d-flex align-items-center mb-2">
                             <img src="<?=$friend['pfp']['path']?>" alt="<?=$friend['user']?>" class="img-fluid rounded-circle" style="width: 30px; height: 30px;">
-                            <h6 class="ms-2 mb-0"><?=$friend['username']?></h6>
+                            <h6 class="ms-2 mb-0"><a style="color: black;" href="see_profile/<?=$friend['user']?>"><?=$friend['username']?></a></h6>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -29,13 +29,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="postModalLabel">Novo Post</h5>
+                    <h5 class="modal-title" id="postModalLabel">Nova publicação</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
                     <!-- Formulário de novo post -->
                     <form action="<?php echo base_url('/new_post'); ?>" class="post-form" method="post" enctype="multipart/form-data">
                         <div id="preview" class="mb-3 d-flex flex-wrap"></div>
+                        <small class="important">Pode publicar até 3 imagens</small>
                         <div class="mb-3">
                             <textarea name="post-text" class="form-control" placeholder="O que estás a pensar?" required></textarea>
                             <!-- <input type="text" name="post-text" class="form-control" placeholder="O que estás a pensar?" required> -->
@@ -62,7 +63,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <button type="button" class="btn btn-primary new_post" data-bs-toggle="modal" data-bs-target="#postModal">
         Criar Publicação
     </button>
-                                    <!-- Modal de confirmação para deletar comentário -->
     <div class="modal fade" id="deleteCommentModal" tabindex="-1" aria-labelledby="deleteCommentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -203,18 +203,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $(".user-posts").append(div);
 
                 $('.delete-post').click(function(){
-                    $(".loading").toggle();
-                    ajax.get('<?=base_url('delete_post')?>/'+post.post.id, function(data){
-                        if(data.success){
-                            $(".loading").toggle();
-                            window.location.reload();
-                        }else{
-                            $(".loading").addClass('loading-failed');
-                            setTimeout(()=>{
+                    if(confirm('Tem a certeza de que quer remover esta publicação?')){
+                        $(".loading").toggle();
+                        ajax.get('<?=base_url('delete_post')?>/'+post.post.id, function(data){
+                            if(data.success){
+                                $(".loading").toggle();
                                 window.location.reload();
-                            }, 2000);
-                        }
-                    })
+                            }else{
+                                $(".loading").addClass('loading-failed');
+                                setTimeout(()=>{
+                                    window.location.reload();
+                                }, 2000);
+                            }
+                        })
+                    }
                 })
             });
             initializeCommentHandlers();

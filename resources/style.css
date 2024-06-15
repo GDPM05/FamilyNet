@@ -25,6 +25,15 @@
     margin-left: -12px;
 }
 
+.important {
+    color: red;
+    border-bottom: 1px solid red;
+}
+
+.friend-main {
+    width: auto !important; 
+}
+
 .loading-failed {
     filter: sepia(1) saturate(10000%) hue-rotate(0deg) brightness(0.5);
 }
@@ -234,6 +243,20 @@ i{
     justify-content: center !important;  
     margin: auto !important; 
     margin-top: 10px !important;
+}
+
+.dm-window {
+    height: 95vh !important;
+}
+
+#message_send{
+    background-color: var(--cor_prim);
+    transition: 0.5s;
+    color: white;
+}
+
+#message_send:hover{
+    background-color: var(--cor_sec);
 }
 
 /* Estilo do título do card */
