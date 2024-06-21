@@ -7,11 +7,14 @@
         <div class="row">
             <div class="col-md-6">
                 <!-- Botões Open Chat e Settings -->
-                <button class="btn open_chat btn-primary my-3">Abrir chat</button>
+                <button class="activity-btn btn my-3">Atividades</button>
                 <button class="btn config btn-secondary my-3">Definições</button>
                 <!-- Novo div abaixo dos botões -->
-                <div class="family_chat hidden my-3">
-                    
+                <div class="activities hidden my-3">
+                    <h2>As nossas <span class="c_p">sugestões</span> de <span class="c_s">atividades</span>.</h2>
+                    <div class="activities-list">
+
+                    </div>
                 </div>
                 <div class="family_settings hidden my-3">
                 <form action="<?=base_url('update_family_info')?>" method="post">
@@ -80,7 +83,7 @@
 <script>
     $(()=>{
         const ajax = new AjaxHandler();
-
+        let page = 0;
         ajax.get('<?=base_url('get_family')?>', function(data){
             console.log(data);
             Object.values(data).forEach(user => {
@@ -99,6 +102,27 @@
             });
         });
 
+
+        $('.activity-btn').click(function(){
+            $(".activities").removeClass('hidden');
+
+            ajax.get('<?=base_url('get_family_activities')?>/'+page, function(data){
+                console.log(data);
+                const activityHtml = `
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <img src="${data.image || 'placeholder.jpg'}" class="card-img-top" alt="${data.name}">
+                            <div class="card-body">
+                                <h5 class="card-title">${data.name}</h5>
+                                <p class="card-text">${data.description}</p>
+                                <p class="card-text"><small class="text-muted">${data.n_participants} participantes, ${data.rating} avaliação(ões)</small></p>
+                            </div>
+                        </div>
+                    </div>`;
+
+                    $("activities-list").append(activityHtml);
+            });
+        });
 
         $(".config").click(function(){
             console.log("Aa");

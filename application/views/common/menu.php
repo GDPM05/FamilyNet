@@ -15,6 +15,11 @@
         <a class="nav-link <?php echo ($this->router->fetch_class() == 'Family' && $this->router->fetch_method() == 'index') ? 'active' : null;?>" href="<?php echo base_url('family_menu');?>">
             <i class="bi bi-people-fill"></i>
         </a>
+        <?php if($user['category'] > 1): ?>
+            <a class="nav-link admin-menu <?php echo ($this->router->fetch_class() == 'Admin' && $this->router->fetch_method() == 'index') ? 'active' : null;?>" href="<?php echo base_url('admin_base');?>">
+                <i class="bi bi-key-fill"></i>
+            </a>
+        <?php endif;?>
         <a class="nav-link <?php echo ($this->router->fetch_class() == 'Profile' && $this->router->fetch_method() == 'index') ? 'active' : null;?>" href="<?php echo base_url('profile'); ?>">
             <?php
                 if(!empty($path)): ?>

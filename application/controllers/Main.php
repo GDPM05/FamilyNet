@@ -67,10 +67,9 @@
         
             $post_id = $this->Post_Model->insert($post_info);
         
-            // Diretório onde os arquivos serão salvos
+            
             $upload_dir = './media/post-media/';
         
-            // Verificar se o diretório existe, caso contrário, criar
             if (!is_dir($upload_dir)) {
                 mkdir($upload_dir, 0777, true);
             }
@@ -81,7 +80,6 @@
                     $target_file = $upload_dir . $file_name;
             
                     if (move_uploaded_file($tmp_name, $target_file)) {
-                        // Redimensionar a imagem para 400x400
                         $resize_result = $this->resize_image($target_file, 200, 200);
                         if (!$resize_result['status']) {
                             echo "Erro ao redimensionar a imagem $file_name: " . $resize_result['message'];
@@ -89,11 +87,10 @@
                             $resize_result['file_path'] = base_url().substr($resize_result['file_path'], 1, strlen($resize_result['file_path']));
                             $media_data = [
                                 'path' => $resize_result['file_path'],
-                                'alt' => md5($resize_result['file_path'])  // Valor associado à imagem, você pode ajustar conforme necessário
+                                'alt' => md5($resize_result['file_path'])  
                             ];
                             $media_id = $this->Media_Model->insert($media_data);
             
-                            // Inserir ID da mídia e ID do post no modelo Post_Media
                             $post_media_data = [
                                 'id_post' => $post_id,
                                 'id_media' => $media_id

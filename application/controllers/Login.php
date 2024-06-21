@@ -38,7 +38,7 @@
             if($this->form_validation->run()){
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
-                $user = $this->User_model->fetch(array('email' => $email), 'user, id, username, email, pfp, p_role, gender, phone, birthday, access_token, password, active');
+                $user = $this->User_model->fetch(array('email' => $email), 'user, id, category,username, email, pfp, p_role, gender, phone, birthday, access_token, password, active');
                 if($user){
                     //print_r($user);
                     if($user['active'] == 1){

@@ -15,7 +15,7 @@
 
 .loading {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     z-index: 99999;
     position: absolute;
     background: rgba(0,0,0,0.5);
@@ -29,6 +29,47 @@
     color: red;
     border-bottom: 1px solid red;
 }
+
+.activity-btn{
+    background-color: var(--cor_prim) !important;
+    color: #fff !important;
+    transition: 0.5s !important;
+}
+
+.activity-btn:hover{
+    background-color: var(--cor_sec) !important;
+}
+
+.activity-card{
+    border: 2px solid var(--cor_prim);
+    margin: 25px;
+    padding: 10px;
+}
+
+.active {
+    color: var(--cor_sec);
+}
+
+.c_p{
+    color: var(--cor_prim);
+}
+
+.c_s{
+    color: var(--cor_sec);
+}
+
+.admin-menu{
+    rotate: 90deg;
+}
+
+.admin {
+    margin-left: 64px; 
+}
+
+.menu_admin {
+    list-style-type: none;
+}
+
 
 .friend-main {
     width: auto !important; 
@@ -103,7 +144,8 @@ i{
     position: fixed;
     top: 0;
     left: 0;
-    width: auto; /* Ajuste a largura conforme necessário */
+    width: auto; 
+    max-width: 64px;
     height: 100vh;
     overflow: auto;
     border-right: 2px solid var(--cor_prim);

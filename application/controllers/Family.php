@@ -11,6 +11,7 @@
             $this->load->model('Conversation_model');
             $this->load->model('Gender_model');
             $this->load->model('ChildAccount_model');
+            $this->load->model('Activity_model');
             $this->loggedIn();
         }
 
@@ -204,6 +205,34 @@
             header('Content-Type: application/json');
             
             echo json_encode($family_members);
+        }
+
+        public function get_activities($page = 0){
+            header('Content-Type: application/json');
+
+            $return_data = [
+                'success' => false,
+                'message' => ''
+            ];
+
+            $perPage = 5;
+
+            $offset = ($page - 1) * $perPage;
+
+            $activities = $this->Activity_model->fetch_all(null, $offset, $page, null, null);
+
+            if(empty($activities)){
+                $return_data['message'] = 'No activities found.';
+                echo json_encode($return_data);
+                return false;
+            }
+
+            
+            $return_data['success'] = true;
+            $return_data['message'] = '';
+            $return_data['data'] = $activities;
+            echo json_encode($return_data);
+            return true;
         }
 
     }
