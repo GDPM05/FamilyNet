@@ -103,30 +103,73 @@
         });
 
 
-        $('.activity-btn').click(function(){
-            $(".activities").removeClass('hidden');
+        $('.activity-btn').click(function() {
+            $(".activities").toggle();
 
-            ajax.get('<?=base_url('get_family_activities')?>/'+page, function(data){
+            ajax.get('<?=base_url('get_family_activities')?>/'+page, function(data) {
                 console.log(data);
-                const activityHtml = `
-                    <div class="col-md-6 mb-3">
+                Object.keys(data.data).forEach(activity => {
+                    console.log(activity);
+                    var images = '';
+                    Object.keys(data.data[activity].images).forEach(img => {
+                        images += `
+                        <div class="image-container">
+                            <img src="${data.data[activity].images[img]['path']}" class="activity-image" alt="Activity Image">
+                        </div>`;
+                    });
+
+                    const activityHtml = `
+                    <div class="activity col-md-6 mb-3">
                         <div class="card">
-                            <img src="${data.image || 'placeholder.jpg'}" class="card-img-top" alt="${data.name}">
                             <div class="card-body">
-                                <h5 class="card-title">${data.name}</h5>
-                                <p class="card-text">${data.description}</p>
-                                <p class="card-text"><small class="text-muted">${data.n_participants} participantes, ${data.rating} avaliação(ões)</small></p>
+                                <h5 class="card-title">${data.data[activity].name}</h5>
+                                <p class="card-text">${data.data[activity].description}</p>
+                                <div class="d-flex flex-row flex-wrap image-row">
+                                    ${images}
+                                </div>
+                                <div class="rating hidden">
+                                    <span class="star" data-value="5">&#9733;</span>
+                                    <span class="star" data-value="4">&#9733;</span>
+                                    <span class="star" data-value="3">&#9733;</span>
+                                    <span class="star" data-value="2">&#9733;</span>
+                                    <span class="star" data-value="1">&#9733;</span>
+                                </div>
+                                <p class="card-text mt-2"><small class="text-muted">${data.data[activity].n_participants} participações.</small></p>
+                                <p class="card-text"><small class="text-muted">Avaliação média: ${data.data[activity].rating}</small></p>
+                                <button type="button" class="participate btn btn-success">Participar</button>
                             </div>
                         </div>
                     </div>`;
 
-                    $("activities-list").append(activityHtml);
+                    $(".activities-list").append(activityHtml);
+                });
+
+                $(".participate").click(function(){
+                    $(".rating").toggle();
+                });
+
+                $(".activities-list").on("click", ".star", function() {
+                    const value = $(this).data("value");
+                    const stars = $(this).parent().children(".star");
+                    stars.each(function() {
+                        if ($(this).data("value") <= value) {
+                            $(this).addClass("rated");
+                        } else {
+                            $(this).removeClass("rated");
+                        }
+                    });
+                    
+                    
+                });
             });
         });
 
+
+
+
         $(".config").click(function(){
             console.log("Aa");
-            $(".family_settings").removeClass("hidden");
+            $(".family_settings").toggle();
         });
 
     });

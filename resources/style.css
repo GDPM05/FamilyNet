@@ -25,6 +25,41 @@
     margin-left: -12px;
 }
 
+.activity {
+    max-width: 800px !important;
+}
+
+/* Adicione este estilo ao seu arquivo CSS ou na tag <style> no cabeçalho do seu HTML */
+.image-row {
+    display: flex; /* Isso fará com que as imagens fiquem lado a lado */
+    width: 100% !important; /* Largura total da área de exibição das imagens */
+    overflow-x: auto; /* Adiciona um scroll horizontal quando necessário */
+    gap: 10px; /* Espaçamento entre as imagens (ajuste conforme necessário) */
+}
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.star {
+    font-size: 1.5rem;
+    color: #ccc;
+}
+
+.star.rated {
+    color: #f39c12;
+}
+
+.star:hover,
+.star:hover ~ .star {
+    color: #f39c12;
+}
+
+
 .important {
     color: red;
     border-bottom: 1px solid red;

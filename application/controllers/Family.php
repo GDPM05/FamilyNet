@@ -12,6 +12,7 @@
             $this->load->model('Gender_model');
             $this->load->model('ChildAccount_model');
             $this->load->model('Activity_model');
+            $this->load->model('ActivityMedia_model');
             $this->loggedIn();
         }
 
@@ -227,6 +228,14 @@
                 return false;
             }
 
+            foreach($activities as $act => $key){
+                $id_media = $this->ActivityMedia_model->fetch_all(false, null, null, null, ['id_activity' => $activities[$act]['id']]);
+
+                foreach($id_media as $id){
+                    $media = $this->Media_model->fetch(['id' => $id['id_media']]);
+                    $activities[$act]['images'][] = $media;
+                }
+            }
             
             $return_data['success'] = true;
             $return_data['message'] = '';
