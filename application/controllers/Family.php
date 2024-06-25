@@ -13,6 +13,8 @@
             $this->load->model('ChildAccount_model');
             $this->load->model('Activity_model');
             $this->load->model('ActivityMedia_model');
+            $this->load->model('ActivityLikes_Model');
+            $this->load->model('ActivityParticipant_Model');
             $this->loggedIn();
         }
 
@@ -235,6 +237,15 @@
                     $media = $this->Media_model->fetch(['id' => $id['id_media']]);
                     $activities[$act]['images'][] = $media;
                 }
+
+                $id_activity = $activities[$act]['id'];
+                $like = $this->ActivityLikes_Model->check_if_exists(['id_activity' => $id_activity, 'id_user' => $this->session->userdata('user')['id']]);
+
+                $activities[$act]['liked'] = (!$like) ? false : true;
+
+                $participant = $this->ActivityParticipant_Model->check_if_exists(['id_activity' => $id_activity, 'id_user' => $this->session->userdata('user')['id']]);
+
+                $activities[$act]['participant'] = (!$participant) ? false : true; 
             }
             
             $return_data['success'] = true;
@@ -244,5 +255,99 @@
             return true;
         }
 
-    }
+        public function participate($id_activity = null){
+            header('Content-Type: application/json');
+
+            $return_data = [
+                'success' => false,
+                'message' => '',
+                'data' => []
+            ];
+
+            if(!$id_activity){
+                $return_data['message'] = 'Ocorreu um erro. Tente novamente mais tarde.';
+                echo json_encode($return_data);
+                return false;
+            }
+
+            $activity = $this->Activity_model->check_if_exists(['id' => $id_activity]);
+
+            if(!$activity){
+                $return_data['message'] = 'Ocorreu um erro. Tente novamente mais tarde.';
+                echo json_encode($return_data);
+                return false;
+            }
+
+            $participant = $this->ActivityParticipant_Model->check_if_exists(['id_activity' => $id_activity, 'id_user' => $this->session->userdata('user')['id']]);
+
+            if($participant){
+                $return_data['message'] = 'Já participou desta atividade!';
+                echo json_encode($return_data);
+                return false;
+            }
+
+            $this->Activity_model->update(['n_participants' => $activity['n_participants']+1], ['id' => $activity['id']]);
+
+            $this->ActivityParticipant_Model->insert([
+                'id_activity' => $id_activity,
+                'id_user' => $this->session->userdata('user')['id']
+            ]);
+
+            if($this->ActivityParticipant_Model->error){
+                $return_data['message'] = 'Ocorreu um erro. Tente novamente mais tarde.';
+                echo json_encode($return_data);
+                return false;
+            }
+
+            $return_data['success'] = true;
+            echo json_encode($return_data);
+            return true;
+        }
+
+        public function like($activity_id = null){
+            header('Content-Type: application/json');
+            $return_data = [
+                'success' => false,
+                'message' => '',
+                'data' => []
+            ];
+
+            if(empty($activity_id)){
+                $return_data['message'] = 'Ocorreu um erro. Tente novamente mais tarde.';
+                echo json_encode($return_data);
+                return false;
+            }
+
+            $activity = $this->Activity_model->check_if_exists(['id' => $activity_id]);
+
+            if(!$activity){
+                $return_data['message'] = 'Ocorreu um erro. Tente novamente mais tarde.';
+                echo json_encode($return_data);
+                return false;
+            }
+
+            $like = $this->ActivityLikes_Model->check_if_exists(['id_activity' => $activity_id, 'id_user' => $this->session->userdata('user')['id']]);
+
+            if($like){
+                $return_data['message'] = 'Já deu gosto nesta atividade!';
+                echo json_encode($return_data);
+                return false;
+            }
+
+            $this->Activity_model->update(['n_likes' => $activity['n_likes']+1], ['id' => $activity['id']]);
+
+            $this->ActivityLikes_Model->insert(['id_activity' => $activity_id, 'id_user' => $this->session->userdata('user')['id']]);
+
+            if($this->ActivityLikes_Model->error){
+                $return_data['message'] = 'Ocorreu um erro. Tente novamente mais tarde.';
+                echo json_encode($return_data);
+                return false;
+            }
+
+            $return_data['success'] = true;
+            echo json_encode($return_data);
+            return true;
+        }
+
+    }   
 ?>

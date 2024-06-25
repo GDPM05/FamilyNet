@@ -106,3 +106,5 @@ $route['get_activities'] = 'Admin/get_activities';
 $route['delete_activity/(:num)'] = 'Admin/delete_activity/$1';
 $route['edit_activity'] = 'Admin/edit_activity';
 $route['get_family_activities/(:num)'] = 'Family/get_activities/$1';
+$route['new_participation/(:num)'] = 'Family/participate/$1';
+$route['new_like/(:num)'] = 'Family/like/$1';

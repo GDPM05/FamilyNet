@@ -113,7 +113,6 @@
         public function check_if_exists($where = null){
             if($where)
                 $this->db->where($where);
-            
 
             $q = $this->db->get($this->table);
 
