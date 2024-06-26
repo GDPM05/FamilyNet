@@ -11,7 +11,6 @@
     </button>
     <a href="<?php echo base_url('logout')?>" class="btn btn-danger" style="margin-left: 100px">Logout</a>
 
-    <!-- Modal Ver Amigos -->
     <div class="modal fade" id="friendsModal" tabindex="-1" aria-labelledby="friendsModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

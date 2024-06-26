@@ -1,11 +1,10 @@
 <?php
     defined('BASEPATH') OR exit('No direct script access allowed');
-
-
 ?>
 
-<main class="new_family container">
+<main class="new_family_main container">
     <h2 class="text-center my-4">Parece que ainda não tem uma família...</h2>
+    <div class="alert"></div>
      <div class="create_family">
         <form action="<?=base_url('new_family')?>" method="post" class="new_family">
             <div class="form-group">
@@ -31,3 +30,19 @@
         </form>
      </div>
 </main>
+<script>
+    $(document).ready(function() {
+        $('.new_family').on('submit', function(event) {
+            // Seleciona o campo "Nome da Família"
+            var familyNameInput = $('#family_name');
+
+            // Verifica se o campo está vazio
+            if (familyNameInput.val().trim() === '') {
+                // Impede o envio do formulário
+                event.preventDefault();
+                // Alerta o usuário
+                $(".alert").html("Por favor, preencha todos os campos.").addClass("important");
+            }
+        });
+    });
+</script>

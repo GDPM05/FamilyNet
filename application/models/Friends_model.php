@@ -39,6 +39,7 @@
             $this->db->or_group_start();
             $this->db->where('id_user2', $id);
             $this->db->group_end();
+            $this->db->where('status', 1);
 
             $query = $this->db->get($this->table);
             

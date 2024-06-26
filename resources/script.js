@@ -50,6 +50,7 @@ $(document).ready(function() {
             birthday_in: {
                 'empty': false,
                 'name': 'Data de Nascimento',
+                'date': true, // nova regra para verificar data
             },
             gender_in: {
                 'empty': false,
@@ -83,7 +84,7 @@ $(document).ready(function() {
             var id = $(inputs[i]).attr('id');
             var value = $(inputs[i]).val();
             var rule = rules[id];
-
+    
             if (rule) {
                 if (rule.empty === false && value === '') {
                     sendNotification('O campo '+rule.name+" tem de ser preenchido.");
@@ -114,10 +115,51 @@ $(document).ready(function() {
                     sendNotification("As palavras passes não coincidem.");
                     return false;
                 }
+                if (rule.date && !isValidDate(value)) {
+                    sendNotification('A data de nascimento deve ser válida.');
+                    return false;
+                }
             }
         }
         return true;
     }
+    
+    function isValidDate(dateString) {
+        // Verifica o formato dd/mm/yyyy
+        var regex = /^\d{2}\/\d{2}\/\d{4}$/;
+        if (!regex.test(dateString)) {
+            return false;
+        }
+    
+        // Converte para um objeto Date
+        var parts = dateString.split('/');
+        var day = parseInt(parts[0], 10);
+        var month = parseInt(parts[1], 10) - 1; // Mês começa do 0
+        var year = parseInt(parts[2], 10);
+    
+        var date = new Date(year, month, day);
+    
+        // Verifica a validade da data
+        if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
+            return false;
+        }
+    
+        // Verifica se a data não está no futuro
+        var now = new Date();
+        if (date > now) {
+            return false;
+        }
+    
+        // Verifica se a data não está antes de 1920
+        var earliestDate = new Date(1920, 0, 1); // 1 de janeiro de 1920
+        if (date < earliestDate) {
+            return false;
+        }
+    
+        return true;
+    }
+    
+    
 
     // Verifica se o campo está vazio
     function isFieldEmpty() {

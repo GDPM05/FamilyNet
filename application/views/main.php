@@ -271,7 +271,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         loadComments(postId, self);
                     });
                 } else {
-                    $('.comments-list').append('<p class="no-comments text-center">Ainda não há comentários.</p>')
+                    $('.comments-list').html('<p class="no-comments text-center">Ainda não há comentários.</p>')
                 }
             });
         }
