@@ -125,6 +125,7 @@ $(document).ready(function() {
     }
     
     function isValidDate(dateString) {
+        console.log(dateString);
         // Verifica o formato dd/mm/yyyy
         var regex = /^\d{2}\/\d{2}\/\d{4}$/;
         if (!regex.test(dateString)) {

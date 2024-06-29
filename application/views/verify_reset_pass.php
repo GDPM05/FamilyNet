@@ -33,9 +33,14 @@
         var email = $("#email").val();
         if(email.trim() != ""){
             ajax.post(window.location.href, {email: $("#email").val()}, (data)=>{
-                $(".loading").toggle();
-                console.log(data);
-                if(data.success){$(".alert").text('Verifique o seu email.').addClass('important')}
+                if(data.success){
+                    $(".loading").toggle();
+                    console.log(data);
+                    $(".alert").text('Verifique o seu email.').addClass('important')
+                }else{
+                    $(".alert").text(data.message).addClass('important')
+                    $(".loading").toggle();
+                }
             });
         }else{
             $(".alert").text('Insira o seu email!').addClass('important');

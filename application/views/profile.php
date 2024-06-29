@@ -37,7 +37,7 @@
                         <div class="form-group row">
                             <label for="email" class="col-sm-3 col-form-label">Email</label>
                             <div class="col-sm-9">
-                                <input type="email" name="email" id="email" class="form-control" value="<?=$user['email'];?>">
+                                <input type="file" name="pfp" id="pfp">
                             </div>
                         </div>
                         <div class="form-group row">

@@ -137,8 +137,16 @@
 
         public function verify_reset_password(){
             $url_code = $this->uri->segment(2);
-            
+
             $email = $this->input->post();
+
+            $email_query = (isset($email['email'])) ? $this->User_model->check_if_exists(['email' => $email['email']]) : true;
+
+            if(!$email_query){
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'message' => 'Insira um email válido!']);
+                return false;
+            }
 
             $char_list = 'abcderfghijklmnopqrstuvwxyz1234567890';
             $url_code = '';
