@@ -7,7 +7,8 @@
             parent::__construct();
             $this->load->model('Friends_model');
             $this->load->model('Notification_model');
-            //$this->load->library('Mailer');
+            $this->load->library('upload'); // Adiciona a biblioteca de upload
+            $this->load->library('image_lib'); // Adiciona a biblioteca de manipulação de imagens
             if(!$this->LoggedIn()){
                 redirect(base_url('logout'));
                 exit;
@@ -19,7 +20,6 @@
                 'title' => TITLE.' | Perfil',
                 'user' => $this->session->userdata['user']
             );
-
             $this->load->view('common/header', $data);
             $this->load->view('common/menu', $this->data);
             $this->load->view('profile', $data);
@@ -182,11 +182,49 @@
                 return;
             }
 
-            $update_data = [
-                'email'   => $info['email'],
-                'username'   => $info['username'],
-                'phone'   => $info['phone']
-            ];
+            if(!empty($_FILES['pfp']['name'])){
+
+                $config['upload_path'] = './media/profile_pictures';
+                $config['allowed_types'] = 'jpg|jpeg|png';
+                $config['max_size'] = 2048; // 2MB
+                $config['file_name'] = uniqid() . '_' . $_FILES['pfp']['name'];
+
+                $this->upload->initialize($config);
+
+                if($this->upload->do_upload('pfp')){
+                    $data = $this->upload->data();
+
+                    // Configuração para redimensionamento
+                    $resizeConfig['image_library'] = 'gd2';
+                    $resizeConfig['source_image'] = $data['full_path'];
+                    $resizeConfig['maintain_ratio'] = TRUE;
+                    $resizeConfig['width'] = 200;
+                    $resizeConfig['height'] = 200;
+
+                    // print_r($data);
+
+                    $this->image_lib->initialize($resizeConfig);
+                    if($this->image_lib->resize()){
+                        $imagePath = base_url('/media/')."profile_pictures/".$data['raw_name'].$data['file_ext'];
+                    } else {
+                        echo $this->image_lib->display_errors();
+                        return;
+                    }
+
+                    // Atualiza o caminho da imagem no banco de dados
+                    $update_data['pfp'] = $imagePath;
+                } else {
+                    echo $this->upload->display_errors();
+                    return;
+                }
+
+                $id = $this->Media_model->insert(['path' => $update_data['pfp'], 'alt' => md5(time())]);
+                $this->User_model->update(['pfp' => $id], ['id'=>$this->session->userdata('user')['id']]);
+                unset($update_data['pfp']);
+            }
+
+            $update_data['username'] = $info['username'];
+            $update_data['phone'] = $info['phone'];
 
             $this->User_model->update($update_data, ['id' => $this->session->userdata('user')['id']]);
 
@@ -199,10 +237,7 @@
             $this->session->set_userdata('user', $new_userdata);
 
             redirect(base_url('profile'));
-
         }
-
-
     }
 
 

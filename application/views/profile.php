@@ -33,7 +33,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?=base_url('profile/update_info')?>" method="post">
+                    <form action="<?=base_url('profile/update_info')?>" method="post" enctype="multipart/form-data">
                         <div class="form-group row">
                             <label for="email" class="col-sm-3 col-form-label">Email</label>
                             <div class="col-sm-9">
