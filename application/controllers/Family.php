@@ -52,12 +52,25 @@
                 $this->data['family_members'] = $family_members;
             }
 
-            
-
             $this->load->view('common/header', $this->data);
             $this->load->view('common/menu', $this->data);
             $this->load->view((!empty($family)) ? 'family_menu' : 'new_family', $this->data);
             $this->load->view('common/footer');
+        }
+
+        public function get_family_members(){
+            $family_id = $this->FamilyUser_model->fetch(['id_user' => $this->session->userdata('user')['id']]);
+
+            $family = ($family_id) ? $this->Family_model->fetch(['id' => $family_id['id_family']]) : false;
+
+            $family_members_ids = $this->FamilyUser_model->fetch_all(null, null, null, null, ['id_family' => $family_id['id_family']]);
+            $family_members = [];
+            foreach($family_members_ids as $id){
+                //print_r($id);
+                $family_members[] = $this->User_model->fetch(['id' => $id['id_user']], 'id, user, username, pfp, gender, p_role');
+            }
+
+            return $family_members;
         }
 
         public function new_family(){
@@ -107,88 +120,122 @@
             $this->load->view('common/footer');
         }
 
-        public function create_child_account(){
+        public function create_child_account() {
             // Fetch genders
             $return_data['genders'] = $this->Gender_model->fetch_all();
-
+            $return_data['user'] = $this->session->userdata('user');
+            $family_id = $this->FamilyUser_model->fetch(['id_user' => $this->session->userdata('user')['id']]);
+            $family = ($family_id) ? $this->Family_model->fetch(['id' => $family_id['id_family']]) : false;
+            $return_data['family_creator'] = $family['id_creator'];
+            $return_data['family_name'] = $family['family_name'];
+            $return_data['family_members'] = $this->get_family_members();
+            
             // Get input data
             $data = $this->input->post();
-            print_r($data);
-
+        
             // Validate input
-            if(empty($data['name']) || empty($data['birthday']) || empty($data['gender'])){
+            if (empty($data['name']) || empty($data['birthday']) || empty($data['email']) || empty($data['gender'])) {
                 $return_data['error'] = true;
-                $return_data['error_msg'] = 'All fields must be provided.';
-            } else {
-                // Validate date of birth
-                $data_nascimento = new DateTime($data['birthday']);
-                $data_atual = new DateTime(date('Y'));
-
-                if($data_nascimento->format('Y') > $data_atual->format('Y') || $data_nascimento->format('Y') < ($data_atual->format('Y') - 100)){
-                    $return_data['error'] = true;
-                    $return_data['error_msg'] = 'Insert a valid date.';
-                } else {
-                    // Insert user data
-
-                    $media_id = $this->Media_model->insert([
-                        'path' => base_url('/media/profile_pictures/default/child.png'),
-                        'alt' => 'child'
-                    ]);
-
-                    $insert_data = [
-                        'username' => $data['name'],
-                        'user' => strtolower(str_replace(' ', '', $data['name'])),
-                        'birthday' => $data['birthday'],
-                        'gender' => $data['gender'],
-                        'pfp' => $media_id
-                    ];
-                    $user = $this->User_model->insert($insert_data);
-                    print_r($insert_data);
-
-                    // Insert child account
-                    if(empty($user)){
-                        $return_data['error'] = true;
-                        $return_data['error_msg'] = 'There was an error creating the user. Please try again later.';
-                    } else {
-                        $child = $this->ChildAccount_model->insert(['id_user' => $user, 'access' => 'none', 'access_age' => 0, 'parent' => $this->session->userdata('user')['id']]);
-                        var_dump($user);
-
-                        $check_child = $this->ChildAccount_model->fetch(['id_user' => $user]);
-                        print_r($check_child);
-                        if(empty($check_child)){
-                            $return_data['error'] = true;
-                            $return_data['error_msg'] = 'There was an error creating the child account. Please try again later. ';
-                        } else {
-                            $family = $this->FamilyUser_model->fetch(['id_user' => $this->session->userdata('user')['id']]);
-                            var_dump($family);
-                            if(empty($family)){
-                                $return_data['error'] = true;
-                                $return_data['error_msg'] = 'There was an error creating the child account. Please try again later.';
-                            }else{
-                                $this->FamilyUser_model->insert(['id_family' => $family['id_family'], 'id_user' => $user]);
-
-                                $check_family_member = $this->FamilyUser_model->fetch(['id_user' => $user]);
-
-                                if(empty($check_family_member)){
-                                    $return_data['error'] = true;
-                                    $return_data['error_msg'] = 'There was an error creating the child account. Please try again later.';
-                                }else{
-                                    //Redirect on success
-                                    redirect(base_url('family_menu'));
-                                    return;
-                                }
-                            }
-                        }
-                    }
-                }
+                $return_data['error_msg'] = 'Todos os campos devem ser preenchidos.';
+                $this->load_views($return_data);
+                return;
+            }
+        
+            // Validate date of birth
+            $data_nascimento = new DateTime($data['birthday']);
+            $data_atual = new DateTime(date('Y'));
+        
+            if ($data_nascimento->format('Y') > $data_atual->format('Y') || $data_nascimento->format('Y') < ($data_atual->format('Y') - 100)) {
+                $return_data['error'] = true;
+                $return_data['error_msg'] = 'Insira uma data válida.';
+                $this->load_views($return_data);
+                return;
+            }
+            
+            if($this->User_model->check_if_exists(['email' => $data['email']])){
+                $return_data['error'] = true;
+                $return_data['error_msg'] = 'Este email já está em uso.';
+                $this->load_views($return_data);
+                return;
             }
 
-            // Load views
+            // Insert user data
+            $media_id = $this->Media_model->insert([
+                'path' => base_url('/media/profile_pictures/default/child.png'),
+                'alt' => 'child'
+            ]);
+        
+            $insert_data = [
+                'username' => $data['name'],
+                'user' => strtolower(str_replace(' ', '', $data['name'])),
+                'birthday' => $data['birthday'],
+                'email' => $data['email'],
+                'gender' => $data['gender'],
+                'pfp' => $media_id
+            ];
+            $user = $this->User_model->insert($insert_data);
+            print_r($insert_data);
+        
+            if (empty($user)) {
+                $return_data['error'] = true;
+                $return_data['error_msg'] = 'Houve um erro na criação da conta. Tente novamente mais tarde.';
+                $this->load_views($return_data);
+                return;
+            }
+        
+            // Insert child account
+            $child = $this->ChildAccount_model->insert([
+                'id_user' => $user,
+                'access' => 'none',
+                'access_age' => 0,
+                'parent' => $this->session->userdata('user')['id']
+            ]);
+            var_dump($user);
+        
+            $check_child = $this->ChildAccount_model->fetch(['id_user' => $user]);
+            print_r($check_child);
+        
+            if (empty($check_child)) {
+                $return_data['error'] = true;
+                $return_data['error_msg'] = 'Houve um erro na criação da conta. Tente novamente mais tarde.';
+                $this->load_views($return_data);
+                return;
+            }
+        
+            $family = $this->FamilyUser_model->fetch(['id_user' => $this->session->userdata('user')['id']]);
+            var_dump($family);
+        
+            if (empty($family)) {
+                $return_data['error'] = true;
+                $return_data['error_msg'] = 'Houve um erro na criação da conta. Tente novamente mais tarde.';
+                $this->load_views($return_data);
+                return;
+            }
+        
+            $this->FamilyUser_model->insert([
+                'id_family' => $family['id_family'],
+                'id_user' => $user
+            ]);
+        
+            $check_family_member = $this->FamilyUser_model->fetch(['id_user' => $user]);
+        
+            if (empty($check_family_member)) {
+                $return_data['error'] = true;
+                $return_data['error_msg'] = 'Houve um erro na criação da conta. Tente novamente mais tarde.';
+                $this->load_views($return_data);
+                return;
+            }
+        
+            // Redirect on success
+            redirect(base_url('family_menu'));
+        }
+        
+        private function load_views($data) {
             $this->load->view('common/header', $this->data);
             $this->load->view('common/menu', $this->data);
-            $this->load->view('family_menu', $return_data);
+            $this->load->view('family_menu', $data);
             $this->load->view('common/footer');
-        }
+        }        
 
         public function get_family(){
             $user_id = $this->session->userdata('user')['id'];

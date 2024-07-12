@@ -87,6 +87,10 @@
     color: var(--cor_sec);
 }
 
+.search h2{
+    text-align: center;
+}
+
 .admin-menu{
     rotate: 90deg;
 }

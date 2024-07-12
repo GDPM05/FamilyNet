@@ -19,49 +19,60 @@
             //$this->login->init($this->passwordhash);
         }
 
-        public function login(){
-            $this->data['title'] = TITLE.' | Login';
-
-            //$this->login->($this->session->userdata('user')['id']);
-            print_r($this->session->userdata('access_token'));
-
-            if($this->LoggedIn()){
-                if(!$this->check_session($this->session->userdata('access_token')))
+        public function index(){
+            $data['title'] = TITLE . ' | Login';
+            $data['login_error'] = '';
+    
+            if ($this->LoggedIn()) {
+                if (!$this->check_session($this->session->userdata('access_token'))) {
                     $this->logout();
-                else
+                } else {
                     redirect(base_url('main'));
+                }
             }
+    
+            $this->load->view('common/header', $this->data);
+            $this->load->view('home', $data);
+            $this->load->view('common/footer');
+        }
+    
+        public function login(){
+            $data['title'] = TITLE . ' | Login';
+            $data['login_error'] = '';
 
             $this->form_validation->set_rules('email', 'Email', 'required|trim');
             $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
-
-            if($this->form_validation->run()){
+    
+            if ($this->form_validation->run() === FALSE && empty($this->input->post())) {
+                $data['login_error'] = 'Informações incorretas.';
+            } else {
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
-                $user = $this->User_model->fetch(array('email' => $email), 'user, id, category,username, email, pfp, p_role, gender, phone, birthday, access_token, password, active');
-                if($user){
-                    //print_r($user);
-                    if($user['active'] == 1){
-                        if($this->checkPassword($password, $user['password'])){
+                $user = $this->User_model->fetch(array('email' => $email), 'id, username, user, email, password, category, active, pfp, gender, birthday, phone, access_token, p_role');
+                if ($user) {
+                    if ($user['active'] == 1) {
+                        if ($this->checkPassword($password, $user['password'])) {
                             session_regenerate_id();
                             unset($user['password']);
                             $this->createSession($user, session_id(), $this->input->post('keep_login'));
                             redirect(base_url('main'));
-                        }else
-                            $this->data['login_error'] = 'Utilizador ou palavra passe incorretos.';
-                    }else{
+                        } else {
+                            $data['login_error'] = 'Utilizador ou palavra passe incorretos.';
+                        }
+                    } else {
                         $this->session->set_userdata('user_id', $user['id']);
                         setcookie(md5('id'), $user['id'], time() + (30 * 60), '/');
-                        $this->data['login_error'] = 'A sua conta ainda não está ativa. Para ativar, aceda a <a href="'.base_url('/activate_account').'">Ativar conta</a>.';
+                        $data['login_error'] = 'A sua conta ainda não está ativa. Para ativar, aceda a <a href="' . base_url('activate_account') . '">Ativar conta</a>.';
                     }
-                }else
-                    $this->data['login_error'] = 'Utilizador ou palavra passe incorretos.';
+                } else {
+                    $data['login_error'] = 'Utilizador ou palavra passe incorretos.';
+                }
             }
-
             $this->load->view('common/header', $this->data);
-            $this->load->view('home', $this->data);
+            $this->load->view('home', $data);
             $this->load->view('common/footer');
         }
+
 
         protected function createSession($userdata, $token = null, $keep_login = "off"){
             

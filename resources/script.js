@@ -63,7 +63,7 @@ $(document).ready(function() {
             email_in: {
                 'empty': false,
                 'min_size': 6, 
-                'regex': /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                'regex': /^[a-zA-Z0-9._%+\-\.\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                 'name': 'Email', 
             },
             password_in: {
@@ -115,16 +115,16 @@ $(document).ready(function() {
                     sendNotification("As palavras passes não coincidem.");
                     return false;
                 }
-                if (rule.date && !isValidDate(value)) {
-                    sendNotification('A data de nascimento deve ser válida.');
-                    return false;
-                }
+                // if (rule.date && !isValidDate(value)) {
+                //     sendNotification('A data de nascimento deve ser válida.');
+                //     return false;
+                // }
             }
         }
         return true;
     }
     
-    function isValidDate(dateString) {
+    /*function isValidDate(dateString) {
         console.log(dateString);
         // Verifica o formato dd/mm/yyyy
         var regex = /^\d{2}\/\d{2}\/\d{4}$/;
@@ -138,7 +138,7 @@ $(document).ready(function() {
         var month = parseInt(parts[1], 10) - 1; // Mês começa do 0
         var year = parseInt(parts[2], 10);
     
-        var date = new Date(year, month, day);
+        var date = new Date(year, month - 1, day);
     
         // Verifica a validade da data
         if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
@@ -158,7 +158,7 @@ $(document).ready(function() {
         }
     
         return true;
-    }
+    }*/
     
     
 

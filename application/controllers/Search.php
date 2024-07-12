@@ -17,6 +17,7 @@ class Search extends MY_Controller {
     public function index() {
         $data = array(
             'title' => TITLE.' | Pesquisa',
+            'user' => $this->session->userdata('user')
         );
 
         $this->load->view('common/header', $data);

@@ -1,7 +1,8 @@
 <?php
     defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<main class="container mt-5">
+<main class="container search mt-5">
+    <h2>Encontre os seus <span class="c_p">amigos</span>.</h2>
     <div class="row justify-content-center">
         <div class="col-lg-6">
             <div class="input-group mb-3">

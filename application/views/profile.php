@@ -26,40 +26,41 @@
 
     <!-- Modal Editar Perfil -->
     <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editProfileModalLabel">Editar Perfil</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <form action="<?=base_url('profile/update_info')?>" method="post" enctype="multipart/form-data">
-                        <div class="form-group row">
-                            <label for="email" class="col-sm-3 col-form-label">Email</label>
-                            <div class="col-sm-9">
-                                <input type="file" name="pfp" id="pfp">
-                            </div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Editar Perfil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+            </div>
+            <div class="modal-body">
+                <form action="<?=base_url('profile/update_info')?>" method="post" enctype="multipart/form-data">
+                    <div class="form-group row">
+                        <label for="file" class="col-sm-3 col-form-label">Foto de perfil</label>
+                        <div class="col-sm-9">
+                            <input type="file" name="pfp" id="pfp" title=""/>
                         </div>
-                        <div class="form-group row">
-                            <label for="username" class="col-sm-3 col-form-label">Nome de utilizador</label>
-                            <div class="col-sm-9">
-                                <input type="text" name="username" id="username" class="form-control" value="<?=$user['username'];?>">
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="username" class="col-sm-3 col-form-label">Nome de utilizador</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="username" id="username" class="form-control" value="<?=$user['username'];?>">
                         </div>
-                        <div class="form-group row">
-                            <label for="phone" class="col-sm-3 col-form-label">Número de Telefone</label>
-                            <div class="col-sm-9">
-                                <input type="text" name="phone" id="phone" class="form-control" value="<?=$user['phone'];?>">
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="phone" class="col-sm-3 col-form-label">Número de Telefone</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="phone" id="phone" class="form-control" value="<?=$user['phone'];?>">
                         </div>
-                        <div class="form-group row">
-                            <div class="col-sm-10 offset-sm-2">
-                                <button type="submit" class="btn btn-primary">Confirmar</button>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10 offset-sm-2">
+                            <button type="submit" class="btn btn-primary">Confirmar</button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
 </main>

@@ -190,6 +190,13 @@
             if(isset($data['success']) && $data['success']){
                 $this->session->unset_userdata(array(md5('n_tries'), md5('c0d4')));
                 $this->User_model->update(['active' => 1], ['id' => $_COOKIE[md5('id')]]);
+
+                $user = $this->User_model->fetch(['id' => $_COOKIE[md5('id')]]);
+                print_r($user);
+                if(empty($user['password'])){
+                    header('location: '.base_url('reset_password/'));
+                }
+                return;
                 unset($_COOKIE[md5('expire')]);
                 unset($_COOKIE[md5('c0d4')]);
                 unset($_COOKIE[md5('id')]);

@@ -34,8 +34,8 @@
             <div class="send_message d-inline-block mr-2">
                 <button class="btn btn-primary"><a href="<?php echo base_url('send_message_private/').$user['id'];?>" class="text-white">Send message</a></button>
             </div>
-            <div class="unfriend d-inline-block">
-                <button class="btn btn-danger">Remover Amigo</button>
+            <div class="d-inline-block">
+                <button class="btn unfriend btn-danger">Remover Amigo</button>
             </div>
         <?php endif;?>
     </div>
@@ -60,6 +60,7 @@
         });
 
         btn_decline.click(function(){
+            $(".loading").toggle();
             ajax.get('<?php echo base_url('invites/'.$user['id'].'/'.'2');?>', (data)=>{
                 $('#mensagemModal').text(data.mensagem);
                 modal.show();
@@ -73,18 +74,23 @@
                     $('#mensagemModal').text(data.mensagem);
                     modal.show();
                     console.log(data);
+                    $(".loading").toggle();
+                    setTiemout(()=>{
+                        location.realod();
+                    }, 200);
                 },
                 error: function(data) {
                     $('#mensagemModal').text('Internal Error. Try again later.');
                     modal.show();
                     console.log(data);
+                    $(".loading").toggle();
                 }
             });
         });
 
         span.click(function(){
             modal.hide();
-            setInterval(function(){
+            setTimeout(function(){
                 location.reload();
             }, 200)
         });

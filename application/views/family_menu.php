@@ -47,7 +47,7 @@
                 <div class="card my-3">
                     <div class="card-header"><?=$family_name?></div>
                     <ul class="family_members list-group list-group-flush">
-                        <!-- Membros da família serão adicionados aqui -->
+
                     </ul>
                 </div>
                 <div class="card my-3">
@@ -58,6 +58,10 @@
                             <div class="form-group">
                                 <label for="name">Nome</label>
                                 <input type="text" name="name" id="name" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" id="email" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="birthday">Data de Nascimento</label>
@@ -98,7 +102,10 @@
             });
 
             $(".family_member").click(function() {
-                window.location.href = 'http://localhost/FamilyNet/see_profile/' + $(this).find('.hidden').text();
+                console.log("1 ", Number($(this).find('.hidden').text()), "2 ",Number(<?=$user['id']?>));
+                if(Number($(this).find('hidden').text()) != Number(<?=$user['id']?>)){
+                    window.location.href = 'http://localhost/FamilyNet/see_profile/' + $(this).find('.hidden').text();
+                }
             });
         });
 

@@ -29,6 +29,8 @@
         public function load_profile(){
             $info = $this->uri->segment(2);
             $user = (is_numeric($info)) ?  $this->User_model->fetch(array('id' => $info)) :  $this->User_model->fetch(array('user' => $info));
+            // var_dump($user);
+            // return;
             $pfp = $this->Media_model->fetch(array('id' => $user['pfp']));
             $this->data['title'] = TITLE.' | '.$user['username'];
             $this->data['user_pfp']['path'] = $pfp['path'];

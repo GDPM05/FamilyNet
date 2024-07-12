@@ -42,9 +42,10 @@
                         <img src="<?=$group['picture']['path']?>" alt="<?=$group['name']?>" class="rounded-circle mr-2" style="width: 30px; height: 30px;">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1 group_name"><?=$group['name']?></h5>
-                            <small class="group-hidden" id="conv_id"><?=$group['id_conversation']?></small>
+                            <small class="group-hidden" id="n_members"><?=$group['n_members']?></small>
                         </div>
-                        <p class="mb-1 group-hidden" id="group_id"><?=$group['id']?></p>
+                        <p class="mb-1 group-hidden" id="group_desc"><?=$group['description']?></p>
+                        <p class="mb-1 hidden" id="conv_id"><?=$group['id_conversation']?></p>
                     </div>
             <?php endforeach;?>
         </div>
@@ -221,6 +222,8 @@
             });
 
             window.conv_id = conv_id;
+
+            console.log("Conv_id linha 225", window.conv_id);
 
             var user = ajax.get('<?php echo base_url('fetch_conv');?>/'+conv_id, (data)=>{
                 console.log("aaai", data);

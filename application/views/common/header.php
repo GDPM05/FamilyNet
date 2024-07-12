@@ -23,11 +23,13 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
         <script src="<?php echo base_url('resources/profile-js.js');?>"></script>
         <script>
+            <?if(isset($_SESSION['user'])): ?>
             const userdata = {
                     id: <?=$_SESSION['user']['id']?>,
                     username: '<?=$_SESSION['user']['username']?>',
                     user: '<?=$_SESSION['user']['user']?>'
                 }
+            <?endif?>
         </script>
         <script src="<?php echo base_url('resources/NotificationClient.js');?>"></script>
         <title><?php echo $title;?></title>
