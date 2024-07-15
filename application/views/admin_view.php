@@ -135,7 +135,6 @@
             $('#deleteConfirmModal').modal('hide'); // Esconde o modal de confirmação
             $(".loading").toggle();
             ajax.get('<?=base_url('delete_activity')?>/'+deleteActivityId, (data) => {
-                console.log(data);
                 if(data.success){
                     $(".loading").toggle();
                     setTimeout(()=>{
@@ -150,10 +149,8 @@
             $(".loading").toggle();
             var name = $(this).find('.actName').val();
             var desc = $(this).find('.actDesc').val();
-            console.log(name, desc);
             var id = $(this).closest('.activity-card').find('.act_id').text(); // Armazena o ID da atividade
             ajax.post('<?=base_url('edit_activity')?>', {name: name, desc: desc, id: id}, (data) => {
-                console.log(data);
                 if(!data.success){
                     $(".loading").toggle();
                     $('#dynamicModalLabel').text('Erro!');
@@ -178,7 +175,6 @@
         function loadActivities(){
             $(".loading").toggle();
             ajax.get('<?=base_url('get_activities')?>', function(data){
-                console.log(data);
                 const activitiesContainer = $('#activities-container');
                 activitiesContainer.empty('');
                 

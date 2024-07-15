@@ -11,14 +11,11 @@ $(()=>{
 
     // When the user clicks the button, open the modal 
     $("#friendsButton").click(function(){
-        console.log("aa");
         friendsModal.show();
         $("#friendsModal").find('.friend').remove();
         ajax.get("http://localhost/FamilyNet/get_friends_pr", (friends)=>{
             Object.values(friends).forEach(function(friend){
-                console.log(friend);
                 var div = createDiv(friend);
-                console.log(div);
                 $("#friendsModal .modal-body").append(div); // Corrigido aqui
             });
         });

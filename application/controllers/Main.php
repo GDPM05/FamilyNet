@@ -34,7 +34,7 @@
 
             $friends_ids = $this->Friends_Model->fetch_friends($data['user']['id']);
 
-            //print_r($friends_ids);
+            //// // print_r($friends_ids);
 
             $friends = [];
             foreach($friends_ids as $friend){
@@ -46,7 +46,7 @@
             }
 
             $data['friends'] = $friends;
-            //print_r($data['friends']);
+            //// // print_r($data['friends']);
             $this->load->view('common/header', $data);
             $this->load->view('common/menu', $this->data);
             $this->load->view('main', $data);
@@ -55,8 +55,8 @@
 
         public function new_post(){
             $data = $this->input->post();
-            print_r($data);
-            print_r($_FILES);
+            // // print_r($data);
+            // // print_r($_FILES);
         
             $post_info = [
                 'text' => $data['post-text'],
@@ -167,11 +167,11 @@
 
                 if(!isset($user['post']))
                     continue;
-                //print_r($user);
+                //// // print_r($user);
                 $media = $this->PostMedia_Model->fetch_all(null, null, null, null, ['id_post' => $user['post']['id']]);
                 if(!empty($media))
                     foreach($media as $md){
-                        // print_r($md);
+                        // // // print_r($md);
                         $user['post']['media'][] = $this->Media_model->fetch(['id' => $md['id_media']]);
                     }
                 
@@ -196,7 +196,7 @@
 
             $post_likes = (int) $this->Post_Model->get_likes($id_post);
 
-            // print_r($post_likes);
+            // // // print_r($post_likes);
 
             $this->Post_Model->add_like($id_post);
             $this->PostLikes_Model->insert([
@@ -229,7 +229,7 @@
             
             $post_likes = (int) $this->Post_Model->get_likes($id_post);
 
-            // print_r($post_likes);
+            // // // print_r($post_likes);
 
             $this->Post_Model->remove_like($id_post);
             $this->PostLikes_Model->delete([
@@ -254,7 +254,7 @@
         public function add_comment(){
             header('Content-Type: application/json');
             $data = $this->input->post();
-            // print_r($data);
+            // // // print_r($data);
 
             $insert_data = [
                 'text' => $data['comment'],
@@ -291,7 +291,7 @@
                 $comments[$key]['username'] = $this->User_Model->fetch(['id' => $comments[$key]['id_user']], 'username, pfp');
                 $comments[$key]['pfp'] = $this->Media_Model->fetch(['id' => $comments[$key]['username']['pfp']], 'path');
                 unset($comments[$key]['username']['pfp']);
-                // print_r($comment);
+                // // // print_r($comment);
             }
             $return_data['comments'] = $comments;
             $return_data['n_comments'] = $this->Comments_Model->get_count(['id_post' => $id_post]);

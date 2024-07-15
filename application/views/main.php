@@ -86,10 +86,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 </script>
 <script>
-    /*var modal = new bootstrap.Modal(document.getElementById('postModal'), {});
-    modal.show();*/
+
     $(".new_post").click(function(){
-        //console.log("Botão clicado!"); // Adicione esta linha para verificar se a função está sendo chamada
         $('#postModal').modal('show');
     });
     var fileList = [];
@@ -154,12 +152,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         var page = 1;
         $(".loading").css({visibility: 'visible'});
         ajax.get('<?=base_url('get_posts/')?>'+page, function(data){
-            //console.log(data);
             Object.keys(data).forEach(function(key){
                 var post = data[key];
                 var delete_btn = '';
                 if(post.id == <?=$user['id']?>){
-                    delete_btn = `<button class="btn btn-danger delete-post ms-auto" style="margin-left: auto;">Apagar</button>`
+                    delete_btn = `<button class="btn btn-danger delete-post ms-auto" data-post-id="${post.post.id}" style="margin-left: auto;">Apagar</button>`
                 }  
                 var like_icon = post.already_like ? '<i class="bi bi-hand-thumbs-up-fill"></i>' : '<i class="bi bi-hand-thumbs-up"></i>';
                 const color_table = [
@@ -201,28 +198,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>`;
 
                 $(".user-posts").append(div);
-
-                $('.delete-post').click(function(){
-                    if(confirm('Tem a certeza de que quer remover esta publicação?')){
-                        $(".loading").toggle();
-                        ajax.get('<?=base_url('delete_post')?>/'+post.post.id, function(data){
-                            if(data.success){
-                                $(".loading").toggle();
-                                window.location.reload();
-                            }else{
-                                $(".loading").addClass('loading-failed');
-                                setTimeout(()=>{
-                                    window.location.reload();
-                                }, 2000);
-                            }
-                        })
-                    }
-                })
             });
             initializeCommentHandlers();
             changeLike();
             $(".loading").css({visibility: 'none'});
-            console.log('Toggled');
+        });
+
+        $('.user-posts').on('click', '.delete-post', function() {
+            const post_id = $(this).data('post-id');
+            if (confirm('Tem a certeza de que quer remover esta publicação?')) {
+                $(".loading").toggle();
+                ajax.get('<?=base_url('delete_post')?>/' + post_id, function(data) {
+                    if (data.success) {
+                        $(".loading").toggle();
+                        window.location.reload();
+                    } else {
+                        $(".loading").addClass('loading-failed');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    }
+                });
+            }
         });
 
         var page = 1;
@@ -232,15 +229,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 if (data.comments != null && data.comments.length > 0) {
                     data.comments.forEach(comment => {
                         if($(self).closest('.post').find('.publisher_id').text() == <?=$user['id']?> || comment.id_user == <?=$user['id']?>){
-                            //console.log('Dono do Post');
                             var button_del = `<button class="btn btn-danger" id="deleteButton">
                                                 <i class="bi bi-trash-fill"></i> 
                                             </button>`;
                         }else{
                             var button_del = "";
                         }
-                        //console.log(comment);
-                        console.log(comment);
                         const newComment = `
                         <div class="comment d-flex mb-2">
                             <p class="hidden comment-id">${comment.id}</p>
@@ -280,7 +274,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         function initializeCommentHandlers() {
             // Mostrar/esconder comentários
             $('.toggle-comments').on('click', function(){
-                //console.log("aaa");
                 if($(this).next('.comments-list').find('.comment').length > 0){
                     $(this).next('.comments-list').find('.comment').remove();
                     page = 1;
@@ -288,7 +281,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $(this).next('.comments-list').toggle(); //css({'display': 'block'});
                 var postId = $(this).closest('.post').find('.post_id').text();
                 var self = this;
-                //console.log(postId);
                 window.postId = postId;
                 loadComments(postId, self);
             })

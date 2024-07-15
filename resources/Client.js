@@ -31,21 +31,18 @@ class Client{
             this.socket = this.io.connect(url);
 
             this.socket.on('connect_error', (error) => {
-                console.log(error);
-                $(".loading").css({display: 'block'});
+                $(".loading").toggle()
             });
 
             this.socket.on('connect', () => {
-                $('.loading').css({display: 'none'});
+                $('.loading').toggle()
                 this.socket.on('new_msg', this.receive_message.bind(this, this.socket));
                 this.socket.on('enc_method', (socket)=>{
-                    console.log('ai', socket);
                     this.enc_method = socket;
-                    $(".loading").css({display: 'none'});
+                    $(".loading").toggle();
                 });
                 this.socket.on('friend_online', (socket)=>{
                     setTimeout(function(){
-                        console.log((socket) ? "Online" : "Offline");
                         $(".is_online").html(((socket) ? "Online" : "Offline"));
                     }, 200);
                 });
@@ -58,9 +55,7 @@ class Client{
     }
 
     emit_userdata(data){ // Método responsável por enviar os dados do utilizador para o servidor
-        console.log(data);
         try{
-            console.log(data);
             this.socket.emit('user_data', {name: data.user_name, id: data.user_id, id_conv: data.id_conv, friend: data.friend_id});
         }catch(error){
             throw error;
@@ -91,9 +86,7 @@ class Client{
     }
 
     receive_message(socket, str){ // Método responsável por receber uma mensagem enviada pelo outro utilizador
-        console.log(str);
         var decrypted_msg = this.decrypt_message(str.msg, this.enc_method);
-        console.log(toString(decrypted_msg));
         $(".messages").prepend('<p class="message friend_msg">'+decrypted_msg+'</p>');
     }
 
@@ -104,9 +97,6 @@ class Client{
          * Em seguida, vai percorrer esta nova string com os caracteres baralhados e substituir cada caractere pelo correspondente em binário
          * Em seguida, vai percorrer a string em binário e substituir cada 4 caracters pelo correspondente em hexa
          */
-
-        console.log(str);
-        console.log(this.enc_method[str[0]]);
         var new_str = '';
         for(let i = 0; i < str.length; i++){ // Percorre a string passada
             new_str += this.enc_method[str[i]]; // E para cada letra, substitui pela correspondente no método de encriptação gerado no servidor

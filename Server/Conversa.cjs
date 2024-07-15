@@ -21,13 +21,10 @@ class Conversa{
     
     get_friends(user_id){
         var users = [];
-        console.log(this.users);
-        console.log(user_id);
         for(var i = 0; i < this.users.length; i++){
             if(this.users[i] != user_id)
                 users.push(this.users[i]);
         }
-        console.log("asdasd" + users);
         return users
     }
 

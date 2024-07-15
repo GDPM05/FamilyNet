@@ -38,9 +38,7 @@ async function new_notification(id_sender, id_receiver, message, type){
 
 async function getUserNotifications(data){
     const conn = await connect();
-    console.log(data.page);
-    console.log(data.limit);
-    const [rows] = await conn.query("SELECT * FROM notifications WHERE receiver_id = ? LIMIT ? OFFSET ?;", [Number(data.user_id), Number(data.limit), Number(data.page-1)]);
+    const [rows] = await conn.query("SELECT * FROM notifications WHERE receiver_id = ? ORDER BY sent_date DESC LIMIT ? OFFSET ?;", [Number(data.user_id), Number(data.limit), Number(data.page-1)]);
 
     return rows;
 }
@@ -67,13 +65,13 @@ async function updateInvite(notification_id, status){
         await conn.query("DELETE FROM notifications WHERE id = ?", [notification_id]);
     
         const user = await conn.query("SELECT * FROM user WHERE id = ?;", [users_ids.receiver_id]);
-        //console.log(await conn.query("SELECT * FROM user WHERE id = ?;", [users_ids.receiver_id]));
+
         const username = JSON.parse(JSON.stringify(await user))[0][0].username;
-        //console.log("User: "+JSON.stringify(JSON.parse(JSON.stringify(await user))[0][0].username));
+
     
         var currentDate = new Date();
         var sqlFormattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
-        console.log(sqlFormattedDate); // Outputs: "2024-04-30 10:43:30"
+        
         await conn.query("INSERT INTO notifications (type_id, sent_date, receiver_id, sender_id, message_text) VALUES (?, ?, ?, ?, ?);",[2, sqlFormattedDate, users_ids.sender_id, users_ids.receiver_id, username+' '+((status == 1) ? 'accpeted' : 'refused')+' your friend invitation.']);    
         return true;
     }catch(err){

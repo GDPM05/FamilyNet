@@ -8,11 +8,9 @@ class NotificationClient {
     }
 
     connect(url){ // Método responsável por efetuar a conexão ao servidor.
-        console.log("Connecting");
         this.socket = this.io.connect(url);
         try{
             this.socket.on('notification', (socket) => {
-                console.log(socket);
                 $('.notification-icon').append('<span class="notification-badge"></span>');
             });
 

@@ -160,7 +160,6 @@
 
             $friends = $this->Friends_model->fetch_friends($this->session->userdata('user')['id']);
 
-           // print_r($friends);
 
             $friend_user = [];
             foreach($friends as $friend){
@@ -170,7 +169,6 @@
                 $friend_user[] = $user;
             }
 
-            //print_r($friend_user);
 
             header('Content-Type: application/json');
             echo json_encode($friend_user);
@@ -203,7 +201,6 @@
                     $resizeConfig['width'] = 200;
                     $resizeConfig['height'] = 200;
 
-                    // print_r($data);
 
                     $this->image_lib->initialize($resizeConfig);
                     if($this->image_lib->resize()){

@@ -54,7 +54,6 @@
                 $('#mensagemModal').text("Pedido de amizade enviado com sucesso!");
                 not_client.send_simple_notification(<?=$user['id']?>);
                 modal.show();
-                console.log(data);
                 $(".loading").toggle();
                 location.reload();
             });
@@ -65,7 +64,6 @@
             ajax.get('<?php echo base_url('invites/'.$user['id'].'/'.'2');?>', (data)=>{
                 $('#mensagemModal').text(data.mensagem);
                 modal.show();
-                console.log(data);
             })
 
             $.ajax({
@@ -74,7 +72,6 @@
                 success: function(data) {
                     $('#mensagemModal').text(data.mensagem);
                     modal.show();
-                    console.log(data);
                     $(".loading").toggle();
                     setTiemout(()=>{
                         location.realod();
@@ -83,7 +80,6 @@
                 error: function(data) {
                     $('#mensagemModal').text('Internal Error. Try again later.');
                     modal.show();
-                    console.log(data);
                     $(".loading").toggle();
                 }
             });

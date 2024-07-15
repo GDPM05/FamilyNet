@@ -1,6 +1,5 @@
 $(document).ready(function() {
     $('.loading').toggle();
-    console.log('toggled');
 
     var step = 0;
     var steps = $(".form-group").toArray();
@@ -103,8 +102,6 @@ $(document).ready(function() {
                     return false;
                 }
                 if (rule.regex && !rule.regex.test(value)) {
-                    console.log(value);
-                    console.log(rule.regex.test(value));
                     if(id == "password_in")
                         sendNotification('O campo '+rule.name+" deve conter pelo menos 1 letra maíscula e 1 caractere especial.");
                     else if(id == "email_in")
@@ -115,17 +112,16 @@ $(document).ready(function() {
                     sendNotification("As palavras passes não coincidem.");
                     return false;
                 }
-                // if (rule.date && !isValidDate(value)) {
-                //     sendNotification('A data de nascimento deve ser válida.');
-                //     return false;
-                // }
+                if (rule.date && !isValidDate(value)) {
+                    sendNotification('A data de nascimento deve ser válida.');
+                    return false;
+                }
             }
         }
         return true;
     }
     
-    /*function isValidDate(dateString) {
-        console.log(dateString);
+    function isValidDate(dateString) {
         // Verifica o formato dd/mm/yyyy
         var regex = /^\d{2}\/\d{2}\/\d{4}$/;
         if (!regex.test(dateString)) {
@@ -158,7 +154,7 @@ $(document).ready(function() {
         }
     
         return true;
-    }*/
+    }
     
     
 
@@ -184,7 +180,6 @@ $(document).ready(function() {
         $(".signup_error").text("");
         if (!checkFieldRule()) {
             //checkFieldRule();
-            console.log("Olá");
             //$(".signup_error").text("Porfavor, preencha todos os campos antes de avançar.");
             return;
         }
@@ -209,7 +204,6 @@ $(document).ready(function() {
 
     $(".create_group").click(function(){
         $("#create_group").css("display", "block");
-        console.log("airflow");
     });
     
     $(".close").click(function(){

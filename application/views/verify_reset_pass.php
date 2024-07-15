@@ -35,7 +35,6 @@
             ajax.post(window.location.href, {email: $("#email").val()}, (data)=>{
                 if(data.success){
                     $(".loading").toggle();
-                    console.log(data);
                     $(".alert").text('Verifique o seu email.').addClass('important')
                 }else{
                     $(".alert").text(data.message).addClass('important')

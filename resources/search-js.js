@@ -10,7 +10,6 @@ $(document).ready(function(){
     });
 
     function createDiv(user){
-        //console.log(user);
         var div = `<div class="col-md-4 d-flex flex-column search-items align-items-center text-center mb-3">
         <div class="card user_list">
             <input type="hidden" name="user_id" value="${user.id}">
@@ -33,17 +32,12 @@ $(document).ready(function(){
         var query = $('#search').val();
         $(".results").html("");
         var secondSegment = (window.location.pathname.split('/')[3] != undefined) ? window.location.pathname.split('/')[3] : 0;
-        console.log("SEGMENT " + secondSegment);
         var page = secondSegment;
-        console.log(query, page);
         debounceTimeout = setTimeout(function(){
             if(query != "") {
                 ajax.post("http://localhost/FamilyNet/fetch", {query:query, page:page}, function(results) {
-                    console.log(results);
                     $(".results").html('<div class="row">');
-                    console.log(results.query);
                     Object.values(results.query).forEach(user => {
-                        console.log(results.query.user);
                         var div = createDiv(user);
                         $(".results").append(div);
                     });

@@ -26,7 +26,7 @@
             
             $user_id = $this->session->userdata['user']['id'];
 
-            //print_r($this->session->userdata['user']);
+            //// print_r($this->session->userdata['user']);
               
             $family_id = $this->FamilyUser_model->fetch(['id_user' => $user_id]);
 
@@ -40,12 +40,12 @@
                     $user = $this->User_model->fetch(['id' => $friend_id]);
                     $this->data['friends'][] = $user;
                 }
-                //print_r($data);
+                //// print_r($data);
             }else{
                 $family_members_ids = $this->FamilyUser_model->fetch_all(null, null, null, null, ['id_family' => $family_id['id_family']]);
                 $family_members = [];
                 foreach($family_members_ids as $id){
-                    //print_r($id);
+                    //// print_r($id);
                     $user = $this->User_model->fetch(['id' => $id['id_user']], 'id, user, username, pfp, gender, p_role');
                     $user['admin'] = $id['admin'];
                     $family_members[] = $user;
@@ -82,7 +82,7 @@
             $family_members_ids = $this->FamilyUser_model->fetch_all(null, null, null, null, ['id_family' => $family_id['id_family']]);
             $family_members = [];
             foreach($family_members_ids as $id){
-                //print_r($id);
+                //// print_r($id);
                 $family_members[] = $this->User_model->fetch(['id' => $id['id_user']], 'id, user, username, pfp, gender, p_role');
             }
 
@@ -190,7 +190,7 @@
                 'pfp' => $media_id
             ];
             $user = $this->User_model->insert($insert_data);
-            print_r($insert_data);
+            // print_r($insert_data);
         
             if (empty($user)) {
                 $return_data['error'] = true;
@@ -209,7 +209,7 @@
             var_dump($user);
         
             $check_child = $this->ChildAccount_model->fetch(['id_user' => $user]);
-            print_r($check_child);
+            // print_r($check_child);
         
             if (empty($check_child)) {
                 $return_data['error'] = true;

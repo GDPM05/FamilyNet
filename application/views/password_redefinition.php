@@ -48,7 +48,6 @@
             $(".alert").text('A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma letra minúscula, um número e um caractere especial.').addClass('important');
         else{
             ajax.post(window.location.href, {password: pass, password_repeat: pass_repeat}, (data)=>{
-                console.log(data);
                 if(data.success){$(".alert").text('A sua palavra passe foi alterada com sucesso!').addClass('important')}
                 setTimeout(()=>{
                     window.location.href = '<?php echo base_url();?>';

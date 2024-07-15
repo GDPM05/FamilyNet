@@ -94,7 +94,6 @@
                     else{
                         $form_data['media_id'] = $insert_media;
                         /* Insere os dados na base de dados para criar um novo user guardando também o id deste novo utilizador */
-                        //print_r($form_data);
                         $new_user = $this->User_model->insert([
                             'username' => $form_data['name_in'],
                             'user' => $form_data['username_in'],
@@ -149,8 +148,6 @@
 
             $code = "";
 
-            //print_r($this->session->userdata(md5('n_tries')));
-
             if(($this->session->userdata(md5('n_tries')) >= 3) || (!isset($_COOKIE[md5('expire')]))){
                 $this->signup_fail();
                 return;
@@ -175,8 +172,6 @@
                         $data['formErrors'] = "Internal error.";
                 }                
 
-                print_r(md5(sha1($code)));
-                print_r($this->session->userdata(md5('c0d4')));
 
                 if(md5(sha1($code)) == $_COOKIE[md5('c0d4')]){
                     $data['success'] = TRUE;
@@ -185,14 +180,11 @@
                 }
             }
 
-            // print_r($_COOKIE[md5('id')]);
-
             if(isset($data['success']) && $data['success']){
                 $this->session->unset_userdata(array(md5('n_tries'), md5('c0d4')));
                 $this->User_model->update(['active' => 1], ['id' => $_COOKIE[md5('id')]]);
 
                 $user = $this->User_model->fetch(['id' => $_COOKIE[md5('id')]]);
-                print_r($user);
                 if(empty($user['password'])){
                     header('location: '.base_url('reset_password/'));
                 }
@@ -312,8 +304,6 @@
                 'email' => $this->session->userdata(md5('current_signup_data'))
             );
 
-            //print_r($data);
-
             $this->load->view('common/header', $data);
             $this->load->view('complete_signup', $data);
             $this->load->view('common/footer');  
@@ -377,8 +367,6 @@
         public function activate_account_external(){
             $user_id = $_COOKIE[md5('id')];
             // $this->session->userdata(md5('user_id'));
-            // print_r($this->session->userdata);
-            // var_dump($user_id);
             $user = $this->User_model->fetch(['id' => $user_id], 'id, username, email');
 
             $code = $this->generate_code();

@@ -120,7 +120,6 @@
         let page = 0;
 
         ajax.get('<?=base_url('get_family')?>', function(data) {
-            console.log(data);
             Object.values(data).forEach(user => {
                 var li = "<li style='cursor: pointer;' class='family_member list-group-item'>" +
                          ((user.pfp && user.pfp.hasOwnProperty('path')) ? 
@@ -132,7 +131,6 @@
             });
 
             $(".family_member").click(function() {
-                console.log("1 ", Number($(this).find('.hidden').text()), "2 ",Number(<?=$user['id']?>));
                 if(Number($(this).find('hidden').text()) != Number(<?=$user['id']?>)){
                     window.location.href = 'http://localhost/FamilyNet/see_profile/' + $(this).find('.hidden').text();
                 }
@@ -142,12 +140,10 @@
         $('#add_members_form').on('submit', function(event) {
             event.preventDefault();
             $('.loading').toggle();
-            console.log("olá?");
             const member = $("#select_member").val();
             const url = "<?=base_url('add_member')?>";
             
             $.post(url, {member: member}, function(data) {
-                console.log(data);
                 if (data.error) {
                     $(".error").text(data.message).addClass('important');
                     $('.loading').toggle();
@@ -163,7 +159,6 @@
         });
 
         $(".config").click(function() {
-            console.log("olá?");
             $(".family_settings").toggle();
         });
 
@@ -178,7 +173,6 @@
         $('.activity-btn').click(function() {
             $(".activities").toggle();
             $(".loading").toggle();
-            console.log('aberto 1');
             $(".activity").remove();
 
             ajax.get('<?=base_url('get_family_activities')?>/'+page, function(data) {
@@ -193,7 +187,6 @@
                     var likeElement = (data.data[activity].liked) ? 
                         ('<i class="bi like bi-hand-thumbs-up-fill permanent-like"></i>') : 
                         (`<i class="bi like ${(data.data[activity].participant) ? '' : 'hidden'} bi-hand-thumbs-up"></i>`);
-                    console.log(likeElement);
                     const activityHtml = 
                     `<div class="activity col-md-6 mb-3">
                         <div class="card">
@@ -214,11 +207,9 @@
                     $(".activities-list").append(activityHtml);
                 });
                 $(".loading").toggle();
-                console.log('fechado 1');
                 $(".participate").click(function() {
                     $(".loading").toggle();
                     var activity_id = $(this).siblings('.activity_id').text();
-                    console.log(activity_id);
                     ajax.get('<?=base_url('new_participation')?>/'+activity_id, function(data){
                         if(data.success){
                             $(this).siblings("p").find(".like").toggle();
@@ -243,17 +234,13 @@
                 });
 
                 $(".like").click(function() {
-                    console.log("aaa");
                     $(".loading").toggle();
                     var activity_id = $(this).parent().siblings('.activity_id').text();
-                    console.log(activity_id);
                     var self = this;
                     var likeElement = $(this);
                     ajax.get('<?=base_url('new_like')?>/'+activity_id, function(data){
-                        console.log(data);
                         if(data.success){
                             $(".loading").toggle();
-                            console.log($(this).siblings().find('span'));
                             $(this).siblings(".n_likes").find('span').html($(this).siblings(".n_likes").find('span').text() + 1);
                             setTimeout(()=>{
                                 likeElement.removeClass('bi-hand-thumbs-up').addClass('bi-hand-thumbs-up-fill permanent-like');

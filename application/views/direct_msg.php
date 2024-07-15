@@ -97,6 +97,7 @@
 </main>
 <script>
     $(()=>{
+        $(".loading").toggle();
         var cliente = new Client(io);
         cliente.connect('http://localhost:9014');
         var ajax = new AjaxHandler();
@@ -109,60 +110,45 @@
         window.conv_type = null;
 
         $(".friend").click(function(){
-            console.log("aaaaaa",$(this).find(".conv_id").text());
             var user_name = '<?php echo $user['user'];?>';
             var user_id = <?php echo $user['id'];?>;   
             var current_friend = $(this).find('#friend_id').text(); 
-            var id_conv = $(this).find
-            console.log
 
             if(current_friend == friend_id){
                 return;
             }
 
-            console.log("aaa", window.conv_type);
-
-            console.log("Amigo: "+current_friend);
             conv_id = $(this).find('#conv_id').text();
-            console.log("banana", conv_id);
             if((window.conv_type != null)){
                 cliente.change_friend({friends: current_friend, conv_id: conv_id});
             }else
                 cliente.emit_userdata({user_name: user_name, user_id:user_id, friend_id: current_friend, id_conv: conv_id});
 
             friend_id = current_friend;
-            console.log(friend_id);
             window.conv_type = 1;
             setTimeout(()=>{
-                $(".loading").css({visibility: 'visible'});
+                $(".loading").toggle();
             }, 200);
             ajax.get('<?php echo base_url('resources/html/dm-mode.html');?>', (data)=>{
-                $(".loading").css({visibility: 'none'});
+                $(".loading").toggle();
                 $(".left-side").html(data);
                 messages = $(".messages");
                 messages.on('scroll', function(){
-                    console.log("Load 1", load);
-                    //console.log(-($(this).scrollTop()) + $(this).innerHeight());
                     var alturaAtual = $(this)[0].scrollHeight;
                     
                     if ((-($(this).scrollTop()) + $(this).innerHeight() >= alturaAtual - 5)) {
-                        console.log('Scroll máximo atingido');
-                        console.log("Load: ", load);
                         if(load){
                             load = false;
                             loadMessages(conv_id);
                         }
                         alturaAtual = $(this)[0].scrollHeight;
                     }
-                    //console.log("aa");
                 });
-                console.log(messages);
             });
 
             window.conv_id = conv_id;
 
             var user = ajax.get('<?php echo base_url('fetch_user');?>/'+conv_id, (data)=>{
-                console.log("aaai", data);
                 $(".card-header > .user-img").attr('src', data.pfp.path);
                 $(".card-header > .user-img").attr('alt', data.user);
                 $(".card-header > div > .user-name").text(data.username);
@@ -171,7 +157,7 @@
 
 
             loadMessages(conv_id);
-            
+            $(".loading").toggle();
         });
 
         $('.group').click(function(){
@@ -181,14 +167,11 @@
             var user_id = <?php echo $user['id'];?>;   
 
             ajax.get('<?=base_url('/get_group_members/')?>'+conv_id, (data)=>{
-                console.log("Membros", data.data[1]);
 
                 Object.values(data.data).forEach(member => {
                     members_ids.push(member.id);
                 });
 
-                console.log("conv_id", conv_id);
-                console.log("members_ids", members_ids);
 
                 if(window.conv_type != null)
                     cliente.change_friend({friends: members_ids, conv_id: conv_id});
@@ -203,30 +186,21 @@
                 $(".left-side").html(data);
                 messages = $(".messages");
                 messages.on('scroll', function(){
-                    console.log("Load 1", load);
-                    //console.log(-($(this).scrollTop()) + $(this).innerHeight());
                     var alturaAtual = $(this)[0].scrollHeight;
 
                     if ((-($(this).scrollTop()) + $(this).innerHeight() >= alturaAtual - 5)) {
-                        console.log('Scroll máximo atingido');
-                        console.log("Load: ", load);
                         if(load){
                             load = false;
                             loadMessages(conv_id);
                         }
                         alturaAtual = $(this)[0].scrollHeight;
                     }
-                    //console.log("aa");
                 });
-                console.log(messages);
             });
 
             window.conv_id = conv_id;
 
-            console.log("Conv_id linha 225", window.conv_id);
-
             var user = ajax.get('<?php echo base_url('fetch_conv');?>/'+conv_id, (data)=>{
-                console.log("aaai", data);
                 $(".card-header > .user-img").attr('src', data.data['picture']['path']);
                 $(".card-header > .user-img").attr('alt', data.data['picture']['alt']);
                 $(".card-header > div > .user-name").text(data.data['name']);
@@ -244,17 +218,12 @@
 
 
         $(document).on('click', '#message_send', function() {
-            console.log("Oi?");
             sendMessage();
         });
 
         function loadMessages(conv_id){
-            console.log("Scrolling ", scrolling);
-            console.log("conv_id", conv_id)
             if(scrolling)
                 return;
-            console.log("Offset: ", offset);
-            console.log("Oi?");
             scrolling = true;
             ajax.get('<?php echo base_url('get_messages');?>/'+offset+'/'+conv_id, function(data){    
                 var div_class;
@@ -268,7 +237,6 @@
 
                         message.message_text = cliente.decrypt_message(message.message_text, JSON.parse(message.enc_method));
 
-                        //console.log(div_class);
                         var msg_div = '<div class="message '+div_class+'"><p class="msg_text">'+message.message_text+'</p><p class="msg_date">'+message.send_date+'</p></div>';
                         
                         $(".messages").append(msg_div);
@@ -279,12 +247,10 @@
                 setTimeout(()=>{
                     load = true;
                     offset += 15;
-                    console.log("offset: ", offset);
                     scrolling = false;
                 }, 100)
             });
 
-            console.log("Offset: ", offset);
         }
 
         function sendMessage(){
@@ -301,7 +267,6 @@
             $('.msg_text').val('');
             var msg_div = '<div class="message self"><p class="msg_text">'+message_text+'</p><p class="msg_date">'+'<?php echo date("Y-m-d H:i:s");?>'+'</p></div>';
             $('.messages').prepend(msg_div);
-            console.log(cliente.getMethod());
 
             var dataAtual = new Date();
             var dataHoraFormatada = dataAtual.toISOString().replace('T', ' ').substring(0, 19);
@@ -317,10 +282,7 @@
             data['message']['read_date'] = '0000-00-00 00:00:00';
 
 
-            console.log(data);
-
             ajax.post('<?php echo base_url('send_message');?>', data, (res)=>{
-                console.log(res);
             });
         }
 
@@ -338,7 +300,6 @@
 
                 if ((e.keyCode == 8) && ($("#dm_search_friends").val() == "")) {
                     $(".suggestions").css({ "display": "none" })
-                    console.log("aaa");
                 }
 
                 if ($(".suggestions").css('display') == "none" && ($("#dm_search_friends").val() != ""))
@@ -351,14 +312,11 @@
                             window.location.reload();
                         }
                     });
-                    console.log(id);
                 });
 
                 search = $("#dm_search_friends").val();
-                //console.log(search);
                 if ((e.keyCode != 8 && $("#dm_search_friends").val() != "")) {
                     ajax.get("<?=base_url('search_friends')?>/" + search, (data) => {
-                        console.log(data);
                         Object.values(data).forEach(user => {
                             var div = "<div class='friend_suggest d-flex justify-content-between align-items-center w-100 p-2'>";
                             div += "<img class='friend_suggest_img rounded-circle' src='" + user.pfp.path + "' alt='Foto de perfil' style='width: 50px; height: 50px;'>";
