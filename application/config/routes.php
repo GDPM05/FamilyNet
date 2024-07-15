@@ -67,6 +67,7 @@ $route['logout'] = 'Login/logout';
 $route['search'] = 'Search';
 $route['search/(:num)'] = 'Search';
 $route['fetch'] = 'Search/fetch';
+$route['direct_msg'] = 'Directmsg';
 $route['see_profile/(:any)'] = 'Profile/load_profile';
 $route['send_invite/(:num)'] = 'Profile/send_friend_invitation';
 $route['invites/(:any)/(:num)'] = 'Profile/update_invite/$1/$2';
