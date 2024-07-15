@@ -39,7 +39,7 @@ class Client{
                 $('.loading').css({display: 'none'});
                 this.socket.on('new_msg', this.receive_message.bind(this, this.socket));
                 this.socket.on('enc_method', (socket)=>{
-                    console.log('ai');
+                    console.log('ai', socket);
                     this.enc_method = socket;
                     $(".loading").css({display: 'none'});
                 });

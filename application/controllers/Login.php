@@ -95,7 +95,6 @@
                 $insert_token = array('access_token' => $token);
                 $this->User_model->update($insert_token, array('id' => $userdata['id']));
             }
-            
         }
 
         public function check_session(){

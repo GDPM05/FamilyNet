@@ -74,12 +74,22 @@ class Auth extends MY_Controller {
         $this->session->set_userdata('user_details', $userDetails); 
     }
 
-    protected function createSession($userdata, $token = null){
+    protected function createSession($userdata, $token = null, $keep_login = "off"){
+            
+        $userdata['pfp'] = $this->Media_model->fetch(['id' => $userdata['pfp']]);
+
         $this->session->set_userdata(array(
             'logged_in' => TRUE,
             'user' => $userdata,
             'access_token' => $token
         ));
+    
+
+        if($keep_login == "on"){
+            $userdata['logged_in'] = TRUE;
+            $userdata['access_token'] = $token;
+            setcookie('user_login', serialize($userdata), (time() + (86400 * 3)), '/');
+        }
 
         if(!empty($token)){
             $insert_token = array('access_token' => $token);
