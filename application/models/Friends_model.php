@@ -24,7 +24,7 @@
 
             $query = $this->db->get($this->table);
         
-            $check_already_friends = ($query->num_rows() > 0) ? $query->row() : TRUE;
+            $check_already_friends = ($query->num_rows() > 0) ? $query->result_array() : FALSE;
 
             return $check_already_friends;
         }

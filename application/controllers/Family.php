@@ -22,6 +22,7 @@
             $this->data['title'] = TITLE.' | Família';
             $this->data['user'] = $this->session->userdata['user'];
             $this->data['genders'] = $this->Gender_model->fetch_all();
+            $this->data['admin'] = $this->FamilyUser_model->fetch(['id_user' => $this->session->userdata('user')['id']])['admin'];
             
             $user_id = $this->session->userdata['user']['id'];
 
@@ -45,8 +46,23 @@
                 $family_members = [];
                 foreach($family_members_ids as $id){
                     //print_r($id);
-                    $family_members[] = $this->User_model->fetch(['id' => $id['id_user']], 'id, user, username, pfp, gender, p_role');
+                    $user = $this->User_model->fetch(['id' => $id['id_user']], 'id, user, username, pfp, gender, p_role');
+                    $user['admin'] = $id['admin'];
+                    $family_members[] = $user;
                 }
+
+                $friends = $this->Friends_model->fetch_friends($user_id);
+
+                $friends_array = [];
+                foreach($friends as $friend){
+                    $id_friend = ($friend['id_user1'] == $user_id) ? $friend['id_user2'] : $friend['id_user1'];
+
+                    $friend_data = $this->User_model->fetch(['id' => $id_friend], 'id, username');
+
+                    $friends_array[] = $friend_data;
+                }
+
+                $this->data['friends'] = $friends_array;
                 $this->data['family_creator'] = $family['id_creator'];
                 $this->data['family_name'] = $family['family_name'];
                 $this->data['family_members'] = $family_members;
@@ -249,6 +265,7 @@
             foreach($family_members_ids as $id){
                 $user = $this->User_model->fetch(['id' => $id['id_user']], 'id, user, username, pfp');
                 $user['pfp'] = $this->Media_model->fetch(['id' => $user['pfp']]);
+                $user['admin'] = $id['admin'];
                 $family_members[] = $user; 
             }
 
@@ -396,5 +413,162 @@
             return true;
         }
 
+        public function add_member(){
+            header('Content-Type: application/json');
+            $return_data = [
+                'success' => false,
+                'message' => '',
+                'data' => []
+            ];
+            $data = $this->input->post();
+
+            $user = $this->session->userdata('user');
+
+            $family_id = $this->FamilyUser_model->fetch(['id_user' => $user['id']]);
+
+            $family = $this->Family_model->fetch(['id' => $family_id['id_family']]);
+
+            $members = $this->FamilyUser_model->fetch_all(false, null, null, null, ['id_family' => $family_id['id_family']]);
+
+            $already_member = false;
+            foreach ($members as $member) {
+                if($member['id_user'] == $data['member'])
+                    $already_member = true;
+            }
+
+            if($already_member){
+                $return_data['error'] = true;
+                $return_data['message'] = 'Este utilizador já é membro da sua família!';
+                echo json_encode($return_data);
+                return false;                
+            }
+
+            $this->FamilyUser_model->insert(['id_user' => $data['member'], 'id_family' => $family_id['id_family']]);
+
+            if($this->FamilyUser_model->error){
+                $return_data['error'] = true;
+                $return_data['message'] = 'Ocorreu um erro. Tente novamente mais tarde.';
+                echo json_encode($return_data);
+                return false;
+            }   
+
+            $this->Family_model->update(['n_members' => ($family['n_members'] + 1)], ['id' => $family['id']]);
+
+            if($this->Family_model->error){
+                $return_data['error'] = true;
+                $return_data['message'] = 'Ocorreu um erro. Tente novamente mais tarde.';
+                echo json_encode($return_data);
+                return false;
+            }  
+
+            $return_data['success'] = true;
+            echo json_encode($return_data);
+            return true;
+        }
+
+        public function remove_member($id_member = null){
+            if($id_member == null){
+                redirect(base_url(''));
+                return false;
+            }
+
+            $user = $this->session->userdata('user');
+
+            $family_id = $this->FamilyUser_model->fetch(['id_user' => $user['id']]);
+
+            $family = $this->Family_model->fetch(['id' => $family_id['id_family']]);
+
+            $members = $this->FamilyUser_model->fetch_all(false, null, null, null, ['id_family' => $family_id['id_family']]);
+
+            $already_member = false;
+            foreach ($members as $member) {
+                if($member['id_user'] == $id_member)
+                    $already_member = true;
+            }
+
+            if(!$already_member){
+                redirect(base_url('family_menu'));           
+                return false;
+            }
+
+            $this->FamilyUser_model->delete(['id_user' => $id_member]);
+
+            if($this->FamilyUser_model->error){
+                redirect(base_url('family_menu'));           
+                return false;
+            }  
+
+            $this->Family_model->update(['n_members' => ($family['n_members'] - 1)], ['id' => $family['id']]);
+
+            if($this->Family_model->error){
+                $redirect(base_url('family_menu'));           
+                return false;
+            }  
+
+            redirect(base_url('family_menu'));           
+            return true;
+        }
+
+        public function promote_member($id_member = null) {
+            if($id_member == null){
+                redirect(base_url('family_menu'));
+                return false;
+            }
+
+            $user = $this->session->userdata('user');
+
+            $family_id = $this->FamilyUser_model->fetch(['id_user' => $user['id']]);
+
+            $family = $this->Family_model->fetch(['id' => $family_id['id_family']]);
+
+            $members = $this->FamilyUser_model->fetch_all(false, null, null, null, ['id_family' => $family_id['id_family']]);
+
+            $already_member = false;
+            foreach ($members as $member) {
+                if($member['id_user'] == $id_member)
+                    $already_member = true;
+            }
+
+            if(!$already_member){
+                redirect(base_url('family_menu'));           
+                return false;
+            }
+
+            $this->FamilyUser_model->update(['admin' => 1], ['id_user' => $id_member]);
+
+            if($this->FamilyUser_model->error){
+                redirect(base_url('family_menu'));           
+                return false;
+            }  
+
+            redirect(base_url('family_menu'));
+            return true;
+        }
+
+        public function update_info(){
+            
+            $user = $this->session->userdata('user');
+
+            $data = $this->input->post();
+
+            if(empty($data)){
+                redirect(base_url('family_menu'));
+                return false;
+            }
+
+            $family_id = $this->FamilyUser_model->fetch(['id_user' => $user['id']]);
+            
+            $this->Family_model->update(['family_name' => $data['familyName']], ['id' => $family_id['id_family']]);
+
+            if($this->Family_model->error){
+                reidrect(base_url('family_menu'));
+                return false;
+            }
+
+            redirect(base_url('family_menu'));
+            return true;
+        }
+
     }   
 ?>
+

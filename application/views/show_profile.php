@@ -1,6 +1,5 @@
 <?php
     defined('BASEPATH') OR exit('No direct script access allowed');
-
 ?>
 
 <main class="container">
@@ -22,11 +21,11 @@
         </h1>
     </div>
     <div class="user-options text-center mt-4">
-        <?php if($already_friends === TRUE || $already_friends->status == 2):?>
+        <?php if(!$already_friends || $already_friends[0]['status'] == 2):?>
             <div class="add_friend d-inline-block mr-2">
                 <button class="btn btn-primary">Enviar pedido de amizade</button>
             </div>
-        <?php elseif((int)$already_friends->status == 3): ?>
+        <?php elseif($already_friends && $already_friends[0]['status'] == 3): ?>
             <div class="add_friend d-inline-block mr-2">
                 <button class="btn btn-primary" disabled>Pedido pendente</button>
             </div>
@@ -50,12 +49,14 @@
         var span = $(".close");
 
         btn_add.click(function(){
+            $(".loading").toggle();
             ajax.post('<?php echo base_url('send_invite').'/'.$user['id'];?>', null, (data)=>{
                 $('#mensagemModal').text("Pedido de amizade enviado com sucesso!");
                 not_client.send_simple_notification(<?=$user['id']?>);
                 modal.show();
                 console.log(data);
-                document.location.reload();
+                $(".loading").toggle();
+                location.reload();
             });
         });
 

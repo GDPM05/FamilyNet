@@ -185,7 +185,7 @@
                 }
             }
 
-            print_r($_COOKIE[md5('id')]);
+            // print_r($_COOKIE[md5('id')]);
 
             if(isset($data['success']) && $data['success']){
                 $this->session->unset_userdata(array(md5('n_tries'), md5('c0d4')));

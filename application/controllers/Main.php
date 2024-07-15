@@ -148,14 +148,14 @@
                     $user['post'] = $post;
                 } elseif ($post['privacy_level'] == 2) {
                     // Friends-only post
-                    if ($this->Friends_Model->check_friends($user_id, $post['id_sender'])) {
+                    if ($this->Friends_Model->check_friends($user_id, $post['id_sender']) || $post['id_sender'] == $user_id) {
                         $user['post'] = $post;
                     }
                 } elseif ($post['privacy_level'] == 3) {
                     // Family-only post
                     $family_id = $this->FamilyUser_Model->fetch(['id_user' => $user_id]);
                     //var_dump($family_id);
-                    if ($family_id && $this->FamilyUser_Model->check_if_exists(['id_family' => $family_id['id_family'], 'id_user' => $post['id_sender']])) {
+                    if ($family_id && $this->FamilyUser_Model->check_if_exists(['id_family' => $family_id['id_family'], 'id_user' => $post['id_sender']]) && $post['id_sender'] == $user_id) {
                         $user['post'] = $post;
                     }
                 } elseif ($post['privacy_level'] == 4) {

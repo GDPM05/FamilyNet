@@ -59,7 +59,7 @@
             $check_friends = $this->Friends_model->check_friends($user['id'], $this->session->userdata('user')['id']);
 
             if($check_friends !== TRUE){
-                switch($check_friends->status){
+                switch($check_friends['status']){
                     case 2:
                         $this->update_invite($user['id'], 3);
                         return;
@@ -116,7 +116,7 @@
                     break;
                 case 2:
                     $type_id = 2; 
-                    $status_message = ($check_friends->status == 3) ? $this->session->userdata('user')['username'].' recusou o seu pedido de amizade!' : $user['username'].' já não é seu amigo.';
+                    $status_message = ($check_friends['status'] == 3) ? $this->session->userdata('user')['username'].' recusou o seu pedido de amizade!' : $user['username'].' já não é seu amigo.';
                     break;
                 case 3: 
                     $type_id = 1;

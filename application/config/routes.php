@@ -109,3 +109,7 @@ $route['edit_activity'] = 'Admin/edit_activity';
 $route['get_family_activities/(:num)'] = 'Family/get_activities/$1';
 $route['new_participation/(:num)'] = 'Family/participate/$1';
 $route['new_like/(:num)'] = 'Family/like/$1';
+$route['add_member'] = 'Family/add_member';
+$route['remove_member/(:num)'] = 'Family/remove_member/$1';
+$route['promote_member/(:num)'] = 'Family/promote_member/$1';
+$route['update_family_info'] = 'Family/update_info';
