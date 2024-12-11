@@ -13,8 +13,8 @@ class Auth extends MY_Controller {
 
     public function google_auth(){
         $client = new Google_Client();
-        $client->setClientId('908931447639-ocnea685o5j4rj3711vjlhepmeh4quf6.apps.googleusercontent.com');
-        $client->setClientSecret('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');
+        $client->setClientId('***');
+        $client->setClientSecret('***');
         $client->setRedirectUri(base_url('callback'));
         $client->addScope(Google_Service_Oauth2::USERINFO_EMAIL);
 
@@ -27,8 +27,8 @@ class Auth extends MY_Controller {
         $code = $this->input->get('code');
 
         $client = new Google_Client();
-        $client->setClientId('908931447639-ocnea685o5j4rj3711vjlhepmeh4quf6.apps.googleusercontent.com');
-        $client->setClientSecret('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');
+        $client->setClientId('***');
+        $client->setClientSecret('***');
         $client->setRedirectUri(base_url('callback'));
         $client->addScope(Google_Service_Oauth2::USERINFO_EMAIL);
 
